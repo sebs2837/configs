@@ -56,8 +56,6 @@ if status --is-interactive
     source "$BASE16_SHELL/profile_helper.fish"
 end
 
-base16-gruvbox-dark-hard
-
 # nice cheat sheet appl in rust
 if command -v navi > /dev/null
     source (navi widget fish)
