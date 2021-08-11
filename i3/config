@@ -89,11 +89,11 @@ gaps outer $gaps_o
 
 workspace $ws1 gaps inner $gaps_i
 workspace $ws1 gaps outer $gaps_o
-workspace $ws2 gaps inner $gaps_i  
+workspace $ws2 gaps inner $gaps_i
 workspace $ws2 gaps outer $gaps_o
 workspace $ws3 gaps inner $gaps_i
 workspace $ws3 gaps outer $gaps_o
-workspace $ws4 gaps inner $gaps_i 
+workspace $ws4 gaps inner $gaps_i
 workspace $ws4 gaps outer $gaps_o
 workspace $ws5 gaps inner $gaps_i
 workspace $ws5 gaps outer $gaps_o
@@ -168,8 +168,8 @@ set $right l
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal termite
-bindszm $mod+Control+f exec i3-sensible-terminal termite -c fish
+bindsym $mod+Return exec i3-sensible-terminal -e fish
+bindszm $mod+Control+z exec i3-sensible-terminal termite 
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -410,8 +410,8 @@ for_window [class="(?i)recordmydesktop"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable, move position mouse
 for_window [class="(?i)pavucontrol" instance="pavucontrol-bar"] move down $height px
 
-#assign [class="(?i)chrome"]                       $ws1
-#assign [class="(?i)eclipse" window_type="splash"] $ws3
+assign [class="(?i)chromium" window_type="normal"]$ws5
+assign [class="(?i)neovide" window_type="normal"] $ws4
 #assign [class="(?i)eclipse" window_type="normal"] $ws3
 assign [class="(?i)thunderbird"]                  $ws9
 
@@ -430,11 +430,8 @@ assign [class="(?i)thunderbird"]                  $ws9
 #    tray_padding 0
     
 #}
-#exec --no-startup-id nm-applet &
-#exec --no-startup-id $HOME/.scripts/set_bg.sh &
 exec --no-startup-id $HOME/.scripts/launch_polybar "notebook" &
-#exec --no-startup-id blueman-applet &
 exec --no-startup-id compton &
-exec --no-startup-id feh --bg-fill /home/seri/.config/wallpaper/hologram_scheme_scifi_139294_1920x1200.jpg &
+exec --no-startup-id feh -z --bg-fill /home/seri/.config/wallpaper/ 
 exec --no-startup-id unclutter &
-exec --no-startup-id deadd-notification-center &
+exec --no-startup-id dunst&

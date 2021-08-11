@@ -3,7 +3,7 @@
 set runtimepath^=~/.vim
 let &packpath = &runtimepath
 
-" ============================================================================= 
+" =============================================================================
 " # Editor settings
 " ============================================================================="
 
@@ -31,16 +31,18 @@ set autoindent
 """ Filetype-Specific Configurations
 
 " HTML, XML
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd FileType xml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " Markdown and Journal
-autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType journal setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType asciidoc setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2 textwidth=120
+autocmd FileType journal setlocal shiftwidth=2 tabstop=2 softtabstop=2 textwidth=120
+autocmd FileType asciidoc setlocal shiftwidth=2 tabstop=2 softtabstop=2 textwidth=120
 
-" Programming languages 
+" Programming languages
 autocmd FileType c,cpp,cc setlocal expandtab shiftwidth=2 softtabstop=2 cindent
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4 autoindent
 autocmd FileType java setlocal expandtab shiftwidth=2 softtabstop=4 autoindent
@@ -48,77 +50,92 @@ autocmd FileType groovy setlocal expandtab shiftwidth=2 softtabstop=4 autoindent
 autocmd FileType rust setlocal expandtab shiftwidth=2 softtabstop=2 cindent
 
 
-" ============================================================================= 
-" # Pluggins
-" ============================================================================= 
+" =============================================================================
+" # Plugins
+" =============================================================================
 call plug#begin('~/.vim/plugged')
+"Web development
+Plug 'ap/vim-css-color'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 
 "Main
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 " Completion plugins
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do':'yarn install --frozen-lockfile'}
 
 "For the looks
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/vim-journal'
-Plug 'zaki/zazen'
 Plug 'KabbAmine/vCoolor.vim'
+Plug 'mhinz/vim-startify'
 
 "Additional themes and colors
-Plug 'tomasiser/vim-code-dark'
+"Plug 'tomasiser/vim-code-dark'
 
 " Functionalities
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
+Plug 'tommcdo/vim-lion'
 Plug 'lifepillar/vim-cheat40'
-Plug 'airblade/vim-rooter'
-Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/vim-easy-align'
+Plug 'frazrepo/vim-rainbow'
 Plug 'alvan/vim-closetag'
-Plug 'tpope/vim-abolish'
 Plug 'Yggdroot/indentLine'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'chrisbra/Colorizer'
-Plug 'heavenshell/vim-pydocstring'
-Plug 'vim-scripts/loremipsum'
-Plug 'dkarter/bullets.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'will133/vim-dirdiff'
-Plug 'rust-lang/rust.vim'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf_vim', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'wsdjeg/vim-hackernews'
 Plug 'easymotion/vim-easymotion'
-Plug 'dagwieers/asciidoc-vim'
 Plug 'chrisbra/unicode.vim'
+Plug 'honza/vim-snippets'
+Plug 'suan/vim-instant-markdown'
+Plug 'voldikss/vim-floaterm'
+Plug 'liuchengxu/vim-which-key'
+Plug 'vifm/vifm.vim'
+
+" language support
+"Plug 'fatih/vim-go'
+Plug 'rust-lang/rust.vim'
+Plug 'habamax/vim-asciidoctor'
+
+" Graveyard
+" Plug 'airblade/vim-rooter'
+" Plug 'scrooloose/nerdcommenter'
+" Plug 'tpope/vim-abolish'
+" Plug 'will133/vim-dirdiff'
+" Plug 'junegunn/vim-easy-align'
+"Testing area
+Plug '~/code/rst/reqorous'
 
 call plug#end()
 
 
-"================================================================================ 
-"# GUI Settings
-" ================================================================================ 
+"==============================================================================
+" GUI Settings
+"==============================================================================
 """Base 16
-set background=dark
-colorscheme base16-gruvbox-dark-hard
+"set background=dark
+colorscheme base16-gruvbox-dark-medium
+""" Enable rainbow brackets
+let g:rainbow_active = 1
 "highlight Pmenu guibg=white guifg=black gui=bold
+if has('nvim')
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    set inccommand=nosplit
+    noremap <C-q> :confirm qall<CR>
+    set guifont=Fira\ Code\ Regular\ Nerd\ Font\ Complete:h16
+end
+set guifont=Fira\ Code:h16
+
 highlight Comment gui=bold
 highlight Normal gui=none
 highlight NonText guibg=none
-set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-		  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-		  \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 " Opaque Background (Comment out to use terminal's profile)
 set termguicolors
-
+"highlight CursorLine gui=underline cterm=underline guibg=none ctermbg=none
 " Transparent Background (For i3 and compton)
 highlight Normal guibg=NONE ctermbg=NONE
 highlight LineNr guibg=NONE ctermbg=NONE
@@ -131,159 +148,37 @@ set guioptions-=T "No toolbar"
 set ruler laststatus=2 showcmd showmode
 set number
 set relativenumber
-set colorcolumn=80 "draw a colored column"
+set colorcolumn=80,120 "draw a colored column"
+
+" Git diff options
 set diffopt+=iwhite" No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 
-
-" ================================================================================ 
-" # Plugin Configurations
-" ================================================================================ 
-" NERDTree
-let NERDTreeShowHidden=1
-let g:NERDTreeDirArrowExpandable = '↠'
-let g:NERDTreeDirArrowCollapsible = '↡'
-
-" LightLine
-set showtabline=2
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch','readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ }
-let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type   = {'buffers': 'tabsel'}
-let g:lightline#bufferline#shorten_path=1
-
-"Vim rooter
-let g:rooter_patterns = ['Rakefile', '.git/', 'Cargo.toml', 'CMakeLists']
-
-" Neovim :Terminal
-tmap <Esc> <C-\><C-n>
-tmap <C-w> <Esc><C-w>
-autocmd BufWinEnter,WinEnter term://* startinsert
-autocmd BufLeave term://* stopinsert
-
-"Coc completion settings
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-
-"Python settings
-let g:python3_host_prog='/usr/bin/python'
-
-" settings for go lang
-let g:go_play_open_browser = 0
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-let g:go_bin_path = $GOBIN
-
-" rust settings
-"let g:rustfmt_autosave = 1
-"let g:formatters_rust=['rustfmt']
-"et g:formatdef_rustfmt='"rustfmt"'
-
-
-" autoformat
-augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
-  autocmd FileType rust AutoFormatBuffer rustfmt
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
-  autocmd FileType vue AutoFormatBuffer prettier
-augroup END
-
-" enable spell check for dedicated files
-autocmd BufRead,BufNewFile *.adoc setlocal spell
-
-
-"EasyAlign
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" indentLine
-let g:indentLine_char = '▏'
-let g:indentLine_color_gui = '#363949'
-
-" TagBar
-let g:tagbar_width = 30
-let g:tagbar_iconchars = ['↠', '↡']
-
-" fzf-vim
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'Type'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Character'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
-""" Custom Functions
-
-if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
-endif
-
-" Trim Whitespaces
-function! TrimWhitespace()
-    let l:save = winsaveview()
-    %s/\\\@<!\s\+$//e
-    call winrestview(l:save)
-endfunction
-
-" Wrapping options
-"set formatoptions=tc " wrap text and comments using textwidth
-"set formatoptions+=r " continue comments when pressing ENTER in I mode
-"set formatoptions+=q " enable formatting of comments with gq
-"set formatoptions+=n " detect lists for formatting
-"set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long line
-
-" ============================================================================= 
+" =============================================================================
 " # Custom Key Bindings
-" ============================================================================= 
+" =============================================================================
 let mapleader="\<Space>"
-nmap <leader>q :NERDTreeToggle<CR>
-nmap <leader>e :TagbarToggle<CR>
+let maplocalleader=","
+nnoremap <leader>q :NERDTreeToggle<CR>
 nmap <leader>ee :Colors<CR>
 nmap <silent><leader>r  :so ~/.config/nvim/init.vim<CR>
-nmap <leader>t :call TrimWhitespace()<CR>
+nmap <leader>ws :call TrimWhitespace()<CR>
 xmap <leader>a gaip*
 nmap <leader>a gaip*
 nmap <leader>x <C-w>s<C-w>j:terminal<CR>
 nmap <leader>vs <C-w>v<C-w>l:terminal<CR>
 nmap <leader>f :Files<CR>
-nmap <leader>g :Goyo<CR>
+nmap <leader>g :Goyo 120<CR>
 nmap <leader>j :set filetype=journal<CR>
 nmap <leader>T :enew<CR>
 nmap <leader>bl :ls<CR>
 nmap <leader>ev :vsplit $MYVIMRC<CR>
 
-" Completion 
+" Further fzf bindings
+nnoremap <C-p> :Files<cr>
+" Completion
 
 " Ctrl+c and Ctrl+j as Esc
 inoremap jk <Esc>
@@ -296,9 +191,9 @@ inoremap <C-z> :sus<cr>
 vnoremap <C-z> :sus<cr>
 nnoremap <C-z> :sus<cr>
 
+
 " RG search mappings
 noremap <leader>s :Rg
-let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -312,18 +207,7 @@ nmap <silent> <leader><leader> :noh<CR>
 nnoremap <right> :bnext<CR>
 nnoremap <left> :bprevious<CR>
 
-
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-" s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk) nmap <Leader>L <Plug>(easymotion-overwin-line)
-" Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
-
+" Vim like movement beginn and end fo line
 map H ^
 map L $
 
@@ -342,9 +226,6 @@ nnoremap ? ?\v
 nnoremap / /\v
 cnoremap %s/ %sm/
 
-nnoremap <silent> <Space><Space>f :CtrlP<CR>
-nnoremap <silent> <Space><Space>m :CtrlPMixed<CR>
-nnoremap <silent> <Space><Space>r :CtrlPMRU<CR>
 " hard Mode no arrwos allowed
 nnoremap <up>    <nop>
 nnoremap <down>  <nop>
@@ -364,131 +245,95 @@ nnoremap <leader>, :set invlist<cr>
 " Toggle buffers
 nnoremap <leader><leader> <c-^><cr>
 
-"coc stuff
-" if hidden is not set, TextEdit might fail.
-set hidden
 
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
+"=============================================================================
+"  Plugin Configurations
+" =============================================================================
+source $HOME/.config/nvim/plugin-cfg/floatterm-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/startify-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/nerdtree-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/which-key-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/fzf-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/coc-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/lightline-cfg.vim
+source $HOME/.config/nvim/plugin-cfg/easymotion-cfg.vim
 
-" Better display for messages
-set cmdheight=2
 
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+"Vim rooter
+"let g:rooter_patterns = ['Rakefile', '.git/', 'Cargo.toml', 'CMakeLists']
 
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
+" Neovim :Terminal
+tmap <Esc> <C-\><C-n>
+tmap <C-w> <Esc><C-w>
+autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufLeave term://* stopinsert
 
-" always show signcolumns
-set signcolumn=yes
+"Python settings
+let g:python3_host_prog='/usr/bin/python'
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" settings for go lang
+let g:go_play_open_browser = 0
+let g:go_def_mapping_enabled = 0
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+let g:go_bin_path = $GOBIN
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+" rust settings
+"let g:rustfmt_autosave = 1
+"let g:formatters_rust=['rustfmt']
+"et g:formatdef_rustfmt='"rustfmt"'
+let g:rust_clip_command = 'xclip -section clipboard'
+"let g:rustfmt_options = '--edition 2018'
+
+
+" autoformat
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  " autocmd FileType proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  "autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn format
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " autocmd FileType rust AutoFormatBuffer rustfmt
+  " autocmd FileType python AutoFormatBuffer autopep8
+  " autocmd FileType vue AutoFormatBuffer prettier
+augroup END
+
+" enable spell check for dedicated files
+autocmd BufRead,BufNewFile *.adoc setlocal spell spelllang=en_us
+autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
+autocmd BufRead,BufNewFile *.html setlocal spell spelllang=en_us
+
+" Wrapping options
+set formatoptions=tc " wrap text and comments using textwidth
+set formatoptions+=r " continue comments when pressing ENTER in I mode
+set formatoptions+=q " enable formatting of comments with gq
+set formatoptions+=n " detect lists for formatting
+set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long line
+
+
+"EasyAlign
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" indentLine
+let g:indentLine_char = '▏'
+let g:indentLine_color_gui = '#363949'
+
+"==============================================================================
+" Custom Functions
+"==============================================================================
+
+if executable('rg')
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
+
+" Trim Whitespaces
+function! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\\\@<!\s\+$//e
+    call winrestview(l:save)
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>

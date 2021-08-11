@@ -8,7 +8,7 @@ clickable_url = true
 #dynamic_title = true
 #font = Monospace 14 
 #font = SauceCodePro Nerd Font Mono 14
-font = Input Mono Regular 14
+font = Fira Code Regular 14
 #font = NotoSerif Nerd Font 14
 #fullscreen = true
 #icon_name = terminal
@@ -54,7 +54,7 @@ scrollbar = right
 #background = #3f3f3f
 
 # 20% background transparency (requires a compositor)
-background = rgba(63, 63, 63, 0.9)
+background = rgba(63, 63, 63, 1.0)
 
 # If unset, will reverse foreground and background
 highlight = #2f2f2f

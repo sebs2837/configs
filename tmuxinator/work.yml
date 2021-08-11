@@ -40,7 +40,6 @@ root: ~/
 # attach: false
 
 windows:
-  - tasks: tasksh
   - editor: vim
   - fish: fish
   - zsh: zsh
