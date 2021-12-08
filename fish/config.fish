@@ -1,14 +1,7 @@
 #  Global environment variables
 set -xg EDITOR nvim
-#Vulkan settings
-#set -xg VULKAN_SDK $HOME/vulkan/1.2.170.0/x86_64
-#set -xg VK_LAYER_PATH $VULKAN_SDK/etc/vulkan/explicit_layer.d
-#set -xg LD_LIBRARY_PATH $VULKAN_SDK/lib $LD_LIBRARY_PATH
-# neovide mutligrid
-#set -xg NeoideMultiGrid
 set -xg JAVA_HOME /usr/lib/jvm/java-14-openjdk
 set JULIA /Applications/Julia-1.6.app/Contents/Resources/julia/bin
-set NIX_LINK $HOME/.nix-profile
 set RVM $HOME/.rvm/bin
 set -xg PATH $HOME/bin $HOME/.cargo/bin $JAVA_HOME $RVM $JULIA $PATH
 set -xg RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
@@ -19,12 +12,11 @@ set -xg GO111MODULE on
 set -xg CARGO_HOME $HOME/.cargo
 set -xg CARGO_INSTALL_ROOT $CARGO_HOME
 set -xg GEMS $HOME/.gem/ruby/3.0.0/bin
-set -xg PATH $GOBIN $CARGO_INSTALL_ROOT $PIP_USR_BIN $GEMS $DOOM_BIN_PATH $PATH $VULKAN_SDK/bin
+set -xg PATH $GOBIN $CARGO_INSTALL_ROOT $PIP_USR_BIN $GEMS $PATH 
 #set -xg ROGCAT_PROFILES $HOME/.config/rogcat/profiles.toml
 set -xg CCACHE_DIR $HOME/CACHE
 set -xg NAVI_CONFIG $HOME/.config/navi/config.yaml
 #set -xg RUSTC_WRAPPER = /home/seri/.ccache
-#
 
 # User varibales 
 set -U  fish_user_paths (yarn global bin)
@@ -56,12 +48,6 @@ alias tma='tmux attach -d -t'
 alias tmx='tmux new -f ~/.config/tmux/tmux.conf -s (basename (pwd))'
 
 
-if command -v nix-env > /dev/null
-  abbr -a nixi 'nix-env -iA'
-  abbr -a nixq 'nix-env -qaP'
-  abbr -a nixu 'nix-env -u'
-  abbr -a nixgc 'nix-collect-garbage -d'
-end
 # NNN env variables
 set -xg NNN_PLUG 'o:fzopen'
 
@@ -281,3 +267,4 @@ eval (ssh-agent -c) >> /dev/null
 starship init fish | source
 #freshfetch
 fish_add_path /usr/local/opt/llvm/bin
+fish_add_path /usr/local/opt/binutils/bin
