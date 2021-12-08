@@ -22,6 +22,7 @@ set title
 " Permanent undo
 set undodir=~/.vimdid
 set undofile
+set signcolumn=yes
 
 set cursorline
 set shiftwidth=4
@@ -64,7 +65,34 @@ Plug 'prettier/vim-prettier', {
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 " Completion plugins
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do':'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+
+" Collection of common configurations for the Nvim LSP client
+Plug 'neovim/nvim-lspconfig'
+
+" Completion framework
+Plug 'hrsh7th/nvim-cmp'
+
+" LSP completion source for nvim-cmp
+Plug 'hrsh7th/cmp-nvim-lsp'
+
+" Snippet completion source for nvim-cmp
+Plug 'hrsh7th/cmp-vsnip'
+
+" Other usefull completion sources
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+
+" See hrsh7th's other plugins for more completion sources!
+" Snippet engine
+Plug 'hrsh7th/vim-vsnip'
+
+" To enable more of the features of rust-analyzer, such as inlay hints and more!
+Plug 'simrat39/rust-tools.nvim'
+
+Plug 'folke/lsp-colors.nvim'
+
+
 
 "For the looks
 Plug 'ryanoasis/vim-devicons'
@@ -75,6 +103,9 @@ Plug 'mhinz/vim-startify'
 "Additional themes and colors
 "Plug 'tomasiser/vim-code-dark'
 
+" Fancy git signs
+Plug 'mhinz/vim-signify'
+
 " Functionalities
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -84,16 +115,19 @@ Plug 'scrooloose/nerdtree'
 Plug 'frazrepo/vim-rainbow'
 Plug 'alvan/vim-closetag'
 Plug 'Yggdroot/indentLine'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf_vim', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf_vim', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+Plug 'lotabout/skim.vim'
 Plug 'wsdjeg/vim-hackernews'
 Plug 'easymotion/vim-easymotion'
 Plug 'chrisbra/unicode.vim'
 Plug 'honza/vim-snippets'
 Plug 'suan/vim-instant-markdown'
 Plug 'voldikss/vim-floaterm'
-Plug 'liuchengxu/vim-which-key'
-Plug 'vifm/vifm.vim'
+"Plug 'liuchengxu/vim-which-key'
+Plug 'folke/which-key.nvim'
+"Plug 'vifm/vifm.vim'
 
 " language support
 "Plug 'fatih/vim-go'
@@ -107,10 +141,24 @@ Plug 'habamax/vim-asciidoctor'
 " Plug 'will133/vim-dirdiff'
 " Plug 'junegunn/vim-easy-align'
 "Testing area
-Plug '~/code/rst/reqorous'
+"Plug '~/code/rst/reqorous'
+
+Plug 'zenbro/mirror.vim'
 
 call plug#end()
 
+"=============================================================================
+"  Plugin Configurations
+" =============================================================================
+source $HOME/.config/nvim/plugin_cfg/floatterm-cfg.vim
+source $HOME/.config/nvim/plugin_cfg/startify-cfg.vim
+source $HOME/.config/nvim/plugin_cfg/nerdtree-cfg.vim
+luafile $HOME/.config/nvim/plugin_cfg/which-key-cfg.lua
+source $HOME/.config/nvim/plugin_cfg/fzf-cfg.vim
+"source $HOME/.config/nvim/plugin_cfg/coc-cfg.vim
+source $HOME/.config/nvim/plugin_cfg/lightline-cfg.vim
+source $HOME/.config/nvim/plugin_cfg/easymotion-cfg.vim
+luafile $HOME/.config/nvim/plugin_cfg/lsp-cfg.lua
 
 "==============================================================================
 " GUI Settings
@@ -121,7 +169,7 @@ colorscheme base16-gruvbox-dark-medium
 """ Enable rainbow brackets
 let g:rainbow_active = 1
 "highlight Pmenu guibg=white guifg=black gui=bold
-if has('nvim')
+    if has('nvim')
     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
     set inccommand=nosplit
     noremap <C-q> :confirm qall<CR>
@@ -245,18 +293,31 @@ nnoremap <leader>, :set invlist<cr>
 " Toggle buffers
 nnoremap <leader><leader> <c-^><cr>
 
+" Code navigation shortcuts
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 
-"=============================================================================
-"  Plugin Configurations
-" =============================================================================
-source $HOME/.config/nvim/plugin-cfg/floatterm-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/startify-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/nerdtree-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/which-key-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/fzf-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/coc-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/lightline-cfg.vim
-source $HOME/.config/nvim/plugin-cfg/easymotion-cfg.vim
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
+" Set updatetime for CursorHold
+" 300ms of no cursor movement to trigger CursorHold
+set updatetime=300
+" Show diagnostic popup on cursor hold
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})
+
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+
+
 
 
 "Vim rooter
@@ -314,8 +375,8 @@ set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long line
 
 
 "EasyAlign
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+"xmap ga <Plug>(EasyAlign)
+"nmap ga <Plug>(EasyAlign)
 
 " indentLine
 let g:indentLine_char = '▏'
