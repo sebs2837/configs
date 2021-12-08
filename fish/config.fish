@@ -1,16 +1,18 @@
 #  Global environment variables
 set -xg EDITOR nvim
 #Vulkan settings
-set -xg VULKAN_SDK $HOME/vulkan/1.2.170.0/x86_64
-set -xg VK_LAYER_PATH $VULKAN_SDK/etc/vulkan/explicit_layer.d
-set -xg LD_LIBRARY_PATH $VULKAN_SDK/lib $LD_LIBRARY_PATH
+#set -xg VULKAN_SDK $HOME/vulkan/1.2.170.0/x86_64
+#set -xg VK_LAYER_PATH $VULKAN_SDK/etc/vulkan/explicit_layer.d
+#set -xg LD_LIBRARY_PATH $VULKAN_SDK/lib $LD_LIBRARY_PATH
 # neovide mutligrid
-set -xg NeoideMultiGrid
+#set -xg NeoideMultiGrid
 set -xg JAVA_HOME /usr/lib/jvm/java-14-openjdk
-set -xg PATH $HOME/bin $HOME/.conan $JAVA_HOME $PATH
+set JULIA /Applications/Julia-1.6.app/Contents/Resources/julia/bin
+set NIX_LINK $HOME/.nix-profile
+set RVM $HOME/.rvm/bin
+set -xg PATH $HOME/bin $HOME/.cargo/bin $JAVA_HOME $RVM $JULIA $PATH
 set -xg RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 set -xg PIP_USR_BIN $HOME/.local/bin
-set -xg DOOM_BIN_PATH $HOME/.emacs.d/bin
 set -xg GOPATH $HOME/code/go
 set -xg GOBIN $GOPATH/bin
 set -xg GO111MODULE on
@@ -18,51 +20,65 @@ set -xg CARGO_HOME $HOME/.cargo
 set -xg CARGO_INSTALL_ROOT $CARGO_HOME
 set -xg GEMS $HOME/.gem/ruby/3.0.0/bin
 set -xg PATH $GOBIN $CARGO_INSTALL_ROOT $PIP_USR_BIN $GEMS $DOOM_BIN_PATH $PATH $VULKAN_SDK/bin
-set -xg ROGCAT_PROFILES $HOME/.config/rogcat/profiles.toml
+#set -xg ROGCAT_PROFILES $HOME/.config/rogcat/profiles.toml
 set -xg CCACHE_DIR $HOME/CACHE
+set -xg NAVI_CONFIG $HOME/.config/navi/config.yaml
 #set -xg RUSTC_WRAPPER = /home/seri/.ccache
 #
 
 # User varibales 
-set -U  fish_user_paths (yarn global bin) $HOME/.fzf/bin
+set -U  fish_user_paths (yarn global bin)
+set fish_greeting
 
 # Aliases
 abbr -a yr 'cal -y'
 abbr -a c cargo
 abbr -a e nvim
 abbr -a m make
-abbr -a o xdg-open
+#abbr -a o xdg-open
 abbr -a g git
 abbr -a gc 'git checkout'
 abbr -a ga 'git add -p'
 abbr -a vimdiff 'nvim -d'
 abbr -a ct 'cargo t'
 abbr -a gah 'git stash; and git pull --rebase; and git stash pop'
-abbr -a p 'paru'
-abbr -a up 'paru -Syu'
+#abbr -a p 'paru'
+#abbr -a up 'paru -Syu'
 abbr -a lzd 'lazydocker'
-abbr -a pdf 'zathura'
+#abbr -a pdf 'zathura'
 abbr -a calc 'bc'
-abbr -a mux 'tmuxinator'
 
 alias vi="nvim"
 alias vim="nvim"
 alias nnn="nnn -e"
 
+alias tma='tmux attach -d -t'
+alias tmx='tmux new -f ~/.config/tmux/tmux.conf -s (basename (pwd))'
 
+
+if command -v nix-env > /dev/null
+  abbr -a nixi 'nix-env -iA'
+  abbr -a nixq 'nix-env -qaP'
+  abbr -a nixu 'nix-env -u'
+  abbr -a nixgc 'nix-collect-garbage -d'
+end
 # NNN env variables
 set -xg NNN_PLUG 'o:fzopen'
 
 if command -v exa > /dev/null
-	abbr -a l 'exa'
-	abbr -a ls 'exa'
-	abbr -a ll 'exa -l'
-	abbr -a lll 'exa -la'
+	abbr -a l 'exa --icons '
+	abbr -a ls 'exa --icons'
+	abbr -a ll 'exa --icons -l'
+	abbr -a lll 'exa --icons -la'
+	abbr -a lt 'exa --icons -T'
 else
 	abbr -a l 'ls'
 	abbr -a ll 'ls -l'
 	abbr -a lll 'ls -la'
 end
+
+# make standard ls also available
+abbr -a lx 'ls'
 
 if command -v bat > /dev/null
 	abbr -a cat 'bat'
@@ -77,7 +93,7 @@ end
 
 # nice cheat sheet appl in rust
 if command -v navi > /dev/null
-    source (navi widget fish)
+    navi widget fish | source
 end
 
 #if [ -e /usr/share/fish/functions/fzf_key_bindings.fish ]; and status --is-interactive
@@ -161,7 +177,7 @@ setenv MANPAGER        'less -s -M +Gg' # percentage into document
 # For RLS
 # https://github.com/fish-shell/fish-shell/issues/2456
 #setenv LD_LIBRARY_PATH (rustc +nightly --print sysroot)"/lib:$LD_LIBRARY_PATH"
-setenv RUST_SRC_PATH (rustc --print sysroot)"/lib/rustlib/src/rust/src"
+#setenv RUST_SRC_PATH (rustc --print sysroot)"/lib/rustlib/src/rust/src"
 
 setenv FZF_DEFAULT_COMMAND 'rg --files --follow'
 setenv FZF_CTRL_T_COMMAND 'rg --files --follow'
@@ -173,28 +189,28 @@ set FISH_CLIPBOARD_CMD "cat"
 
 function fish_user_key_bindings
 	bind \cz 'fg>/dev/null ^/dev/null'
-	if functions -q fzf_key_bindings
-		fzf_key_bindings
+	if functions -q skim_key_bindings
+		skim_key_bindings
 	end
 end
 
-function fish_prompt
-	set_color brblack
-	echo -n "["(date "+%H:%M")"] "
-	set_color blue
-	echo -n (hostname)
-	if [ $PWD != $HOME ]
-		set_color brblack
-		echo -n ':'
-		set_color yellow
-		echo -n (basename $PWD)
-	end
-	set_color green
-	printf '%s ' (__fish_git_prompt)
-	set_color red
-	echo -n '| '
-	set_color normal
-end
+#function fish_prompt
+#	set_color brblack
+#	echo -n "["(date "+%H:%M")"] "
+#	set_color blue
+#	echo -n (hostname)
+#	if [ $PWD != $HOME ]
+#		set_color brblack
+#		echo -n ':'
+#		set_color yellow
+#		echo -n (basename $PWD)
+#	end
+#	set_color green
+#	printf '%s ' (__fish_git_prompt)
+#	set_color red
+#	echo -n '| '
+#	set_color normal
+#end
 
 #function fish_greeting
 #	echo
@@ -259,8 +275,9 @@ end
 #	set_color normal
 #end
 
-setxkbmap -option caps:escape
+#setxkbmap -option caps:escape
 
-fish_ssh_agent
+eval (ssh-agent -c) >> /dev/null
 starship init fish | source
-freshfetch
+#freshfetch
+fish_add_path /usr/local/opt/llvm/bin
