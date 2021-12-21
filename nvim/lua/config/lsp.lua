@@ -1,5 +1,25 @@
-local nvim_lsp = require'lspconfig'
+ -- Lua lsp setup
+local system_name = ''
+local USER = vim.fn.expand('$USER')
+local sumneko_root_path = "/Users/" ..USER.. "/code/lua/lua-language-server"
 
+if vim.fn.has("mac") == 1 then
+  system_name = "macOS"
+elseif vim.fn.has("unix") == 1 then
+  system_name = "Linux"
+elseif vim.fn.has('win32') == 1 then
+  system_name = "Windows"
+else
+  print("Unsupported system for sumneko")
+end
+
+local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+local nvim_lsp = require'lspconfig'
 
 require("lsp-colors").setup({
   Error = "#db4b4b",
@@ -13,6 +33,31 @@ nvim_lsp.gopls.setup{}
 nvim_lsp.clangd.setup{}
 nvim_lsp.cmake.setup{}
 nvim_lsp.julials.setup{}
+nvim_lsp.sumneko_lua.setup {
+  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
 
 local opts = {
     tools = { -- rust-tools options
@@ -114,3 +159,19 @@ cmp.setup({
     { name = 'buffer' },
   },
 })
+
+-- Key mappings 
+local map = vim.api.nvim_set_keymap
+local default_options = { noremap = true, silent = true }
+local expr_options = { noremap = true, expr = true, silent = true }
+
+map("n", "<c-]>", "<Cmd>lua vim.lsp.buf.definition()<CR>", default_options)
+map("n", "K",     "<Cmd>lua vim.lsp.buf.hover()<CR>,", default_options)
+map("n", "gD",    "<Cmd>lua vim.lsp.buf.implementation()<CR>", default_options)
+map("n", "<c-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", default_options)
+map("n", "1gD",   "<Cmd>lua vim.lsp.buf.type_definition()<CR>", default_options)
+map("n", "gr",    "<Cmd>lua vim.lsp.buf.references()<CR>", default_options)
+map("n", "g0",    "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", default_options)
+map("n", "gW",    "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", default_options)
+map("n", "gd",    "<Cmd>lua vim.lsp.buf.definition()<CR>", default_options)
+map("n", "ga",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", default_options)
