@@ -20,11 +20,16 @@ end
 
 -- initialize and configure packer
 local packer = require("packer")
+local util = require("packer.util")
+local use = packer.use
+
 packer.init {
     enable = true, -- enable profiling via :PackerCompile profile=true
-    threshold = 0 -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    display = {
+	open_fn = util.float,
+    }
 }
-local use = packer.use
 packer.reset()
 
 -- actual plugins list
@@ -37,6 +42,7 @@ use {
 }
 
 use {"RRethy/nvim-base16", config = get_config("base16")}
+use "arkav/lualine-lsp-progress"
 
 use {
     "nvim-telescope/telescope.nvim",

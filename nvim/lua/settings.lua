@@ -75,3 +75,5 @@ o.wildignore = [[
 */tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**"
 ]]
 
+o.diffopt = {"iwhite", "algorithm:histogram", "indent-heuristic"} -- ignore whitespaces 
+
