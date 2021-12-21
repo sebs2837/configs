@@ -54,13 +54,13 @@ o.grepprg = "rg --hidden --vimgrep --smart-case --"
 o.completeopt = {"menu", "menuone", "noselect", "noinsert"} -- A comma separated list of options for Insert mode completion
 
 --[[
-- tc wrap text and comments using the textwidht
-- r continue comments when pressing
-- q enable formatting of comments with gq
-- n detect list formatting
-- b autowarp in instert mode but not old long lines
+ tc wrap text and comments using the textwidht
+ r continue comments when pressing
+ q enable formatting of comments with gq
+ n detect list formatting
+ b autowarp in instert mode but not old long lines
 --]]
-o.formatoptions = {"tc", "r", "q", "n","b"}
+o.formatoptions:append("tcrqnb")
 
 o.splitbelow = true -- force all horizontal splits to go below current window
 o.splitright = true -- force all vertical splits to go to the right of current window
