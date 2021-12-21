@@ -1,8 +1,7 @@
 local g = vim.g
+local cmd = vim.cmd
 local map = vim.api.nvim_set_keymap
 
-local default_options = { noremap = true, silent = true }
-local expr_options = { noremap = true, expr = true, silent = true }
 
 g.nvim_tree_indent_markers = 1 -- 0 by default, this option shows indent markers when folders are open
 g.nvim_tree_git_hl = 1 -- 0 by default, will enable file highlight for git attributes (can be used without the icons).
@@ -137,4 +136,5 @@ require("nvim-tree").setup {
 }
 
 -- mapings for neovim-tree
-map("n", "<Leader>q", ":NvimTreeToggle<CR>", default_options)
+map("n", "<Leader>q", ":NvimTreeToggle<CR>", DEFAULT_OPTIONS)
+cmd[[highlight NvimTreeGitDirty guifg=#ab4642 ]]

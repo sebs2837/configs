@@ -35,6 +35,7 @@ o.title = true
 
 -- UI Settings
 o.background = "dark"
+o.termguicolors = true
 o.guifont = "Fira Code:h16"
 o.showtabline = 2
 o.ruler = true
