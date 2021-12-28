@@ -35,7 +35,8 @@ packer.reset()
 -- actual plugins list
 -- use {"nvim-neorg/neorg", config = get_config("neorg") } -- failing on treesitter
 use "wbthomason/packer.nvim"
-use {'pwntester/octo.nvim', config=get_config("ocot") }
+use {'pwntester/octo.nvim', config=get_config("octo") } -- octo needs GH cli
+
 use {
     "nvim-lualine/lualine.nvim",
     config = get_config("lualine"),
@@ -43,8 +44,9 @@ use {
     requires = {"kyazdani42/nvim-web-devicons", opt = true}
 }
 
-use {"RRethy/nvim-base16", config = get_config("base16")}
 use "arkav/lualine-lsp-progress"
+
+use {"RRethy/nvim-base16", config = get_config("base16")}
 
 use {
     "nvim-telescope/telescope.nvim",
