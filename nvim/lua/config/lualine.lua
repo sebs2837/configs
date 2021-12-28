@@ -1,9 +1,11 @@
+
+
 require"lualine".setup {
     options = {
 	theme = 'gruvbox',
         icons_enabled = true,
-        section_separators = { left = '', right = ''},
-        component_separators = { left = '', right = ''},
+	section_separators = { left = '', right = '' },
+	component_separators = '',
         disabled_filetypes = {}
     },
     sections = {
@@ -31,3 +33,4 @@ require"lualine".setup {
     tabline = {},
     extensions = {"nvim-tree", "toggleterm", "quickfix", "symbols-outline"}
 }
+
