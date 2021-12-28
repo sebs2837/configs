@@ -6,7 +6,6 @@ telescope.setup({
   defaults = {
     -- Default configuration for telescope goes here:
     -- config_key = value,
-    layout_strategies = 'vertical',
     layout_config = {
           vertical =  { width = 0.5 }
     },
@@ -21,8 +20,8 @@ telescope.setup({
   },
   pickers = {
       find_files = {
-	  find_command = { "fd", "--type", "f", "--strip-cwd-prefix" }
-      }
+      theme = "dropdown",
+    }
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,
@@ -41,5 +40,5 @@ telescope.setup({
 })
 
 -- Key mappings
-map("n","<C-p>", ":Telescope find_files<CR>", DEFAULT_OPTIONS)
+map("n","<C-p>", ":Telescope find_files prompt_prefix=🔍<CR>", DEFAULT_OPTIONS)
 map("n","<C-g>", ":Telescope git_files<CR>", DEFAULT_OPTIONS)

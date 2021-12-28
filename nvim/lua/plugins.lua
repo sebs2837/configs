@@ -33,7 +33,9 @@ packer.init {
 packer.reset()
 
 -- actual plugins list
+-- use {"nvim-neorg/neorg", config = get_config("neorg") } -- failing on treesitter
 use "wbthomason/packer.nvim"
+use {'pwntester/octo.nvim', config=get_config("ocot") }
 use {
     "nvim-lualine/lualine.nvim",
     config = get_config("lualine"),
@@ -56,7 +58,8 @@ use { "neovim/nvim-lspconfig",
         {"folke/lsp-colors.nvim"}, {"simrat39/rust-tools.nvim"},
         {"hrsh7th/cmp-nvim-lsp"}, {"hrsh7th/cmp-buffer"}, {"hrsh7th/cmp-path"},
         {"hrsh7th/cmp-cmdline"}, {"hrsh7th/cmp-vsnip"},{"hrsh7th/nvim-cmp"},
-        {"f3fora/cmp-spell", {"hrsh7th/cmp-calc"}, {"hrsh7th/cmp-emoji"}}
+        {"f3fora/cmp-spell", {"hrsh7th/cmp-calc"}, {"hrsh7th/cmp-emoji"},
+	{ "hrsh7th/vim-vsnip"}}
       },
       config = get_config("lsp")
   }

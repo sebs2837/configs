@@ -54,11 +54,11 @@ o.grepprg = "rg --hidden --vimgrep --smart-case --"
 o.completeopt = {"menu", "menuone", "noselect", "noinsert"} -- A comma separated list of options for Insert mode completion
 
 --[[
- tc wrap text and comments using the textwidht
- r continue comments when pressing
- q enable formatting of comments with gq
- n detect list formatting
- b autowarp in instert mode but not old long lines
+- tc wrap text and comments using the textwidht
+- r continue comments when pressing
+- q enable formatting of comments with gq
+- n detect list formatting
+- b autowarp in instert mode but not old long lines
 --]]
 o.formatoptions:append("tcrqnb")
 
