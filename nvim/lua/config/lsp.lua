@@ -13,7 +13,8 @@ else
   print("Unsupported system for sumneko")
 end
 
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+-- local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+local sumneko_binary = sumneko_root_path.."/bin/lua-language-server"
 
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
@@ -174,4 +175,10 @@ map("n", "gr",    "<Cmd>lua vim.lsp.buf.references()<CR>", default_options)
 map("n", "g0",    "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", default_options)
 map("n", "gW",    "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", default_options)
 map("n", "gd",    "<Cmd>lua vim.lsp.buf.definition()<CR>", default_options)
-map("n", "ga",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", default_options)
+-- map("n", "ga",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", default_options)
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end

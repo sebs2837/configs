@@ -35,6 +35,14 @@ packer.reset()
 -- actual plugins list
 -- use {"nvim-neorg/neorg", config = get_config("neorg") } -- failing on treesitter
 use "wbthomason/packer.nvim"
+use 'famiu/bufdelete.nvim' -- better buffer layout handling when buffers are closed
+use { 'marko-cerovac/material.nvim', config = get_config("material") }
+
+use {
+  'weilbith/nvim-code-action-menu',
+   cmd = {'CodeActionMenu'},
+   config = get_config("codeaction")
+}
 use {'pwntester/octo.nvim', config=get_config("octo") } -- octo needs GH cli
 
 use {
@@ -46,7 +54,7 @@ use {
 
 use "arkav/lualine-lsp-progress"
 
-use {"RRethy/nvim-base16", config = get_config("base16")}
+-- use {"RRethy/nvim-base16", config = get_config("base16")}
 
 use {
     "nvim-telescope/telescope.nvim",
@@ -76,7 +84,13 @@ use {
 }
 
 use { "phaazon/hop.nvim", config = get_config("hop") } -- hop for easy movement
-use { "tpope/vim-fugitive", requires = "mhinz/vim-signify"}
+use { "tpope/vim-fugitive"}
+
+use {
+  'lewis6991/gitsigns.nvim',
+  requires = 'nvim-lua/plenary.nvim',
+  config = get_config('gitsigns')
+}
 
 use "p00f/nvim-ts-rainbow"
 
@@ -106,59 +120,20 @@ use {
     requires = "voldikss/vim-floaterm",
     config = get_config("lf")
 }
---[[
-use {"rafamadriz/friendly-snippets", requires = {{"hrsh7th/vim-vsnip"}}}
 
 use {
-    "mhartington/formatter.nvim",
-    event = "BufWritePre",
-    config = get_config("formatter")
+    "lewis6991/spellsitter.nvim",
+    config = get_config("spellsitter")
 }
 
-use {"ray-x/lsp_signature.nvim", requires = {{"neovim/nvim-lspconfig"}}}
-
-use {"onsails/lspkind-nvim", requires = {{"famiu/bufdelete.nvim"}}}
-
-use {
-    "simrat39/symbols-outline.nvim",
-    cmd = {"SymbolsOutline"},
-    config = get_config("symbols")
-}
-
-
-use {
-    "ptzz/lf.vim",
-    requires = "voldikss/vim-floaterm",
-    config = get_config("lf")
-}
-
-
-
-
-
-
-use {
-    "iamcco/markdown-preview.nvim",
-    run = function()
-        vim.fn["mkdp#util#install"]()
-    end,
-    ft = {"markdown"},
-    config = get_config("markdown-preview")
-}
+use 'rust-lang/rust.vim'
 
 --[[
+
 use {
-    "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    cmd = {"TodoTrouble", "TodoTelescope"},
-    event = "BufReadPost",
-    config = get_config("todo")
-}--]]
-
-
-
-
-
-
-
+    "nvim-neorg/neorg",
+    config = get_config("neorg"),
+    requires = "nvim-lua/plenary.nvim"
+}
+-- ]]
 
