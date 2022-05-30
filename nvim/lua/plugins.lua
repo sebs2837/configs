@@ -74,6 +74,7 @@ use {"kyazdani42/nvim-tree.lua", config = get_config("nvim-tree")}
 
 use {
     "akinsho/nvim-bufferline.lua",
+    branch = 'main',
     requires = "kyazdani42/nvim-web-devicons",
     event = "BufReadPre",
     config = get_config("bufferline")
