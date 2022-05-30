@@ -19,7 +19,7 @@ set -xg NAVI_CONFIG $HOME/.config/navi/config.yaml
 #set -xg RUSTC_WRAPPER = /home/seri/.ccache
 
 # User varibales 
-set -U  fish_user_paths (yarn global bin)
+#set -U  fish_user_paths (yarn global bin)
 set fish_greeting
 
 # Aliases
@@ -268,3 +268,5 @@ starship init fish | source
 #freshfetch
 fish_add_path /usr/local/opt/llvm/bin
 fish_add_path /usr/local/opt/binutils/bin
+fish_add_path /opt/homebrew/bin/brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
