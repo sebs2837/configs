@@ -35,7 +35,11 @@ packer.reset()
 -- actual plugins list
 -- use {"nvim-neorg/neorg", config = get_config("neorg") } -- failing on treesitter
 use "wbthomason/packer.nvim"
-use {'pwntester/octo.nvim', config=get_config("octo") } -- octo needs GH cli
+use { 'marko-cerovac/material.nvim', config = get_config("material") }
+use { 'tami5/lspsaga.nvim', branch = 'nvim6.0' or 'nvim51', config = get_config('lsp-saga') }
+-- use {'pwntester/octo.nvim', config=get_config("octo") } -- octo needs GH cli
+use {'aklt/plantuml-syntax'} -- Plant uml syntax
+
 
 use {
     "nvim-lualine/lualine.nvim",
@@ -47,11 +51,10 @@ use {
 use "arkav/lualine-lsp-progress"
 
 -- use {"RRethy/nvim-base16", config = get_config("base16")}
-use { 'marko-cerovac/material.nvim', config = get_config("material") }
 
 use {
     "nvim-telescope/telescope.nvim",
-    requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}},
+    requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}, {"nvim-telescope/telescope-ui-select.nvim"}},
     config = get_config("telescope")
 }
 
@@ -62,7 +65,7 @@ use { "neovim/nvim-lspconfig",
         {"hrsh7th/cmp-nvim-lsp"}, {"hrsh7th/cmp-buffer"}, {"hrsh7th/cmp-path"},
         {"hrsh7th/cmp-cmdline"}, {"hrsh7th/cmp-vsnip"},{"hrsh7th/nvim-cmp"},
         {"f3fora/cmp-spell", {"hrsh7th/cmp-calc"}, {"hrsh7th/cmp-emoji"},
-	{ "hrsh7th/vim-vsnip"}}
+	{ "hrsh7th/vim-vsnip"} }
       },
       config = get_config("lsp")
   }
@@ -77,7 +80,13 @@ use {
 }
 
 use { "phaazon/hop.nvim", config = get_config("hop") } -- hop for easy movement
-use { "tpope/vim-fugitive", requires = "mhinz/vim-signify"}
+use { "tpope/vim-fugitive"}
+
+use {
+  'lewis6991/gitsigns.nvim',
+  requires = 'nvim-lua/plenary.nvim',
+  config = get_config('gitsigns')
+}
 
 use "p00f/nvim-ts-rainbow"
 
@@ -108,31 +117,19 @@ use {
     config = get_config("lf")
 }
 
-use "rust-lang/rust.vim" -- needed since fmt and other rust features rely on the existens
+use {
+    "lewis6991/spellsitter.nvim",
+    config = get_config("spellsitter")
+}
+
+use 'rust-lang/rust.vim'
+
 --[[
 
 use {
-    "iamcco/markdown-preview.nvim",
-    run = function()
-        vim.fn["mkdp#util#install"]()
-    end,
-    ft = {"markdown"},
-    config = get_config("markdown-preview")
+    "nvim-neorg/neorg",
+    config = get_config("neorg"),
+    requires = "nvim-lua/plenary.nvim"
 }
-
-use {
-    "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    cmd = {"TodoTrouble", "TodoTelescope"},
-    event = "BufReadPost",
-    config = get_config("todo")
-
-}--]]
-
-
-
-
-
-
-
+-- ]]
 

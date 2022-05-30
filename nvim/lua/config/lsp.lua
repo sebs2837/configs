@@ -1,7 +1,7 @@
  -- Lua lsp setup
 local system_name = ''
 local USER = vim.fn.expand('$USER')
-local sumneko_root_path = "/Users/" ..USER.. "/code/lua/lua-language-server"
+local sumneko_root_path = "/Users/" ..USER.. "/tools/lua-language-server"
 
 if vim.fn.has("mac") == 1 then
   system_name = "macOS"
@@ -13,7 +13,8 @@ else
   print("Unsupported system for sumneko")
 end
 
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+-- local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+local sumneko_binary = sumneko_root_path.."/bin/lua-language-server"
 
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
@@ -33,6 +34,7 @@ nvim_lsp.gopls.setup{}
 nvim_lsp.clangd.setup{}
 nvim_lsp.cmake.setup{}
 nvim_lsp.julials.setup{}
+nvim_lsp.pylsp.setup{}
 nvim_lsp.sumneko_lua.setup {
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
   settings = {
@@ -66,7 +68,7 @@ local opts = {
 	inlay_hints = {
 
             -- Only show inlay hints for the current line
-            only_current_line = true,
+            only_current_line = false,
 
             -- Event which triggers a refersh of the inlay hints.
             -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
@@ -109,7 +111,7 @@ local opts = {
         -- on_attach = on_attach,
         settings = {
             -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-aalyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            -- https://github.com/rust-aalyzer/rust-analyzero blob/master/docs/user/generated_config.adoc
             ["rust-analyzer"] = {
                 -- enable clippy on save
                 checkOnSave = {
@@ -174,4 +176,12 @@ map("n", "gr",    "<Cmd>lua vim.lsp.buf.references()<CR>", default_options)
 map("n", "g0",    "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", default_options)
 map("n", "gW",    "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", default_options)
 map("n", "gd",    "<Cmd>lua vim.lsp.buf.definition()<CR>", default_options)
-map("n", "ga",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", default_options)
+-- map("n", "ga",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", default_options)
+--[[
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) 
+end
+ --]]
+ 

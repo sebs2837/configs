@@ -31,6 +31,7 @@ telescope.setup({
     -- builtin picker
   },
   extensions = {
+	["ui-select"]= {}
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,

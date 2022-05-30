@@ -1,4 +1,4 @@
-local map = vim.api.nvim_set_keymap
+map = vim.api.nvim_set_keymap
 DEFAULT_OPTIONS = { noremap = true, silent = true }
 EXPR_OPTIONS = { noremap = true, expr = true, silent = true }
 
@@ -41,3 +41,6 @@ map("n", "H", "^", DEFAULT_OPTIONS) -- H will go to begining of a line
 map("n", "L", "$", DEFAULT_OPTIONS) -- H will go to begining of a line
 
 map("n", "gf", ":edit <cfile><CR>", DEFAULT_OPTIONS) -- create a new file if it does not exist
+
+map("n", "<Leader>-", ":split<CR>", DEFAULT_OPTIONS) --simpler split
+map("n", "<Leader>|", ":vsplit<CR>", DEFAULT_OPTIONS)

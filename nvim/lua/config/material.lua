@@ -1,4 +1,3 @@
--- Set the theme style
 vim.g.material_style = 'darker'
 
 require('material').setup({
@@ -26,4 +25,3 @@ vim.api.nvim_set_keymap('n', '<leader>ms', ':lua require("material.functions").t
 
 -- Enable the colorscheme
 vim.cmd 'colorscheme material'
-

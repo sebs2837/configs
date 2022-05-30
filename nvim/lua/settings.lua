@@ -5,6 +5,8 @@ HOME = os.getenv("HOME") -- get home dir since ~ seems not to work
 local o = vim.opt
 
 -- General settings
+-- disable inline diagnostics 
+vim.diagnostic.config({virtual_text = false})
 
 o.compatible = false
 o.syntax = "on"
@@ -17,6 +19,8 @@ o.hidden = true
 o.cmdheight = 2
 o.updatetime = 500
 o.encoding = "utf8"
+o.spelllang = {"en_us"}
+o.spell = false
 
 o.shortmess:append("c")
 
@@ -24,10 +28,11 @@ o.undodir = HOME.."/.vimdid"
 o.undofile = true
 o.signcolumn = "yes" -- signcolumn for git and other extensions
 
-o.cursorline = true
-o.shiftwidth = 4
-o.softtabstop = 4
-o.autoindent = true
+o.cursorline = false
+
+o.expandtab = false
+o.shiftwidth = 2
+o.softtabstop = 2
 
 o.wrap = true -- wrap lines
 o.breakindent = true
@@ -82,5 +87,7 @@ o.wildignore = [[
 */tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**"
 ]]
 
-o.diffopt = {"iwhite", "algorithm:histogram", "indent-heuristic"} -- ignore whitespaces 
+o.diffopt = {"iwhite", "algorithm:histogram", "indent-heuristic"} -- ignore whitespaces
+
+
 
