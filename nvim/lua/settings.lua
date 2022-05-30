@@ -17,8 +17,6 @@ o.hidden = true
 o.cmdheight = 2
 o.updatetime = 500
 o.encoding = "utf8"
-o.spelllang = {"en_us"}
-o.spell = true
 
 o.shortmess:append("c")
 
@@ -26,10 +24,10 @@ o.undodir = HOME.."/.vimdid"
 o.undofile = true
 o.signcolumn = "yes" -- signcolumn for git and other extensions
 
-o.cursorline = false
+o.cursorline = true
 o.shiftwidth = 4
 o.softtabstop = 4
---o.autoindent = true
+o.autoindent = true
 
 o.wrap = true -- wrap lines
 o.breakindent = true
