@@ -53,10 +53,10 @@ use "arkav/lualine-lsp-progress"
 use {
 	"nvim-telescope/telescope.nvim",
 	requires = {
-	  { "nvim-lua/popup.nvim" },
-	  { "nvim-lua/plenary.nvim" },
-          {"nvim-telescope/telescope-file-browser.nvim"},
-	  { "nvim-telescope/telescope-ui-select.nvim" }
+	 { "nvim-lua/popup.nvim" },
+	 { "nvim-lua/plenary.nvim" },
+	 {"nvim-telescope/telescope-file-browser.nvim"},
+	 { "nvim-telescope/telescope-ui-select.nvim" }
 	},
 	config = get_config("telescope")
 }
@@ -65,18 +65,18 @@ use { "folke/which-key.nvim", config = get_config("whichkey") }
 use { "neovim/nvim-lspconfig",
 	requires = {
 	 { "folke/lsp-colors.nvim" },
-         { "simrat39/rust-tools.nvim" },
+	 {"simrat39/rust-tools.nvim" },
 	 { "hrsh7th/cmp-nvim-lsp" },
-         { "hrsh7th/cmp-buffer" },
-         { "hrsh7th/cmp-path" },
+	 { "hrsh7th/cmp-buffer" },
+	 { "hrsh7th/cmp-path" },
 	 { "hrsh7th/cmp-cmdline" },
-         { "hrsh7th/cmp-vsnip" },
-         { "hrsh7th/nvim-cmp" },
+	 { "hrsh7th/cmp-vsnip" },
+	 { "hrsh7th/nvim-cmp" },
 	 { "f3fora/cmp-spell" },
-         { "hrsh7th/cmp-calc" },
-         { "hrsh7th/cmp-emoji" },
+	 { "hrsh7th/cmp-calc" },
+	 { "hrsh7th/cmp-emoji" },
 	 { "hrsh7th/vim-vsnip" }
-        },
+	},
 	config = get_config("lsp")
 }
 
