@@ -22,6 +22,7 @@ o.encoding = "utf8"
 o.spelllang = {"en_us"}
 o.spell = false
 
+
 o.shortmess:append("c")
 
 o.undodir = HOME.."/.vimdid"

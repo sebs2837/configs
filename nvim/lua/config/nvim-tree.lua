@@ -35,7 +35,7 @@ require("nvim-tree").setup {
     filters = {
       dotfiles = true, -- dont show dot files
       custom = {},
-      exclude = {},
+      exclude = {".config"},
     },
     renderer = {
         add_trailing = true, -- 0 by default, append a trailing slash to folder names
@@ -104,7 +104,7 @@ require("nvim-tree").setup {
         -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
         side = "left",
         -- if true the tree will resize itself after opening a file
-        auto_resize = false,
+        adaptive_size = false,
 	--[[
         mappings = {
             -- custom only false will merge the list with the default mappings

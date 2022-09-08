@@ -1,6 +1,17 @@
 local telescope = require'telescope'
 local map = vim.api.nvim_set_keymap
 
+local M = {}
+
+
+M.search_dotfiles = function()
+	require("telescope.builtin").find_files({
+		prompt_title = "< VimRC >",
+		cwd = vim.env.DOTFILES,
+		hidden = true,
+	})
+end
+
 
 telescope.setup({
   defaults = {
@@ -31,7 +42,7 @@ telescope.setup({
     -- builtin picker
   },
   extensions = {
-	["ui-select"]= {}
+	["ui-select"]= {},
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,
@@ -39,7 +50,14 @@ telescope.setup({
     -- please take a look at the readme of the extension you want to configure
   }
 })
+telescope.load_extension "file_browser"
 
 -- Key mappings
 map("n","<C-p>", ":Telescope find_files prompt_prefix=🔍<CR>", DEFAULT_OPTIONS)
 map("n","<C-g>", ":Telescope git_files<CR>", DEFAULT_OPTIONS)
+map("n","<C-f>", ":Telescope help_tags<CR>", DEFAULT_OPTIONS)
+map("n","<C-l>", "<cmd>Telescope live_grep<CR>",DEFAULT_OPTIONS)
+map("n","<leader>fb", ":Telescope file_browser<CR>", DEFAULT_OPTIONS)
+
+
+return M

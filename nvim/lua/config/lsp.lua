@@ -1,125 +1,172 @@
- -- Lua lsp setup
-local system_name = ''
-local USER = vim.fn.expand('$USER')
-local sumneko_root_path = "/Users/" ..USER.. "/tools/lua-language-server"
 
-if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
-elseif vim.fn.has('win32') == 1 then
-  system_name = "Windows"
-else
-  print("Unsupported system for sumneko")
+local on_attach = function(client, bufnr)
+	-- Enable completion triggered by <c-x><c-o>
+	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+
+	-- Mappings.
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	local bufopts = { noremap = true, silent = true, buffer = true }
+	map('n', 'gD', vim.lsp.buf.declaration, bufopts)
+	map('n', 'gd', vim.lsp.buf.definition, bufopts)
+	map('n', 'K', vim.lsp.buf.hover, bufopts)
+	map('n', 'gi', vim.lsp.buf.implementation, bufopts)
+	map('n', '<leader>vd', vim.diagnostic.open_float, DEFAULT_OPTIONS)
+	map('n', ']d', vim.diagnostic.goto_next, bufopts)
+	map('n', '[d', vim.diagnostic.goto_prev, bufopts)
+	map('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
+	map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+	map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+	map('n', '<leader>wl', function()
+		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	end, bufopts)
+	map('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+	map('n', '<leader>vrn', vim.lsp.buf.rename, DEFAULT_OPTIONS)
+	map('n', '<leader>vca', vim.lsp.buf.code_action, bufopts)
+	map('n', '<leader>vrr', vim.lsp.buf.references, bufopts)
+	map('n', '<leader>vf', vim.lsp.buf.formatting, bufopts)
+	if client.name == 'rust' then
+		map("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions, bufopts)
+	end
 end
+-- Lua lsp setup
+local USER = vim.fn.expand('$USER')
+
+if not vim.fn.executable('lua-language-server') == 1 then
+local sumneko_root_path = "/Users/" .. USER .. "/tools/lua-language-server"
 
 -- local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-local sumneko_binary = sumneko_root_path.."/bin/lua-language-server"
+local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
+else
+local sumneko_binary = 'lua-language-server'
+end
 
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-local nvim_lsp = require'lspconfig'
+
+local nvim_lsp = require 'lspconfig'
 
 require("lsp-colors").setup({
-  Error = "#db4b4b",
-  Warning = "#D8DD4F",
-  Information = "#0db9d7",
-  Hint = "#6CA4BE"
+	Error = "#db4b4b",
+	Warning = "#D8DD4F",
+	Information = "#0db9d7",
+	Hint = "#6CA4BE"
 })
 
-nvim_lsp.vimls.setup{}
-nvim_lsp.gopls.setup{}
-nvim_lsp.clangd.setup{}
-nvim_lsp.cmake.setup{}
-nvim_lsp.julials.setup{}
-nvim_lsp.pylsp.setup{}
+nvim_lsp.vimls.setup {
+	on_attach = on_attach,
+}
+
+nvim_lsp.gopls.setup {
+	on_attach = on_attach,
+}
+
+nvim_lsp.clangd.setup {
+	on_attach = on_attach,
+}
+
+nvim_lsp.cmake.setup {
+	on_attach = on_attach,
+}
+
+nvim_lsp.julials.setup {
+	on_attach = on_attach,
+}
+
+nvim_lsp.pylsp.setup {
+	on_attach = on_attach,
+}
+
 nvim_lsp.sumneko_lua.setup {
-  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
+	on_attach = on_attach,
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = 'LuaJIT',
+				-- Setup your lua path
+				path = runtime_path,
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { 'vim' },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = vim.api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
 }
 
 local opts = {
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        hover_with_actions = true,
-	inlay_hints = {
+	tools = { -- rust-tools options
+		autoSetHints = true,
+		inlay_hints = {
 
-            -- Only show inlay hints for the current line
-            only_current_line = false,
+			-- Only show inlay hints for the current line
+			only_current_line = false,
 
-            -- Event which triggers a refersh of the inlay hints.
-            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-            -- not that this may cause  higher CPU usage.
-            -- This option is only respected when only_current_line and
-            -- autoSetHints both are true.
-            only_current_line_autocmd = "CursorHold",
+			-- Event which triggers a refersh of the inlay hints.
+			-- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+			-- not that this may cause  higher CPU usage.
+			-- This option is only respected when only_current_line and
+			-- autoSetHints both are true.
+			only_current_line_autocmd = "CursorHold",
 
-            -- wheter to show parameter hints with the inlay hints or not
-            show_parameter_hints = true,
+			-- wheter to show parameter hints with the inlay hints or not
+			show_parameter_hints = true,
 
-            -- prefix for parameter hints
-            parameter_hints_prefix = "<- ",
+			-- prefix for parameter hints
+			parameter_hints_prefix = "<- ",
 
-            -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "=> ",
+			-- prefix for all the other hints (type, chaining)
+			other_hints_prefix = "=> ",
 
-            -- whether to align to the length of the longest line in the file
-            max_len_align = false,
+			-- whether to align to the length of the longest line in the file
+			max_len_align = false,
 
-            -- padding from the left if max_len_align is true
-             max_len_align_padding = 1,
+			-- padding from the left if max_len_align is true
+			max_len_align_padding = 1,
 
-            -- whether to align to the extreme right or not
-            right_align = false,
+			-- whether to align to the extreme right or not
+			right_align = false,
 
-            -- padding from the right if right_align is true
-            right_align_padding = 7,
+			-- padding from the right if right_align is true
+			right_align_padding = 7,
 
-            -- The color of the hints
-            highlight = "SpecialComment",
-        },
-    },
+			-- The color of the hints
+			highlight = "SpecialComment",
+		},
+	},
 
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-    server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-aalyzer/rust-analyzero blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-                -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                },
-            }
-        }
-    },
+	-- all the opts to send to nvim-lspconfig
+	-- these override the defaults set by rust-tools.nvim
+	-- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+	server = {
+		-- on_attach is a callback called when the language server attachs to the buffer
+		on_attach = on_attach,
+		-- Hover actions
+		--	  vim.keymap.set("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions, { buffer = bufnr })
+		-- Code action groups
+		--	  vim.keymap.set("n", "<Leader>a", require('rust-tools').code_action_group.code_action_group, { buffer = bufnr })
+		settings  = {
+			-- to enable rust-analyzer settings visit:
+			-- https://github.com/rust-aalyzer/rust-analyzero blob/master/docs/user/generated_config.adoc
+			["rust-analyzer"] = {
+				-- enable clippy on save
+				checkOnSave = {
+					command = "clippy"
+				},
+			}
+		}
+	},
 }
 
 
@@ -128,60 +175,36 @@ require('rust-tools').setup(opts)
 -- Setup Completion
 -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
 
-local cmp = require'cmp'
+local cmp = require 'cmp'
 cmp.setup({
-  -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+	-- Enable LSP snippets
+	snippet = {
+		expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body)
 
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
-  },
+		end,
+	},
+	mapping = {
+		['<C-p>'] = cmp.mapping.select_prev_item(),
+		['<C-n>'] = cmp.mapping.select_next_item(),
+		-- Add tab support
+		['<S-Tab>'] = cmp.mapping.select_prev_item(),
+		['<Tab>'] = cmp.mapping.select_next_item(),
+		['<C-d>'] = cmp.mapping.scroll_docs(-4),
+		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		['<C-leader>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.close(),
+		['<CR>'] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = true,
+		})
+	},
 
-  -- Installed sources
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'path' },
-    { name = 'buffer' },
-  },
+	-- Installed sources
+	sources = {
+		{ name = 'nvim_lsp' },
+		{ name = 'vsnip' },
+		{ name = 'path' },
+		{ name = 'buffer' },
+	},
 })
-
--- Key mappings 
-local map = vim.api.nvim_set_keymap
-local default_options = { noremap = true, silent = true }
-local expr_options = { noremap = true, expr = true, silent = true }
-
-map("n", "<c-]>", "<Cmd>lua vim.lsp.buf.definition()<CR>", default_options)
-map("n", "K",     "<Cmd>lua vim.lsp.buf.hover()<CR>,", default_options)
-map("n", "gD",    "<Cmd>lua vim.lsp.buf.implementation()<CR>", default_options)
-map("n", "<c-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", default_options)
-map("n", "1gD",   "<Cmd>lua vim.lsp.buf.type_definition()<CR>", default_options)
-map("n", "gr",    "<Cmd>lua vim.lsp.buf.references()<CR>", default_options)
-map("n", "g0",    "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", default_options)
-map("n", "gW",    "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", default_options)
-map("n", "gd",    "<Cmd>lua vim.lsp.buf.definition()<CR>", default_options)
--- map("n", "ga",    "<Cmd>lua vim.lsp.buf.code_action()<CR>", default_options)
---[[
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) 
-end
- --]]
- 
