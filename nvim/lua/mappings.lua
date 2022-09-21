@@ -1,5 +1,6 @@
 DEFAULT_OPTIONS = { noremap = true, silent = true }
 EXPR_OPTIONS = { noremap = true, expr = true, silent = true }
+SILENT_OPTION = { silent = true }
 
 ---@version 5.1
 ---
@@ -61,4 +62,3 @@ map("n", "gf", ":edit <cfile><CR>", DEFAULT_OPTIONS) -- create a new file if it 
 map("n", "<Leader>-", ":split<CR>", DEFAULT_OPTIONS) --simpler split
 map("n", "<Leader>|", ":vsplit<CR>", DEFAULT_OPTIONS)
 
-map("n", "<Leader>f", "<cmd>lua vim.lsp.buf.formating()<cr>", DEFAULT_OPTIONS) -- format using lsp on <LEADER>f

@@ -42,6 +42,7 @@ o.title = true
 -- UI Settings
 o.background = "dark"
 o.termguicolors = true
+
 o.guifont = "Fira Code:h16"
 o.showtabline = 2
 o.ruler = true
@@ -89,6 +90,5 @@ o.wildignore = [[
 ]]
 
 o.diffopt = {"iwhite", "algorithm:histogram", "indent-heuristic"} -- ignore whitespaces
-
 
 
