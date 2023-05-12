@@ -1,0 +1,30 @@
+session_name: dev_work
+windows:
+- layout: b93e,320x91,0,0,1
+  options: {}
+  panes:
+    - blank
+  start_directory: /Users/VCY1YF8
+  window_name: home
+- layout: 87df,800x600,0,0,2
+  options: {}
+  panes:
+    - blank
+  start_directory: /Users/VCY1YF8
+  window_name: boundry
+- layout: 87e0,800x600,0,0,3
+  options: {}
+  panes:
+    - blank
+  start_directory: /Users/VCY1YF8
+  window_name: ssh
+- focus: 'true'
+  layout: 0a44,320x91,0,0{75x91,0,0[75x45,0,0,4,75x45,0,46,6],244x91,76,0,5}
+  options: {}
+  panes:
+  - blank
+  - blank
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /Users/VCY1YF8
+  window_name: local_dev

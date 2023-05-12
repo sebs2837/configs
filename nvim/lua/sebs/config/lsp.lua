@@ -29,24 +29,7 @@ local on_attach = function(client, bufnr)
 		map("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions, bufopts)
 	end
 end
--- Lua lsp setup
-local USER = vim.fn.expand('$USER')
 
-if not vim.fn.executable('lua-language-server') == 1 then
-local sumneko_root_path = "/Users/" .. USER .. "/tools/lua-language-server"
-
--- local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-else
-local sumneko_binary = 'lua-language-server'
-end
-
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
-
---local nvim_lsp = require('lsp-zero')
 local lsp = require('lsp-zero')
 
 require("lsp-colors").setup({
@@ -59,7 +42,7 @@ require("lsp-colors").setup({
 lsp.preset("recommended")
 lsp.ensure_installed({
     'rust_analyzer',
-    'sumneko_lua',
+    'lua_ls',
 })
 
 lsp.nvim_workspace()
@@ -88,60 +71,38 @@ nvim_lsp.julials.setup {
 ]]--
 
 lsp.configure('pylsp', {
-	on_attach = on_attach,
-	settings = {
-	  pylsp = {
-	    plugins = {
-	      pylint = {
-		  enabled = true,
-	          args = {"--disable=C0116,W1203,C0114"},
-		  executable = "pylint"
-	      },
-	      pyflakes = { enabled = false },
-	      pycodestyles = { enabled = false },
-	      jedi_completion = {enabled = true},
-	      jedi_hover = {enabled = true},
-	      jedi_references = {enabled = true},
-	      jedi_signature_help = {enabled = true},
-	      jedi_symbols = {enabled = true, all_scopes = true},
-	      pyls_isort = { enabled = true, profile = "black" },
-	      pylsp_mypy = { enabled = true },
-	      pylsp_black = {
-		enable = true,
-		line_length = 120
-	      },
-      },
+    on_attach = on_attach,
+    settings = {
+        pylsp = {
+            plugins = {
+                pylint = {
+                    enabled = true,
+                    args = {"--disable=C0116,W1203,C0114"},
+                    executable = "pylint"
+                },
+                pyflakes = { enabled = false },
+                pycodestyles = { enabled = false },
+                jedi_completion = {enabled = true},
+                jedi_hover = {enabled = true},
+                jedi_references = {enabled = true},
+                jedi_signature_help = {enabled = true},
+                jedi_symbols = {enabled = true, all_scopes = true},
+                pyls_isort = { enabled = true, profile = "black" },
+                pylsp_mypy = { enabled = true },
+                pylsp_black = {
+                    enable = true,
+                    line_length = 120
+                },
+            },
+        },
     },
-  },
-  flags = {
-    debounce_text_changes = 200,
-  },
+    flags = {
+        debounce_text_changes = 200,
+    },
 })
 
-lsp.configure('sumneko_lua', {
+lsp.configure('lua_ls', {
 	on_attach = on_attach,
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT',
-				-- Setup your lua path
-				path = runtime_path,
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { 'vim' },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
 })
 
 local opts = {
@@ -215,7 +176,7 @@ require('rust-tools').setup(opts)
 
 -- Setup Completion
 -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
-
+local lspkind = require('lspkind')
 local cmp = require 'cmp'
 cmp.setup({
 	-- Enable LSP snippets
@@ -240,6 +201,21 @@ cmp.setup({
 			select = true,
 		})
 	},
+
+    -- format actions to get icons
+    formatting = {
+        format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function (entry, vim_item)
+                return vim_item
+            end
+        })
+    },
 
 	-- Installed sources
 	sources = {

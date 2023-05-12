@@ -17,11 +17,5 @@ local function nvim_create_augroups(definitions)
 end
 
 local autocmds = {
-	rust = {
-		{"BufWrite",     "*.rs", vim.lsp.buf.format() };
-	},
-        markdown = {
-		{"BufWrite",     "*.md", "setlocal spell"};
-       }
 }
-nvim_create_augroups(autocmds)
+--nvim_create_augroups(autocmds)

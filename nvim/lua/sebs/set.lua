@@ -45,7 +45,7 @@ opt.title = true
 opt.background = "dark"
 opt.termguicolors = true
 
-opt.guifont = "Fira Code:h16"
+opt.guifont = "FiraCode Nerd Font Ret:h16"
 opt.showtabline = 2
 opt.ruler = true
 opt.laststatus = 2

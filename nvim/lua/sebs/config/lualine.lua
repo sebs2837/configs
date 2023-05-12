@@ -60,8 +60,8 @@ local config = {
 		lualine_b = {},
 		lualine_y = {},
 		lualine_z = {},
-		lualine_c = {},
-		lualine_x = {},
+        lualine_c = {'filename'},
+        lualine_x = {'location'},
 	},
 }
 
@@ -112,7 +112,12 @@ ins_left {
 ins_left {
 	-- mode component
 	function()
-		return ''
+        local os = jit.os
+       if os == "OSX" then
+            return ''
+       else
+            return ''
+       end
 	end,
 	color = mode_color,
 	padding = { right = 1 },
@@ -187,7 +192,7 @@ ins_left {
 		use             = true,
 	},
 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-	spinner_symbols = { ' ', ' ', ' ', ' ', ' ', ' ' }
+	spinner_symbols = { '󰪞 ', '󰪟 ', '󰪠 ', '󰪡 ', '󰪢 ', '󰪣 ' }
 }
 
 -- Add components to right sections
@@ -214,7 +219,7 @@ ins_right {
 ins_right {
 	'diff',
 	-- Is it me or the symbol for modified us really weird
-	symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+	symbols = { added = ' ', modified = ' ', removed = ' ' },
 	diff_color = {
 		added = { fg = colors.green },
 		modified = { fg = colors.orange },
