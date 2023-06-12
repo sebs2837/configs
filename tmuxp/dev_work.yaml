@@ -24,7 +24,7 @@ windows:
   panes:
   - blank
   - blank
-  - focus: 'true'
-    shell_command: nvim
+  - shell_command: 
+        - nvim
   start_directory: /Users/VCY1YF8
   window_name: local_dev

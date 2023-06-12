@@ -112,12 +112,7 @@ ins_left {
 ins_left {
 	-- mode component
 	function()
-        local os = jit.os
-       if os == "OSX" then
-            return ''
-       else
-            return ''
-       end
+		return ''
 	end,
 	color = mode_color,
 	padding = { right = 1 },
@@ -192,7 +187,7 @@ ins_left {
 		use             = true,
 	},
 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-	spinner_symbols = { '󰪞 ', '󰪟 ', '󰪠 ', '󰪡 ', '󰪢 ', '󰪣 ' }
+	spinner_symbols = { '󰪞 ', '󰪟 ', '󰪠 ', '󰪡 ', '󰪢 ', '󰪣 ', '󰪤 ', '󰪥 '}
 }
 
 -- Add components to right sections
