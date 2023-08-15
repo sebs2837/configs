@@ -27,6 +27,15 @@ function _G.ReloadConfig()
 	dofile(vim.env.MYVIMRC)
 end
 
+function toggle_special_chars()
+    local toggle = vim.opt.list:get()
+    if toggle then
+        vim.opt.list = false
+    else
+        vim.opt.list = true
+    end
+end
+
 --map("n", "<Space>", "<NOP>", DEFAULT_OPTIONS)
 vim.g.mapleader = " "
 
@@ -60,3 +69,6 @@ map("n", "gf", ":edit <cfile><CR>", DEFAULT_OPTIONS) -- create a new file if it 
 map("n", "<Leader>-", ":split<CR>", DEFAULT_OPTIONS) --simpler split
 map("n", "<Leader>|", ":vsplit<CR>", DEFAULT_OPTIONS)
 
+map("n", "q?", "<NOP>",DEFAULT_OPTIONS) --no command-line ex ? search
+
+map("n", "<leader>c?", toggle_special_chars ,DEFAULT_OPTIONS)

@@ -3,28 +3,33 @@ windows:
 - layout: b93e,320x91,0,0,1
   options: {}
   panes:
-    - blank
+  - blank
   start_directory: /Users/VCY1YF8
   window_name: home
 - layout: 87df,800x600,0,0,2
   options: {}
   panes:
-    - blank
+  - blank
   start_directory: /Users/VCY1YF8
   window_name: boundry
 - layout: 87e0,800x600,0,0,3
   options: {}
   panes:
-    - blank
+  - blank
   start_directory: /Users/VCY1YF8
   window_name: ssh
 - focus: 'true'
-  layout: 0a44,320x91,0,0{75x91,0,0[75x45,0,0,4,75x45,0,46,6],244x91,76,0,5}
+  layout: 1882,353x87,0,0{139x87,0,0[139x43,0,0,4,139x43,0,44,5],213x87,140,0,6}
   options: {}
   panes:
   - blank
   - blank
-  - shell_command: 
-        - nvim
-  start_directory: /Users/VCY1YF8
+  - blank
+  start_directory: /Users/VCY1YF8/code/
   window_name: local_dev
+- layout: d184,353x87,0,0,7
+  options: {}
+  panes:
+  - focus: 'true'
+  start_directory: /Users/VCY1YF8/code/work/internal/compose/downloads/swp-macro/
+  window_name: qemu

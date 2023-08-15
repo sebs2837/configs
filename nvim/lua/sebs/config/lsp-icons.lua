@@ -8,7 +8,6 @@ require('lspkind').init({
     -- default: symbol
     -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
     mode = 'symbol_text',
-    
 
     -- default symbol map
     -- can be either 'default' (requires nerd-fonts font) or
@@ -21,30 +20,30 @@ require('lspkind').init({
     --
     -- default: {}
     symbol_map = {
-      Text = "",
-      Method = "",
-      Function = "󰊕",
-      Constructor = "",
-      Field = "",
-      Variable = "",
-      Class = "",
-      Interface = "",
-      Module = "",
-      Property = "",
-      Unit = "",
-      Value = "",
-      Enum = "",
-      Keyword = "",
-      Snippet = "",
+      Text = " ",
+      Method = " ",
+      Function = "󰊕 ",
+      Constructor = " ",
+      Field = " ",
+      Variable = " ",
+      Class = " ",
+      Interface = " ",
+      Module = " ",
+      Property = " ",
+      Unit = " ",
+      Value = " ",
+      Enum = " ",
+      Keyword = " ",
+      Snippet = " ",
       Color = "",
-      File = "",
-      Reference = "",
-      Folder = "",
-      EnumMember = "",
-      Constant = "",
-      Struct = "",
-      Event = "",
-      Operator = "",
-      TypeParameter = "",
+      File = " ",
+      Reference = " ",
+      Folder = " ",
+      EnumMember = " ",
+      Constant = " ",
+      Struct = " ",
+      Event = " ",
+      Operator = "  ",
+      TypeParameter = "  ",
     },
 })

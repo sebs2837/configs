@@ -41,7 +41,7 @@ return require("packer").startup(function(use)
             { "nvim-telescope/telescope-file-browser.nvim" },
             { "nvim-telescope/telescope-ui-select.nvim" }
         },
-        config = get_config("telescope")
+        config = get_config("telescope-cfg")
     }
 
     -- LSP 

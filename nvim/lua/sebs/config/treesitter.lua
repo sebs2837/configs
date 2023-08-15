@@ -15,7 +15,14 @@ require"nvim-treesitter.configs".setup {
             scope_incremental = "<CR>",
             node_incremental = "<TAB>",
             node_decremental = "<S-TAB>"
-        }
+        },
+        is_supported = function ()
+            local mode = vim.api.nvim_get_mode().mode
+            if mode == "c" then
+                return false
+            end
+            return true
+        end
     },
     indent = {enable = true},
     autopairs = {{enable = true}},
