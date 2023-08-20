@@ -1,0 +1,7 @@
+#!/bin/fish
+set SQUID_PROXY 
+set VPN_PROXY 
+set CICD_PROXY 
+set PROXY_SETTINGS localhost 
+set CORP_PROXY_SETTINGS $PROXY_SETTINGS 
+set CICD_CLIENT 

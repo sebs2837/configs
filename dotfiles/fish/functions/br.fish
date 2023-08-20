@@ -1,0 +1,1 @@
+/Users/VCY1YF8/Library/Application Support/org.dystroy.broot/launcher/fish/br.fish
