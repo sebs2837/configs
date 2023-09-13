@@ -3,6 +3,7 @@ local config = function()
     local builtin = require('telescope.builtin')
     local utils = require('telescope.utils')
 
+    local map = vim.keymap.set
 
     local map = vim.keymap.set
 
