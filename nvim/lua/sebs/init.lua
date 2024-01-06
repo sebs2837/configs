@@ -1,7 +1,7 @@
 require("sebs.set")
 require("sebs.remap")
 require("sebs.cmds")
-require("sebs.packer")
+require("sebs.lazy")
 
 function R(name)
     require('plenary.reload').reload_module(name)

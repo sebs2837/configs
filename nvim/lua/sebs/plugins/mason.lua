@@ -1,0 +1,20 @@
+
+local config = function ()
+    local mason = require('mason')
+    mason.setup({
+    ui = {
+        icons = {
+            package_installed = "ï˜ ",
+            package_pending = "ó°ª  ø¼Š¨€",
+            package_uninstalled = "îª‡ "
+        }
+    }
+}
+    )
+end
+return {
+    {
+        "williamboman/mason.nvim",
+        config = config,
+    }
+}

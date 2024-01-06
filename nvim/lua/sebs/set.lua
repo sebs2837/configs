@@ -3,6 +3,7 @@
 HOME = os.getenv("HOME") -- get home dir since ~ seems not to work
 
 local opt = vim.opt
+local global = vim.g
 
 -- General settings
 -- disable inline diagnostics 
@@ -14,7 +15,7 @@ opt.number = true
 opt.hidden = true
 opt.relativenumber = true
 opt.mouse = "a" -- mouse in all previouse modes
-opt.filetype = "off"
+opt.filetype = "on"
 opt.hidden = true
 opt.cmdheight = 2
 opt.updatetime = 500
@@ -44,6 +45,7 @@ opt.title = true
 -- UI Settings
 opt.background = "dark"
 opt.termguicolors = true
+vim.cmd("colorscheme nightfox")
 
 opt.guifont = "FiraCode Nerd Font Ret:h16"
 opt.showtabline = 2
@@ -91,7 +93,12 @@ opt.wildignore = [[
 */tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**"
 ]]
 
-opt.diffopt = {"iwhite", "algorithm:histogram", "indent-heuristic"} -- ignore whitespaces
+opt.diffopt = {"vertical","iwhite", "algorithm:histogram", "indent-heuristic"} -- ignore whitespaces
 opt.clipboard='unnamed'
 opt.scrolloff = 8 -- always have 8 lines ahead of the cursor
 
+global.netrw_banner = 0 -- hide the banner
+global.netrw_browse_split = 4 -- open file in previous window
+global.netrw_hide = 1
+global.netrw_winsize = 25
+global.netrw_keepdir = 0 -- stay in dir where opened

@@ -1,6 +1,6 @@
 local api = vim.api
 
-
+--[[
 local function nvim_create_augroups(definitions)
 	for group_name, definition in pairs(definitions) do
 		api.nvim_command('augroup '..group_name)
@@ -15,7 +15,8 @@ local function nvim_create_augroups(definitions)
 		api.nvim_command('augroup END')
 	end
 end
-
 local autocmds = {
 }
+--]]
+
 --nvim_create_augroups(autocmds)
