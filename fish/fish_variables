@@ -3,13 +3,13 @@
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_c:cargo
 SETUVAR _fish_abbr_calc:bc
-SETUVAR _fish_abbr_cat:bat
 SETUVAR _fish_abbr_ct:cargo\x20t
 SETUVAR _fish_abbr_e:nvim
 SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_ga:git\x20add\x20\x2dp
 SETUVAR _fish_abbr_gah:git\x20stash\x3b\x20and\x20git\x20pull\x20\x2d\x2drebase\x3b\x20and\x20git\x20stash\x20pop
 SETUVAR _fish_abbr_gc:git\x20checkout
+SETUVAR _fish_abbr_cat:bat\x20-p
 SETUVAR _fish_abbr_l:exa\x20\x2d\x2dicons\x20
 SETUVAR _fish_abbr_ll:exa\x20\x2d\x2dicons\x20\x2dl
 SETUVAR _fish_abbr_lll:exa\x20\x2d\x2dicons\x20\x2dla

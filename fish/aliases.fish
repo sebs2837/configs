@@ -27,6 +27,7 @@ alias tmux='tmux -f ~/.config/tmux/tmux.conf'
 # CLI-TOOL
 abbr -a yr 'cal -y'
 abbr -a calc 'bc'
+abbr -a cat 'bat --plain'
 
 
 if command -v exa > /dev/null

@@ -2,16 +2,16 @@
 set -xg EDITOR nvim
 
 # HOMEBREW
-set -xg HOMBREW_HOME /opt/homebrew/Cellar
+set -xg HOMBREW_HOME /opt/homebrew
 
 # Random work related tools
 set -xg TOOLS $HOME/.tools/bin
 
 # FIG
-set -xg FIG $HOME/.fig/bin/
+set -xg GIT $HOMBREW_HOME/bin/git
 
 # JAVA
-set -xg JAVA_HOME $HOMBREW_HOME/openjdk/20.0.1
+set -xg JAVA_HOME $HOMBREW_HOME/opt/openjdk/
 
 # JULIA
 set JULIA /Applications/Julia-1.6.app/Contents/Resources/julia/bin
@@ -33,7 +33,7 @@ set -xg CARGO_INSTALL_ROOT $CARGO_HOME
 set RVM $HOME/.rvm/bin
 
 set -xg PATH $HOME/bin $FIG $HOME/.cargo/bin $JAVA_HOME/bin $RVM $JULIA $PATH
-set -xg PATH $TOOLS $GOBIN $CARGO_INSTALL_ROOT $PIP_USR_BIN $PYTHON_USR_BIN $GEMS $LUA_LSP $PATH 
+set -xg PATH $TOOLS $GOBIN $CARGO_INSTALL_ROOT $PIP_USR_BIN $PYTHON_USR_BIN $GIT $GEMS $LUA_LSP $PATH 
 
 set -xg RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 
@@ -130,6 +130,7 @@ function fish_user_key_bindings
   bind \cz 'fg>/dev/null ^/dev/null' # don't display message when sending to bg
   skim
 end
+
 
 eval (ssh-agent -c) >> /dev/null
 starship init fish | source

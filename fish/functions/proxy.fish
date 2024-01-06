@@ -17,7 +17,7 @@ function proxy_vpn_squid -d "Configure http(s) proxy for VW environment with squ
       set -xg no_proxy $argv[2]
 
       if not pgrep -f squid > /dev/null
-          launch_squid
+        launch_squid
       end
 end
 
