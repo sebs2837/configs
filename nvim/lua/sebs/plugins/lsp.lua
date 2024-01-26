@@ -1,6 +1,8 @@
 local config = function()
     local lsp = require('lsp-zero').preset({})
 
+    vim.lsp.set_log_level("off")
+
     require("lsp-colors").setup({
         Error = "#db4b4b",
         Warning = "#D8DD4F",
@@ -8,13 +10,15 @@ local config = function()
         Hint = "#6CA4BE"
     })
 
-    vim.lsp.set_log_level 'trace'
-
     --local on_attach = function(client, bufnr)
     lsp.on_attach(function(client, bufnr)
         -- Enable completion triggered by <c-x><c-o>
         --	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
         local map = vim.keymap.set
+        if client.name == 'rust' then
+            map("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'rust hover actions' })
+        end
         -- Mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>',
@@ -49,10 +53,6 @@ local config = function()
             { noremap = true, silent = true, buffer = bufnr, desc = 'show all references' })
         map('n', '<leader>vf', '<cmd>lua vim.lsp.buf.format()<cr>',
             { noremap = true, silent = true, buffer = bufnr, desc = 'format buffer' })
-        if client.name == 'rust' then
-            map("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions,
-                { noremap = true, silent = true, buffer = bufnr, desc = 'rust hover actions' })
-        end
     end)
 
     lsp.configure('pylsp', {
@@ -111,12 +111,9 @@ local config = function()
 
     })
 
-    lsp.configure('clangd', {
-        --on_attach = on_attach,
-    })
+    lsp.configure('clangd', {})
 
-    lsp.configure('svelte', {
-    })
+    lsp.configure('svelte', {})
 
     lsp.configure('bashls', {})
 

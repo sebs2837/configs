@@ -27,7 +27,7 @@ end
 return {
     {
         'saecki/crates.nvim',
-        tag = 'v0.3.0',
+        tag = 'v0.4.0',
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = config,
     }

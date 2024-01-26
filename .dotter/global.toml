@@ -1,0 +1,5 @@
+[nvim.files]
+nvim = "~/.config/nvim"
+
+[fish.files]
+fish = "~/.config/fish"

@@ -13,7 +13,6 @@ SILENT_OPTION = { silent = true }
 function _G.bind_key(mode, key, cmd, opts)
 	mode = mode or 'n'
 	opts = opts or DEFAULT_OPTIONS
-
 	vim.keymap.set(mode, key, cmd, opts)
 end
 
@@ -39,39 +38,50 @@ end
 --map("n", "<Space>", "<NOP>", DEFAULT_OPTIONS)
 vim.g.mapleader = " "
 
-bind_key("n", "<leader>bf", vim.cmd.Lexplore, DEFAULT_OPTIONS)
-bind_key("v", "<", "<gv", DEFAULT_OPTIONS) -- select line again after indent
-bind_key("v", ">", ">gv", DEFAULT_OPTIONS) -- select line again after indent
+vim.keymap.set("n", "<leader>bf", vim.cmd.Lexplore, DEFAULT_OPTIONS)
+vim.keymap.set("v", "<", "<gv", DEFAULT_OPTIONS) -- select line again after indent
+vim.keymap.set("v", ">", ">gv", DEFAULT_OPTIONS) -- select line again after indent
 
-bind_key("n", "n", "nzzzv", DEFAULT_OPTIONS) -- keep search forward results centered
-bind_key("n", "N", "Nzzzv", DEFAULT_OPTIONS) -- keep search backward results centered
-bind_key("n", "J", "mzJ`z", DEFAULT_OPTIONS) -- TODO find out what it means
+vim.keymap.set("n", "n", "nzzzv", DEFAULT_OPTIONS) -- keep search forward results centered
+vim.keymap.set("n", "N", "Nzzzv", DEFAULT_OPTIONS) -- keep search backward results centered
+vim.keymap.set("n", "J", "mzJ`z", DEFAULT_OPTIONS) -- move contents one line up and join current line
 
-bind_key("i", "jk", "<Esc>", DEFAULT_OPTIONS) -- using jk instead of esc
-bind_key("v", "jk", "<Esc>", DEFAULT_OPTIONS) -- using jk instead of esc
+vim.keymap.set("i", "jk", "<Esc>", DEFAULT_OPTIONS) -- using jk instead of esc
+vim.keymap.set("v", "jk", "<Esc>", DEFAULT_OPTIONS) -- using jk instead of esc
 
-bind_key("n", "<Right>", ":bnext<CR>", DEFAULT_OPTIONS) -- move to next buffer using arrow keys
-bind_key("n", "<Left>", ":bprevious<CR>", DEFAULT_OPTIONS) -- move to previous buffer using arrow keys
+vim.keymap.set("n", "<Right>", ":bnext<CR>", DEFAULT_OPTIONS) -- move to next buffer using arrow keys
+vim.keymap.set("n", "<Left>", ":bprevious<CR>", DEFAULT_OPTIONS) -- move to previous buffer using arrow keys
 
-bind_key("v", "<C-h>", ":nohlsearch<CR>", DEFAULT_OPTIONS) -- cancel search highligting
-bind_key("n", "<C-h>", ":nohlsearch<CR>", DEFAULT_OPTIONS) -- cancel search highligting
+vim.keymap.set("v", "<C-h>", ":nohlsearch<CR>", DEFAULT_OPTIONS) -- cancel search highligting
+vim.keymap.set("n", "<C-h>", ":nohlsearch<CR>", DEFAULT_OPTIONS) -- cancel search highligting
 
-bind_key("c", "%s", "%sm/", DEFAULT_OPTIONS) -- only search in current buffer
+vim.keymap.set("c", "%s", "%sm/", DEFAULT_OPTIONS) -- only search in current buffer
+vim.keymap.set("n", "<leader>sm", [[:%sm/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- search in current buffer input under cursor
 
-bind_key("n", "H", "^", DEFAULT_OPTIONS) -- H will go to begining of a line
-bind_key("n", "L", "$", DEFAULT_OPTIONS) -- H will go to begining of a line
+vim.keymap.set("n", "H", "^", DEFAULT_OPTIONS) -- H will go to begining of a line
+vim.keymap.set("n", "L", "$", DEFAULT_OPTIONS) -- H will go to begining of a line
 
-bind_key("n", "<c-d>", "<c-d>zz", DEFAULT_OPTIONS)
-bind_key("n", "<c-b>", "<c-b>zz", DEFAULT_OPTIONS)
+vim.keymap.set("n", "<c-d>", "<c-d>zz", DEFAULT_OPTIONS)
+vim.keymap.set("n", "<c-b>", "<c-b>zz", DEFAULT_OPTIONS)
 
-bind_key("n", "gf", ":edit <cfile><CR>", DEFAULT_OPTIONS) -- create a new file if it does not exist
+vim.keymap.set("n", "gf", ":edit <cfile><CR>", DEFAULT_OPTIONS) -- create a new file if it does not exist
 
-bind_key("n", "<Leader>-", ":split<CR>", DEFAULT_OPTIONS) --simpler split
-bind_key("n", "<Leader>|", ":vsplit<CR>", DEFAULT_OPTIONS)
+vim.keymap.set("n", "<Leader>-", ":split<CR>", DEFAULT_OPTIONS) --simpler split
+vim.keymap.set("n", "<Leader>|", ":vsplit<CR>", DEFAULT_OPTIONS)
 
-bind_key("n", "q?", "<NOP>",DEFAULT_OPTIONS) --no command-line ex ? search
+vim.keymap.set("n", "q?", "<NOP>",DEFAULT_OPTIONS) --no command-line ex ? search
 
-bind_key("n", "<leader>c?", toggle_special_chars ,DEFAULT_OPTIONS) -- toogle display spaces and other special characters
-bind_key("n", "<leader>dg", "<cmd>diffget<cr>", DEFAULT_OPTIONS)
-bind_key("n", "<leader>dp", "<cmd>diffput<cr>", DEFAULT_OPTIONS)
-bind_key("t", "<ESC>", "<C-\\><C-n>", DEFAULT_OPTIONS)
+vim.keymap.set("n", "<leader>c?", toggle_special_chars ,DEFAULT_OPTIONS) -- toogle display spaces and other special characters
+
+vim.keymap.set("n", "<leader>dg", "<cmd>diffget<cr>", DEFAULT_OPTIONS)
+vim.keymap.set("n", "<leader>dp", "<cmd>diffput<cr>", DEFAULT_OPTIONS)
+vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", DEFAULT_OPTIONS)
+
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") --move lines up 
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") --move lines down
+
+
+vim.keymap.set("n", "<leader><leader>", function() -- reload with double leader
+    vim.cmd("so")
+end)
+
