@@ -1,6 +1,8 @@
 local config = function()
     local telescope = require 'telescope'
-    --local map = vim.api.nvim_set_keymap
+    local builtin = require('telescope.builtin')
+    local utils = require('telescope.utils')
+
 
     local map = vim.keymap.set
 
@@ -28,6 +30,8 @@ local config = function()
             buffers = {
                 theme = "dropdown"
             },
+            grep_string = { theme = "dropdown" },
+            life_grep = { theme = "dropdown" },
             -- Default configuration for builtin pickers goes here:
             -- picker_name = {
             --   picker_config_key = value,
@@ -65,26 +69,44 @@ local config = function()
             },
         }
     })
-    telescope.load_extension "file_browser"
     telescope.load_extension "undo"
 
     -- Key mappings
-    map("n", "<C-p>", "<cmd>Telescope find_files prompt_prefix=🔍<CR>",
+    map("n", "<C-p>", builtin.git_files,
+        { noremap = true, silent = true, desc = 'telescope git files' })
+    map("n", "<leader>pf", function()
+            local where = utils.buffer_dir()
+            builtin.find_files({ cwd = where })
+        end,
         { noremap = true, silent = true, desc = 'telescope find files' })
-    map("n", "<C-g>", "<cmd>Telescope git_files<CR>",
-        { noremap = true, silent = true, desc = 'telescope search git added files' })
-    map("n", "<C-f>", "<cmd>Telescope help_tags<CR>",
+
+    map("n", "<C-f>", builtin.help_tags,
         { noremap = true, silent = true, desc = 'telescope search help tags' })
-    map("n", "<leader>tg", "<cmd>Telescope live_grep<CR>",
+
+    map("n", "<leader>pg", builtin.live_grep,
         { noremap = true, silent = true, desc = 'telescope live grep' })
-    map("n", "<leader>fb", "<cmd>Telescope file_browser<CR>",
-        { noremap = true, silent = true, desc = 'telescope file browser' })
-    map("n", "<leader>tb", "<cmd>Telescope buffers<CR>",
+    map("n", "<leader>pb", builtin.buffers,
         { noremap = true, silent = true, desc = 'telescope show buffers' })
-    map("n", "<leader><tab>", "<cmd>lua require('telescope.builtin').commands()<cr>",
+    map("n", "<leader><tab>", builtin.commands,
         { noremap = true, silent = true, desc = 'telescope show commands' })
-    map("n", "<leader>tu", "<cmd>Telescope undo<cr>", { noremap = true, silent = true, desc = 'telescope undo' })
-    map("n", "<leader>tk", "<cmd>Telescope keymaps<cr>", { noremap = true, silent = true, desc = 'telescope keymaps' })
+    map("n", "<leader>pu", "<cmd>Telescope undo<cr>", { noremap = true, silent = true, desc = 'telescope undo' })
+    map("n", "<leader>pk", builtin.keymaps, { noremap = true, silent = true, desc = 'telescope keymaps' })
+    map("n", "<leader>pWs", function()
+        local word = vim.fn.expand("<cWORD>")
+        builtin.grep_string({ search = word })
+    end
+    , { noremap = true, silent = true, desc = 'telescope grep string under cursor' })
+
+    map("n", "<leader>pws", function()
+        local word = vim.fn.expand("<cword>")
+        builtin.grep_string({ search = word })
+    end
+    , { noremap = true, silent = true, desc = 'telescope grep string under cursor' })
+
+    map("n", "<leader>ps", function()
+        builtin.grep_string({ search = vim.fn.input("Grep > ") })
+    end
+    , { noremap = true, silent = true, desc = 'telescope grep string under cursor' })
 end
 
 return {
@@ -93,7 +115,6 @@ return {
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-lua/popup.nvim" },
-            { "nvim-telescope/telescope-file-browser.nvim" },
             { "nvim-telescope/telescope-ui-select.nvim" },
             { "debugloop/telescope-undo.nvim" },
         },

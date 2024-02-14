@@ -45,9 +45,7 @@ opt.title = true
 -- UI Settings
 opt.background = "dark"
 opt.termguicolors = true
-vim.cmd("colorscheme nightfox")
 
-opt.guifont = "FiraCode Nerd Font Ret:h16"
 opt.showtabline = 2
 opt.ruler = true
 opt.laststatus = 2
@@ -102,3 +100,6 @@ global.netrw_browse_split = 4 -- open file in previous window
 global.netrw_hide = 1
 global.netrw_winsize = 25
 global.netrw_keepdir = 0 -- stay in dir where opened
+
+opt.foldmethod = "expr" -- use expressions for codefolding
+opt.foldexpr = "nvim_treesitter#foldexpr()" -- let treesitter do the evaluation

@@ -1,22 +1,17 @@
 local api = vim.api
+local cmd = vim.cmd
 
---[[
-local function nvim_create_augroups(definitions)
-	for group_name, definition in pairs(definitions) do
-		api.nvim_command('augroup '..group_name)
-		api.nvim_command('autocmd!')
-		for _, def in ipairs(definition) do
-			-- if type(def) == 'table' and type(def[#def]) == 'function' then
-			-- 	def[#def] = lua_callback(def[#def])
-			-- end
-			local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
-			api.nvim_command(command)
-		end
-		api.nvim_command('augroup END')
-	end
-end
-local autocmds = {
-}
---]]
 
---nvim_create_augroups(autocmds)
+api.nvim_create_augroup("open_folds", { clear = false })
+api.nvim_create_autocmd({ "BufEnter", "BufReadPost" }, {
+    pattern = { "*" },
+    group = "open_folds",
+    callback = function ()
+        cmd([[ norm zx
+               norm zR
+        ]])
+    end,
+    --        api.nvim_command("normal zR")
+    --        print(string.format('Got event %s', vim.inspect(ev)))
+})
+

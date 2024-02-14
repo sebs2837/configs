@@ -2,15 +2,12 @@ local config = function()
     local lspsaga = require 'lspsaga'
 
     lspsaga.setup { -- defaults ...
-        debug = false,
         use_saga_diagnostic_sign = true,
-        -- diagnostic sign
         error_sign = " ",
         warn_sign = " ",
         hint_sign = " ",
         infor_sign = " ",
         diagnostic_header_icon = "   ",
-        -- code action title icon
         code_action_icon = " ",
         code_action_prompt = {
             enable = true,
@@ -29,10 +26,6 @@ local config = function()
             scroll_down = "<C-f>",
             scroll_up = "<C-b>",
         },
-        code_action_keys = {
-            quit = "q",
-            exec = "<CR>",
-        },
         rename_action_keys = {
             quit = "<C-c>",
             exec = "<CR>",
@@ -44,10 +37,10 @@ local config = function()
         diagnostic_prefix_format = "%d. ",
     }
     vim.keymap.set("n", "<leader>sh", "<cmd> Lspsaga lsp_finder<CR>",
-        { noremap = true, silent = true, desc = "search all symbols" })                                                                      -- search all symbols
+        { noremap = true, silent = true, desc = "search all symbols" })                                               -- search all symbols
     vim.keymap.set({ "n", "v" }, "<leader>sc", "<cmd> Lspsaga code_action<CR>",
-        { noremap = true, silent = true, desc = "code action" })                                                                             -- perform code action
-    vim.keymap.set("n", "<leader>sr", "<cmd> Lspsaga rename<CR>", { noremap = true, silent = true, desc = "rename" })                        -- rename
+        { noremap = true, silent = true, desc = "code action" })                                                      -- perform code action
+    vim.keymap.set("n", "<leader>sr", "<cmd> Lspsaga rename<CR>", { noremap = true, silent = true, desc = "rename" }) -- rename
     --vim.keymap.set("n", "<leader>sd", "<cmd> Lspsaga peek_definition<CR>", DEFAULT_OPTIONS) -- definition needs floatterm
 
 
@@ -56,7 +49,7 @@ local config = function()
         { noremap = true, silent = true, desc = "show line diagnostics" })
 
     -- Show cursor diagnostic
-    vim.keymap.set("n", "<leader>scd", "<cmd>Lspsaga show_cursor_diagnostics<CR>",
+    vim.keymap.set("n", "<leader>sd", "<cmd>Lspsaga show_cursor_diagnostics<CR>",
         { noremap = true, silent = true, desc = "show diagnostics under cursor" })
 
     -- Diagnsotic jump can use `<c-o>` to jump back
@@ -75,12 +68,16 @@ local config = function()
     })
 
     -- Outline
-    vim.keymap.set("n", "<leader>so", "<cmd>LSoutlineToggle<CR>",
+    vim.keymap.set("n", "<leader>so", "<cmd>Lspsaga outline<CR>",
         { noremap = true, silent = true, desc = "show outline" })
 
     -- Hover Doc
     vim.keymap.set("n", "<leader>sk", "<cmd>Lspsaga hover_doc<CR>", { noremap = true, silent = true, desc = "show docs" })
 end
 return {
-    { "tami5/lspsaga.nvim", config = config }
+    {
+        "kkharji/lspsaga.nvim",
+        event = "LspAttach",
+        config = config
+    }
 }

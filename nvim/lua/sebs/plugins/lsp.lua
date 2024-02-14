@@ -1,7 +1,24 @@
 local config = function()
-    local lsp = require('lsp-zero').preset({})
-
-    vim.lsp.set_log_level("off")
+    local mason = require('mason')
+    local mason_lsp = require('mason-lspconfig')
+    mason.setup({
+        ui = {
+            icons = {
+                package_installed = "󰗠 ",
+                package_pending = "󰺕 ",
+                package_uninstalled = "󰅙 "
+            }
+        }
+    })
+    mason_lsp.setup({
+        ensure_installed = { "lua_ls", "rust_analyzer" },
+        handlers = {
+            function(server_name)
+                require('lspconfig')[server_name].setup({})
+            end
+        }
+    })
+    local lsp = require('lspconfig')
 
     require("lsp-colors").setup({
         Error = "#db4b4b",
@@ -10,53 +27,34 @@ local config = function()
         Hint = "#6CA4BE"
     })
 
-    --local on_attach = function(client, bufnr)
-    lsp.on_attach(function(client, bufnr)
-        -- Enable completion triggered by <c-x><c-o>
-        --	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-        local map = vim.keymap.set
-        if client.name == 'rust' then
-            map("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions,
-                { noremap = true, silent = true, buffer = bufnr, desc = 'rust hover actions' })
-        end
-        -- Mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'go to declaration' })
-        map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'go to definition' })
-        map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { noremap = true, silent = true, desc = 'show hover info' })
-        map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'go to implementation' })
-        map('n', '<leader>vd', '<cmd>lua vim.diagnostic.open_float()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'open diag floating' })
-        map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'go to next diagnostic message' })
-        map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'got to previous diagnostic message' })
-        map('n', '<C-h>', '<cmd>lua vim.lsp.buf.signature_help()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'show signature help' })
-        map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'add folder to workspace' })
-        map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'remove folder from workspace' })
-        map('n', '<leader>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, { noremap = true, silent = true, buffer = bufnr, desc = 'list all workspace folders' })
-        map('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'show type definition' })
-        map('n', '<leader>vrn', vim.lsp.buf.rename,
-            { noremap = true, silent = true, buffer = bufnr, desc = 'rename under cursor' })
-        map('n', '<leader>vca', vim.lsp.buf.code_action,
-            { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
-        map('n', '<leader>vrr', '<cmd>lua vim.lsp.buf.references()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'show all references' })
-        map('n', '<leader>vf', '<cmd>lua vim.lsp.buf.format()<cr>',
-            { noremap = true, silent = true, buffer = bufnr, desc = 'format buffer' })
-    end)
+    lsp.clangd.setup({})
+    lsp.bashls.setup({})
+    lsp.lua_ls.setup({
+        settings = {
+            Lua = {
+                runtime = {
+                    version = 'Lua 5.4',
+                    path = {
+                        '?.lua',
+                        '?/init.lua',
+                        vim.fn.expand '~/.luarocks',
+                        vim.fn.expand '~/.luarocks/share/lua/5.3/?.lua',
+                        vim.fn.expand '~/.luarocks/share/lua/5.3/?/init.lua',
+                    }
+                },
+                workspace = {
+                    library = {
+                        '/opt/homebrew/opt/lua',
+                        '/opt/homebrew/opt/luarocks',
+                        vim.env.VIMRUNTIME,
+                    }
+                }
+            }
+        }
 
-    lsp.configure('pylsp', {
-        -- on_attach = on_attach,
+    })
+
+    lsp.pylsp.setup({
         settings = {
             pylsp = {
                 plugins = {
@@ -86,36 +84,70 @@ local config = function()
         },
     })
 
-    lsp.configure('lua_ls', {
-        settings = {
-            Lua = {
-                runtime = {
-                    version = 'Lua 5.4',
-                    path = {
-                        '?.lua',
-                        '?/init.lua',
-                        vim.fn.expand '~/.luarocks',
-                        vim.fn.expand '~/.luarocks/share/lua/5.3/?.lua',
-                        vim.fn.expand '~/.luarocks/share/lua/5.3/?/init.lua',
-                    }
-                },
-                workspace = {
-                    library = {
-                        '/opt/homebrew/opt/lua',
-                        '/opt/homebrew/opt/luarocks',
-                        vim.env.VIMRUNTIME,
-                    }
-                }
-            }
-        }
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('SebsLspConfig', {}),
+        callback = function(ev)
+            local builtin = require('telescope.builtin')
+            local map = vim.keymap.set
+            local bufnr = ev.buf
 
+            local lsp_clients = vim.lsp.get_active_clients({ bufnr = ev.buf })
+            vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+            local client = lsp_clients[1]
+
+            if client.name == 'rust_analyzer' then
+                map("n", "<leader>k", require('rust-tools').hover_actions.hover_actions,
+                    { noremap = true, silent = true, buffer = bufnr, desc = 'rust hover actions' })
+            end
+
+            -- Mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'go to declaration' })
+            map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'go to definition' })
+            map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { noremap = true, silent = true, desc = 'show hover info' })
+            map('n', 'gi', vim.lsp.buf.implementation,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'go to implementation' })
+            map('n', '<leader>df', vim.diagnostic.open_float,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'open diagnostics in floating window' })
+            map('n', '<leader>vd', function()
+                    builtin.diagnostics({ bufnr = 0 })
+                end,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'show diagnostics for current buffer' })
+            map('n', '<leader>vD', function()
+                    builtin.diagnostics({})
+                end,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'show diagnostics for current buffer' })
+            map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'go to next diagnostic message' })
+            map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'got to previous diagnostic message' })
+            map('n', '<C-h>', '<cmd>lua vim.lsp.buf.signature_help()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'show signature help' })
+            map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'add folder to workspace' })
+            map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>',
+                { noremap = true, silent = true, buffer = bufnr, desc = 'remove folder from workspace' })
+            map('n', '<leader>wl', function()
+                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, { noremap = true, silent = true, buffer = bufnr, desc = 'list all workspace folders' })
+            map('n', '<leader>D', function()
+                    builtin.lsp_type_definitions()
+                end,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'show type definition' })
+            map('n', '<leader>vrn', vim.lsp.buf.rename,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'rename under cursor' })
+            map('n', '<leader>vca', vim.lsp.buf.code_action,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
+            map('n', '<leader>vrr', function()
+                    builtin.lsp_references()
+                end,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'show all references' })
+            map('n', '<leader>vf', vim.lsp.buf.format,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'format buffer' })
+        end,
     })
-
-    lsp.configure('clangd', {})
-
-    lsp.configure('svelte', {})
-
-    lsp.configure('bashls', {})
 
     local opts = {
         tools = { -- rust-tools options
@@ -206,8 +238,6 @@ local config = function()
         },
     }
 
-    --lsp.configure('rust_analyzer',opts)
-
 
     require('rust-tools').setup(opts)
 
@@ -262,15 +292,17 @@ local config = function()
             { name = 'crates' },
         },
     })
-    lsp.setup()
 end
+
 return {
     {
-        "VonHeikemen/lsp-zero.nvim",
+        "neovim/nvim-lspconfig",
         dependencies = {
-            { "neovim/nvim-lspconfig" },
+            { "nvim-telescope/telescope.nvim" },
+            { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
             { "folke/lsp-colors.nvim" },
+            { "f3fora/cmp-spell" },
             { "simrat39/rust-tools.nvim" },
             { "onsails/lspkind.nvim" },
             { "hrsh7th/cmp-nvim-lsp" },
@@ -279,13 +311,12 @@ return {
             { "hrsh7th/cmp-cmdline" },
             { "hrsh7th/cmp-vsnip" },
             { "hrsh7th/nvim-cmp" },
-            { "f3fora/cmp-spell" },
             { "hrsh7th/cmp-calc" },
             { "hrsh7th/cmp-emoji" },
             { "hrsh7th/vim-vsnip" },
             {
                 "L3MON4D3/LuaSnip",
-                 version = "v2.1.1"
+                version = "v2.1.1"
             },
             { "rafamadriz/friendly-snippets" }
         },

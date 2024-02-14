@@ -64,7 +64,7 @@ config = {
     enable_scroll_bar         = true,
     min_scroll_bar_height     = '2cell',
     font                      = wezterm.font_with_fallback({
-        { family = "CaskaydiaCove NFM", scale = 1.3 },
+        { family = "CaskaydiaCove NFP SemiLight", scale = 1.3 },
         { family = "JetBrainsMono NF", scale = 1.2 },
         { family = "SauceCodePro NF",  scale = 1.2 },
     }),
@@ -229,13 +229,11 @@ config = {
             mods = 'LEADER',
             action = act.SpawnTab 'CurrentPaneDomain',
         },
+
         {
-            key = 'r',
+            key = 'y',
             mods = 'LEADER',
-            action = act.ActivateKeyTable {
-                name = 'resize_pane',
-                one_shot = false,
-            },
+            action = act.PaneSelect,
         },
 
         -- CTRL+s, followed by 'a' will put us in activate-pane
@@ -246,7 +244,16 @@ config = {
             mods = 'LEADER',
             action = act.ActivateKeyTable {
                 name = 'activate_pane',
-                timeout_milliseconds = 1000,
+                timeout_milliseconds = 2000,
+            },
+        },
+
+        {
+            key = 'r',
+            mods = 'LEADER',
+            action = act.ActivateKeyTable {
+                name = 'resize_pane',
+                one_shot = false,
             },
         },
     },
@@ -258,16 +265,16 @@ config = {
         -- 'resize_pane' here corresponds to the name="resize_pane" in
         -- the key assignments above.
         resize_pane = {
-            { key = 'LeftArrow',  action = act.AdjustPaneSize { 'Left', 1 } },
+            { key = 'LeftArrow',  action = act.AdjustPaneSize { 'Left', 5 } },
             { key = 'h',          action = act.AdjustPaneSize { 'Left', 1 } },
 
-            { key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 1 } },
+            { key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 5 } },
             { key = 'l',          action = act.AdjustPaneSize { 'Right', 1 } },
 
-            { key = 'UpArrow',    action = act.AdjustPaneSize { 'Up', 1 } },
+            { key = 'UpArrow',    action = act.AdjustPaneSize { 'Up', 5 } },
             { key = 'k',          action = act.AdjustPaneSize { 'Up', 1 } },
 
-            { key = 'DownArrow',  action = act.AdjustPaneSize { 'Down', 1 } },
+            { key = 'DownArrow',  action = act.AdjustPaneSize { 'Down', 5 } },
             { key = 'j',          action = act.AdjustPaneSize { 'Down', 1 } },
 
             -- Cancel the mode by pressing escape

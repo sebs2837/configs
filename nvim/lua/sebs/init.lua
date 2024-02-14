@@ -1,6 +1,6 @@
+require("sebs.cmds")
 require("sebs.set")
 require("sebs.remap")
-require("sebs.cmds")
 require("sebs.lazy")
 
 function R(name)
