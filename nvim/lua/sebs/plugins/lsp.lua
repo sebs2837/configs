@@ -102,11 +102,11 @@ local config = function()
 
             -- Mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
-            map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>',
+            map('n', 'gD', vim.lsp.buf.declaration,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to declaration' })
-            map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>',
+            map('n', 'gd', vim.lsp.buf.definition,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to definition' })
-            map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { noremap = true, silent = true, desc = 'show hover info' })
+            map('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'show hover info' })
             map('n', 'gi', vim.lsp.buf.implementation,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to implementation' })
             map('n', '<leader>df', vim.diagnostic.open_float,
@@ -119,15 +119,15 @@ local config = function()
                     builtin.diagnostics({})
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show diagnostics for current buffer' })
-            map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>',
+            map('n', ']d', vim.diagnostic.goto_next,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to next diagnostic message' })
-            map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>',
+            map('n', '[d', vim.diagnostic.goto_prev,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'got to previous diagnostic message' })
-            map('n', '<C-h>', '<cmd>lua vim.lsp.buf.signature_help()<cr>',
+            map('n', '<C-h>', vim.lsp.buf.signature_help,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show signature help' })
-            map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>',
+            map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'add folder to workspace' })
-            map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>',
+            map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'remove folder from workspace' })
             map('n', '<leader>wl', function()
                 print(vim.inspect(vim.lsp.buf.list_workspace_folders()))

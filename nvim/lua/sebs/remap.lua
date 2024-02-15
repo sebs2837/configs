@@ -13,6 +13,8 @@ OPTIONS = {
     end
 }
 
+local explore_open = false
+
 ---@version 5.1
 ---
 --- key mapping function just thin wrapper ofer neovims default api
@@ -49,29 +51,41 @@ end
 --map("n", "<Space>", "<NOP>", OPTIONS:default())
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<leader>bf", vim.cmd.Lexplore, OPTIONS:default())
+vim.keymap.set("n", "<leader>bf", function()
+        if explore_open then
+            local cwd = vim.fn.expand("%:h")
+            vim.cmd.Lexplore({ cwd })
+            explore_open = true
+        else
+            vim.cmd.Lexplore({})
+            explore_open = false
+        end
+    end,
+    OPTIONS:default())
 
-vim.keymap.set("v", "<", "<gv", OPTIONS:default())                                           -- select line again after indent
-vim.keymap.set("v", ">", ">gv", OPTIONS:default())                                           -- select line again after indent
+vim.keymap.set("n", "<leader>bF", vim.cmd.Lexplore, OPTIONS:default())
 
-vim.keymap.set("n", "n", "nzzzv", OPTIONS:default())                                         -- keep search forward results centered
-vim.keymap.set("n", "N", "Nzzzv", OPTIONS:default())                                         -- keep search backward results centered
-vim.keymap.set("n", "J", "mzJ`z", OPTIONS:default())                                         -- move contents one line up and join current line
+vim.keymap.set("v", "<", "<gv", OPTIONS:default())                                         -- select line again after indent
+vim.keymap.set("v", ">", ">gv", OPTIONS:default())                                         -- select line again after indent
 
-vim.keymap.set("i", "jk", "<Esc>", OPTIONS:default())                                        -- using jk instead of esc
-vim.keymap.set("v", "jk", "<Esc>", OPTIONS:default())                                        -- using jk instead of esc
+vim.keymap.set("n", "n", "nzzzv", OPTIONS:default())                                       -- keep search forward results centered
+vim.keymap.set("n", "N", "Nzzzv", OPTIONS:default())                                       -- keep search backward results centered
+vim.keymap.set("n", "J", "mzJ`z", OPTIONS:default())                                       -- move contents one line up and join current line
 
-vim.keymap.set("n", "<Right>", ":bnext<CR>", OPTIONS:default())                              -- move to next buffer using arrow keys
-vim.keymap.set("n", "<Left>", ":bprevious<CR>", OPTIONS:default())                           -- move to previous buffer using arrow keys
+vim.keymap.set("i", "jk", "<Esc>", OPTIONS:default())                                      -- using jk instead of esc
+vim.keymap.set("v", "jk", "<Esc>", OPTIONS:default())                                      -- using jk instead of esc
 
-vim.keymap.set("v", "<C-h>", ":nohlsearch<CR>", OPTIONS:default())                           -- cancel search highligting
-vim.keymap.set("n", "<C-h>", ":nohlsearch<CR>", OPTIONS:default())                           -- cancel search highligting
+vim.keymap.set("n", "<Right>", ":bnext<CR>", OPTIONS:default())                            -- move to next buffer using arrow keys
+vim.keymap.set("n", "<Left>", ":bprevious<CR>", OPTIONS:default())                         -- move to previous buffer using arrow keys
 
-vim.keymap.set("c", "%s", "%sm/", OPTIONS:default())                                         -- only search in current buffer
+vim.keymap.set("v", "<C-h>", ":nohlsearch<CR>", OPTIONS:default())                         -- cancel search highligting
+vim.keymap.set("n", "<C-h>", ":nohlsearch<CR>", OPTIONS:default())                         -- cancel search highligting
+
+vim.keymap.set("c", "%s", "%sm/", OPTIONS:default())                                       -- only search in current buffer
 vim.keymap.set("n", "<leader>sm", [[:%sm/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- search in current buffer input under cursor
 
-vim.keymap.set("n", "H", "^", OPTIONS:default())                                             -- H will go to begining of a line
-vim.keymap.set("n", "L", "$", OPTIONS:default())                                             -- H will go to begining of a line
+vim.keymap.set("n", "H", "^", OPTIONS:default())                                           -- H will go to begining of a line
+vim.keymap.set("n", "L", "$", OPTIONS:default())                                           -- H will go to begining of a line
 
 vim.keymap.set("n", "<c-d>", "<c-d>zz", OPTIONS:default())
 vim.keymap.set("n", "<c-b>", "<c-b>zz", OPTIONS:default())
