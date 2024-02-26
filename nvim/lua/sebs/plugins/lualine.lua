@@ -175,6 +175,7 @@ ins_left {
 	color = { fg = '#ffffff', gui = 'bold' },
 }
 
+--[[
 ins_left {
 	'lsp_progress',
 	display_components = { 'spinner', { 'percentage' } },
@@ -190,6 +191,7 @@ ins_left {
 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
 	spinner_symbols = { '󰪞 ', '󰪟 ', '󰪠 ', '󰪡 ', '󰪢 ', '󰪣 ', '󰪤 ', '󰪥 '}
 }
+    --]]
 
 -- Add components to right sections
 ins_right {

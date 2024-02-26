@@ -53,17 +53,23 @@ vim.g.mapleader = " "
 
 vim.keymap.set("n", "<leader>bf", function()
         if explore_open then
-            local cwd = vim.fn.expand("%:h")
-            vim.cmd.Lexplore({ cwd })
-            explore_open = true
-        else
-            vim.cmd.Lexplore({})
+            vim.cmd { cmd = 'Lexplore', bang = true }
             explore_open = false
+        else
+            local file_type = vim.bo.filetype
+            if file_type == "netrw" then
+                vim.cmd { cmd = 'Lexplore', bang = true }
+            else
+                local cwd = vim.fn.expand("%:h")
+                if cwd == '' then cwd = '~' end
+                vim.cmd { cmd = 'Lexplore', args = { cwd }, bang = true }
+            end
+            explore_open = true
         end
     end,
     OPTIONS:default())
 
-vim.keymap.set("n", "<leader>bF", vim.cmd.Lexplore, OPTIONS:default())
+-- vim.keymap.set("n", "<leader>bF", vim.cmd({ cmd = 'Lexplore' }), OPTIONS:default())
 
 vim.keymap.set("v", "<", "<gv", OPTIONS:default())                                         -- select line again after indent
 vim.keymap.set("v", ">", ">gv", OPTIONS:default())                                         -- select line again after indent
@@ -108,7 +114,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") --move lines down
 
 vim.keymap.set("n", "<leader>nc", function()
         local cfg = vim.fn.stdpath('config')
-        vim.cmd.Lexplore(cfg)
+        vim.cmd { cmd = 'Lexplore', args = { cfg }, bang = true }
     end,
     OPTIONS:desc("open nvim user config")
 )

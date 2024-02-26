@@ -1,6 +1,6 @@
 
 function ColoredPencils(color)
- 	color = color or "rose-pine"
+ 	color = color or "rose-pine-main"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -22,8 +22,8 @@ return {
                     transparency = false,
                 },
             })
-            --ColoredPencils('rose-pine')
-		vim.cmd.colorscheme('rose-pine-main')
+        ColoredPencils('rose-pine-main')
+		-- vim.cmd.colorscheme('rose-pine-main')
 
         end
     },

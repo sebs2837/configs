@@ -1,4 +1,5 @@
 local config = function()
+    require('fidget').setup({})
     local mason = require('mason')
     local mason_lsp = require('mason-lspconfig')
     mason.setup({
@@ -27,6 +28,9 @@ local config = function()
         Hint = "#6CA4BE"
     })
 
+    lsp.hls.setup({
+        filetypes = { 'haskell', 'lhaskell', 'cabal' },
+    })
     lsp.clangd.setup({})
     lsp.bashls.setup({})
     lsp.lua_ls.setup({
@@ -318,7 +322,8 @@ return {
                 "L3MON4D3/LuaSnip",
                 version = "v2.1.1"
             },
-            { "rafamadriz/friendly-snippets" }
+            { "rafamadriz/friendly-snippets" },
+            { "j-hui/fidget.nvim"}
         },
         config = config
     }
