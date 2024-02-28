@@ -3,3 +3,6 @@ nvim = "~/.config/nvim"
 
 [fish.files]
 fish = "~/.config/fish"
+
+[wezterm.files]
+wezterm = "~/.config/wezterm"
