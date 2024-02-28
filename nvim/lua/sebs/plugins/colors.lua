@@ -1,10 +1,3 @@
-
-function ColoredPencils(color)
- 	color = color or "rose-pine"
-	vim.cmd.colorscheme(color)
-
-end
-
 return {
     {
         'rose-pine/neovim',
@@ -26,7 +19,7 @@ return {
                     transparency = false,
                 },
             })
-        ColoredPencils("rose-pine")
+            vim.cmd.colorscheme("rose-pine")
         end
     },
     { "EdenEast/nightfox.nvim" },
