@@ -74,14 +74,16 @@ config = {
     default_workspace         = 'code',
 
     inactive_pane_hsb         = {
-        saturation = 0.24,
-        brightness = 0.5,
+        saturation = 0.9,
+        brightness = 0.6,
     },
     use_fancy_tab_bar         = false,
+
     window_frame              = {
         active_titlebar_bg = '#2E3440',
         inactive_titlebar_bg = '#2E3440',
     },
+
     tab_bar_at_bottom         = true,
     colors                    = {
         tab_bar = {
@@ -231,7 +233,7 @@ config = {
         },
 
         {
-            key = 'y',
+            key = 'a',
             mods = 'LEADER',
             action = act.PaneSelect,
         },
@@ -240,7 +242,7 @@ config = {
         -- mode until we press some other key or until 1 second (1000ms)
         -- of time elapses
         {
-            key = 'a',
+            key = 'y',
             mods = 'LEADER',
             action = act.ActivateKeyTable {
                 name = 'activate_pane',
