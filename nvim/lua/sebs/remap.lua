@@ -105,8 +105,6 @@ vim.keymap.set("n", "q?", "<NOP>", OPTIONS:default())                      --no 
 
 vim.keymap.set("n", "<leader>c?", toggle_special_chars, OPTIONS:default()) -- toogle display spaces and other special characters
 
-vim.keymap.set("n", "<leader>dg", "<cmd>diffget<cr>", OPTIONS:default())
-vim.keymap.set("n", "<leader>dp", "<cmd>diffput<cr>", OPTIONS:default())
 vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", OPTIONS:default())
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") --move lines up
@@ -122,3 +120,13 @@ vim.keymap.set("n", "<leader>nc", function()
 vim.keymap.set("n", "<leader><leader>", function() -- reload with double leader
     vim.cmd("so")
 end)
+
+vim.keymap.set("n", "gd", function()
+        vim.cmd.diffget { args = { "//2" } }
+    end,
+    OPTIONS:desc("diffget left (LOCAL)"))
+
+vim.keymap.set("n", "gu", function()
+        vim.cmd.diffget { args = { "//3" } }
+    end,
+    OPTIONS:desc("diffget right (REMOTE)"))

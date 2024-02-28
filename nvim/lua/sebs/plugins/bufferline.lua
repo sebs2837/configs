@@ -24,6 +24,7 @@ local config = function()
             diagnostics_indicator = function(count, level, diagnostics_dict, context)
                 return "(" .. count .. ")"
             end,
+            highlights = require("rose-pine.plugins.bufferline"),
             -- NOTE: this will be called a lot so don't do any heavy processing here
             custom_filter = function(buf_number)
                 -- filter out filetypes you don't want to see
