@@ -24,7 +24,7 @@ local config = function()
                 { noremap = true, silent = true, desc = 'reset buffer', buffer = bufnr })
             map('n', '<leader>hp', gs.preview_hunk,
                 { noremap = true, silent = true, desc = 'preview hunk', buffer = bufnr })
-            map('n', '<leader>hb', function() gs.blame_line { full = true } end,
+            map('n', '<leader>hb', function() gs.blame_line { full = false } end,
                 { noremap = true, silent = true, desc = 'blame', buffer = bufnr })
             map('n', '<leader>hS', gs.stage_buffer, DEFAULT_OPTIONS)
         end,
@@ -64,7 +64,11 @@ end
 return {
     {
         "lewis6991/gitsigns.nvim",
-        dependencies = "nvim-lua/plenary.nvim",
+        dependencies = {
+		{"nvim-lua/plenary.nvim"},
+		{"tpope/vim-fugitive"}
+	},
         config = config
     }
 }
+
