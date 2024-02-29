@@ -9,6 +9,11 @@ local global = vim.g
 -- disable inline diagnostics 
 vim.diagnostic.config({virtual_text = false})
 
+global.netrw_browse_split = 3
+global.netrw_banner = 0
+global.netrw_winsize = 25
+global.netrw_keepdir = 0
+
 opt.compatible = false
 opt.syntax = "on"
 opt.number = true
