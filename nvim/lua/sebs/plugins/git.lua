@@ -29,6 +29,7 @@ local config = function()
             map('n', '<leader>hS', gs.stage_buffer, DEFAULT_OPTIONS)
         end,
 
+
         watch_gitdir                      = {
             interval = 1000,
             follow_files = true
@@ -60,6 +61,13 @@ local config = function()
             enable = false
         },
     }
+        vim.api.nvim_create_autocmd('OptionSet', {
+        group = vim.api.nvim_create_augroup('SebsAuCmds', {}),
+            pattern = {"diff"},
+            callback = function (ev)
+                return
+            end,
+})
 end
 return {
     {

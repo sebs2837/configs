@@ -1,6 +1,6 @@
 local config = function()
     require('fidget').setup({})
-    local mason = require('mason')
+    local mason     = require('mason')
     local mason_lsp = require('mason-lspconfig')
     mason.setup({
         ui = {
@@ -42,8 +42,8 @@ local config = function()
                         '?.lua',
                         '?/init.lua',
                         vim.fn.expand '~/.luarocks',
-                        vim.fn.expand '~/.luarocks/share/lua/5.3/?.lua',
-                        vim.fn.expand '~/.luarocks/share/lua/5.3/?/init.lua',
+                        vim.fn.expand '~/.luarocks/share/lua/5.4/?.lua',
+                        vim.fn.expand '~/.luarocks/share/lua/5.4/?/init.lua',
                     }
                 },
                 workspace = {
@@ -52,7 +52,10 @@ local config = function()
                         '/opt/homebrew/opt/luarocks',
                         vim.env.VIMRUNTIME,
                     }
-                }
+                },
+                hint = {
+                    enable = true,
+                },
             }
         }
 
@@ -323,7 +326,7 @@ return {
                 version = "v2.1.1"
             },
             { "rafamadriz/friendly-snippets" },
-            { "j-hui/fidget.nvim"}
+            { "j-hui/fidget.nvim" }
         },
         config = config
     }

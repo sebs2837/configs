@@ -5,7 +5,7 @@ local config = function()
 
     local map = vim.keymap.set
 
-    local map = vim.keymap.set
+    telescope.load_extension "undo"
 
     telescope.setup({
         defaults = {
@@ -33,23 +33,10 @@ local config = function()
             },
             grep_string = { theme = "dropdown" },
             life_grep = { theme = "dropdown" },
-            -- Default configuration for builtin pickers goes here:
-            -- picker_name = {
-            --   picker_config_key = value,
-            --   ...
-            -- }
-            -- Now the picker_config_key will be applied every time you call this
-            -- builtin picker
         },
         extensions = {
-            ["ui-select"] = {},
-            -- Your extension configuration goes here:
-            -- extension_name = {
-            --   extension_config_key = value,
-            -- }
-            -- please take a look at the readme of the extension you want to configure
             undo = {
-                ouse_delta = true,
+                use_delta = true,
                 use_custom_command = nil, -- setting this implies `use_delta = false`. Accepted format is: { "bash", "-c", "echo '$DIFF' | delta" }
                 side_by_side = false,
                 diff_context_lines = vim.o.scrolloff,
@@ -70,7 +57,6 @@ local config = function()
             },
         }
     })
-    telescope.load_extension "undo"
 
     -- Key mappings
     map("n", "<C-p>", builtin.git_files,
