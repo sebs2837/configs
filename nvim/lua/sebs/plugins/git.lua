@@ -24,7 +24,9 @@ local config = function()
                 { noremap = true, silent = true, desc = 'reset buffer', buffer = bufnr })
             map('n', '<leader>hp', gs.preview_hunk,
                 { noremap = true, silent = true, desc = 'preview hunk', buffer = bufnr })
-            map('n', '<leader>hb', function() gs.blame_line { full = false } end,
+            map('n', '<leader>hB', function() gs.blame_line { full = false } end,
+                { noremap = true, silent = true, desc = 'blame', buffer = bufnr })
+            map('n', '<leader>hb', gs.toggle_current_line_blame,
                 { noremap = true, silent = true, desc = 'blame', buffer = bufnr })
             map('n', '<leader>hS', gs.stage_buffer, DEFAULT_OPTIONS)
         end,

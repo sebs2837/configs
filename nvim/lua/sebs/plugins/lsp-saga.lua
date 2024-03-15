@@ -13,7 +13,7 @@ local config = function()
             enable = true,
             sign = true,
             sign_priority = 40,
-            virtual_text = true,
+            virtual_text = false,
         },
         finder_definition_icon = "  ",
         finder_reference_icon = "  ",
