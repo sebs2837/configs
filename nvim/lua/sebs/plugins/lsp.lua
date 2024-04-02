@@ -1,5 +1,4 @@
 local config = function()
-    require('fidget').setup({})
     local mason     = require('mason')
     local mason_lsp = require('mason-lspconfig')
     mason.setup({
@@ -15,7 +14,12 @@ local config = function()
         ensure_installed = { "lua_ls", "rust_analyzer" },
         handlers = {
             function(server_name)
-                require('lspconfig')[server_name].setup({})
+
+                if server_name == "rust_analyzer" then
+                    return true
+                else
+                    require('lspconfig')[server_name].setup({})
+                end
             end
         }
     })
@@ -30,6 +34,31 @@ local config = function()
 
     lsp.hls.setup({
         filetypes = { 'haskell', 'lhaskell', 'cabal' },
+    })
+    lsp.texlab.setup({
+        texlab = {
+            auxDirectory = "./out",
+            bibtexFormatter = "texlab",
+            build = {
+                args = { "-interaction=nonstopmode", "-synctex=1", "%f" },
+                executable = "tex",
+                forwardSearchAfter = false,
+                onSave = false
+            },
+            chktex = {
+                onEdit = false,
+                onOpenAndSave = false
+            },
+            diagnosticsDelay = 300,
+            formatterLineLength = 80,
+            forwardSearch = {
+                args = {}
+            },
+            latexFormatter = "latexindent",
+            latexindent = {
+                modifyLineBreaks = false
+            }
+        }
     })
     lsp.clangd.setup({})
     lsp.bashls.setup({})
@@ -102,10 +131,8 @@ local config = function()
             vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
             local client = lsp_clients[1]
 
-            if client.name == 'rust_analyzer' then
-                map("n", "<leader>k", require('rust-tools').hover_actions.hover_actions,
-                    { noremap = true, silent = true, buffer = bufnr, desc = 'rust hover actions' })
-            end
+            map("n", "<leader>k", vim.lsp.buf.hover,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'hover action' })
 
             -- Mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -246,7 +273,7 @@ local config = function()
     }
 
 
-    require('rust-tools').setup(opts)
+    --require('rustaceanvim').setup(opts)
 
     -- Setup Completion
     -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
@@ -310,7 +337,8 @@ return {
             { "williamboman/mason-lspconfig.nvim" },
             { "folke/lsp-colors.nvim" },
             { "f3fora/cmp-spell" },
-            { "simrat39/rust-tools.nvim" },
+            --{ "simrat39/rust-tools.nvim" },
+            { "mrcjkb/rustaceanvim", version = "^4", ft = {"rust"},},
             { "onsails/lspkind.nvim" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-buffer" },
@@ -325,8 +353,8 @@ return {
                 "L3MON4D3/LuaSnip",
                 version = "v2.1.1"
             },
-            { "rafamadriz/friendly-snippets" },
-            { "j-hui/fidget.nvim" }
+            { "rafamadriz/friendly-snippets" }
+--            { "j-hui/fidget.nvim" }
         },
         config = config
     }

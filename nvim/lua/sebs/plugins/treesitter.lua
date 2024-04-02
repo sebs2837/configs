@@ -17,7 +17,8 @@ local config = function()
             "scss",
             "toml",
             "vimdoc",
-            "yaml"
+            "yaml",
+            "latex"
         },                   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
         ignore_install = {}, -- List of parsers to ignore installing
         highlight = {

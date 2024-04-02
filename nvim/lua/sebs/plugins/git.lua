@@ -26,7 +26,9 @@ local config = function()
                 { noremap = true, silent = true, desc = 'preview hunk', buffer = bufnr })
             map('n', '<leader>hb', function() gs.blame_line { full = false } end,
                 { noremap = true, silent = true, desc = 'blame', buffer = bufnr })
-            map('n', '<leader>hS', gs.stage_buffer, DEFAULT_OPTIONS)
+            map('n', '<leader>hS', gs.stage_buffer, OPTIONS:desc("stage complete buffer"))
+            map('n', ']h', gs.next_hunk, OPTIONS:desc("gitsigns next hunk"))
+            map('n', '[h', gs.prev_hunk, OPTIONS:desc("gitsigns next hunk"))
         end,
 
 
