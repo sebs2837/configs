@@ -140,7 +140,7 @@ local config = function()
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to declaration' })
             map('n', 'gd', vim.lsp.buf.definition,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to definition' })
-            map('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'show hover info' })
+            map('n', 'D', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'show hover info' })
             map('n', 'gi', vim.lsp.buf.implementation,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to implementation' })
             map('n', '<leader>df', vim.diagnostic.open_float,

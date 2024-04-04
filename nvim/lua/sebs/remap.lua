@@ -121,12 +121,12 @@ vim.keymap.set("n", "<leader><leader>", function() -- reload with double leader
     vim.cmd("so")
 end)
 
-vim.keymap.set("n", "gd", function()
+vim.keymap.set("n", "dg", function()
         vim.cmd.diffget { args = { "//2" } }
     end,
     OPTIONS:desc("diffget left (LOCAL)"))
 
-vim.keymap.set("n", "gu", function()
+vim.keymap.set("n", "dh", function()
         vim.cmd.diffget { args = { "//3" } }
     end,
     OPTIONS:desc("diffget right (REMOTE)"))
