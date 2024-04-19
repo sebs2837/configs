@@ -23,17 +23,17 @@ end
 
 wezterm.on(
     'format-tab-title',
-    function(tab, tabs, panes, config, hover, max_width)
+    function(tab, tabs, panes, cfg, hover, max_width)
         local edge_background = '#2E3440'
         local background = '#2E3440'
         local foreground = '#D8DEE9'
 
         if tab.is_active then
             foreground = '#2b2042'
-            background = '#A3BE8C'
+            background = '#ea9a97'
         elseif hover then
-            background = '#81A1C1'
             foreground = '#2b2042'
+            background = '#9ccfd8'
         end
 
         local edge_foreground = background
@@ -60,7 +60,7 @@ wezterm.on(
 
 
 config = {
-    color_scheme              = 'nord',
+    color_scheme              = 'rose-pine-moon',
     enable_scroll_bar         = true,
     min_scroll_bar_height     = '2cell',
     font                      = wezterm.font_with_fallback({
@@ -89,7 +89,7 @@ config = {
         tab_bar = {
             -- The color of the inactive tab bar edge/divider
             inactive_tab_edge = '#575757',
-            background = '#2E3440',
+            background = '#232136',--'#2E3440',
             active_tab = {
                 -- The color of the background area for the tab
                 bg_color = '#2E3440',

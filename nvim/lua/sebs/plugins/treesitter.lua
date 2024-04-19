@@ -6,6 +6,7 @@ local config = function()
             "cpp",
             "css",
             "fish",
+            "go",
             "html",
             "json",
             "lua",
@@ -71,6 +72,10 @@ local config = function()
             "vue",
             "xml",
             "rs",
+            "go",
+            "py",
+            "lua",
+            "c",
         },
         rainbow = {
             enable = true,

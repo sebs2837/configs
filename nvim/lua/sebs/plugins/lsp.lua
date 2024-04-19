@@ -1,6 +1,8 @@
 local config = function()
     local mason     = require('mason')
     local mason_lsp = require('mason-lspconfig')
+    local lspconfig = require('lspconfig')
+
     mason.setup({
         ui = {
             icons = {
@@ -10,114 +12,125 @@ local config = function()
             }
         }
     })
+
     mason_lsp.setup({
         ensure_installed = { "lua_ls", "rust_analyzer" },
         handlers = {
+            -- default handler
             function(server_name)
+                lspconfig[server_name].setup({})
+            end,
+            ["rust_analyzer"] = function()
+                lspconfig.rust_analyzer.setup{
+                    settings = {
+                        ['rust_analyzer'] = {
+                            diagnostic = {
+                                enable = false,
+                            }
+                        }
+                    }
+                }
+            end,
+            ["texlab"] = function()
+                lspconfig.texlab.setup({
+                    texlab = {
+                        auxDirectory = "./out",
+                        bibtexFormatter = "texlab",
+                        build = {
+                            args = { "-interaction=nonstopmode", "-synctex=1", "%f" },
+                            executable = "tex",
+                            forwardSearchAfter = false,
+                            onSave = false
+                        },
+                        chktex = {
+                            onEdit = false,
+                            onOpenAndSave = false
+                        },
+                        diagnosticsDelay = 300,
+                        formatterLineLength = 80,
+                        forwardSearch = {
+                            args = {}
+                        },
+                        latexFormatter = "latexindent",
+                        latexindent = {
+                            modifyLineBreaks = false
+                        }
+                    }
+                })
+            end,
+            ["hls"] = function()
+                lspconfig.hls.setup({
+                    filetypes = { 'haskell', 'lhaskell', 'cabal' },
+                })
+            end,
+            ["lua_ls"] = function()
+                lspconfig.lua_ls.setup({
+                    settings = {
+                        Lua = {
+                            runtime = {
+                                version = 'Lua 5.4',
+                                path = {
+                                    '?.lua',
+                                    '?/init.lua',
+                                    vim.fn.expand '~/.luarocks',
+                                    vim.fn.expand '~/.luarocks/share/lua/5.4/?.lua',
+                                    vim.fn.expand '~/.luarocks/share/lua/5.4/?/init.lua',
+                                }
+                            },
+                            workspace = {
+                                library = {
+                                    '/opt/homebrew/opt/lua',
+                                    '/opt/homebrew/opt/luarocks',
+                                    vim.env.VIMRUNTIME,
+                                }
+                            },
+                            hint = {
+                                enable = true,
+                            },
+                        }
+                    }
 
-                if server_name == "rust_analyzer" then
-                    return true
-                else
-                    require('lspconfig')[server_name].setup({})
-                end
+                })
+            end,
+            ["pylsp"] = function()
+                lspconfig.pylsp.setup({
+                    settings = {
+                        pylsp = {
+                            plugins = {
+                                pylint = {
+                                    enabled = true,
+                                    args = { "--disable=C0116,W1203,C0114" },
+                                    executable = "pylint"
+                                },
+                                pyflakes = { enabled = false },
+                                pycodestyles = { enabled = false },
+                                jedi_completion = { enabled = true },
+                                jedi_hover = { enabled = true },
+                                jedi_references = { enabled = true },
+                                jedi_signature_help = { enabled = true },
+                                jedi_symbols = { enabled = true, all_scopes = true },
+                                pyls_isort = { enabled = true, profile = "black" },
+                                pylsp_mypy = { enabled = true },
+                                pylsp_black = {
+                                    enable = true,
+                                    line_length = 120
+                                },
+                            },
+                        },
+                    },
+                    flags = {
+                        debounce_text_changes = 200,
+                    },
+                })
             end
         }
     })
-    local lsp = require('lspconfig')
 
     require("lsp-colors").setup({
         Error = "#db4b4b",
         Warning = "#D8DD4F",
         Information = "#0db9d7",
         Hint = "#6CA4BE"
-    })
-
-    lsp.hls.setup({
-        filetypes = { 'haskell', 'lhaskell', 'cabal' },
-    })
-    lsp.texlab.setup({
-        texlab = {
-            auxDirectory = "./out",
-            bibtexFormatter = "texlab",
-            build = {
-                args = { "-interaction=nonstopmode", "-synctex=1", "%f" },
-                executable = "tex",
-                forwardSearchAfter = false,
-                onSave = false
-            },
-            chktex = {
-                onEdit = false,
-                onOpenAndSave = false
-            },
-            diagnosticsDelay = 300,
-            formatterLineLength = 80,
-            forwardSearch = {
-                args = {}
-            },
-            latexFormatter = "latexindent",
-            latexindent = {
-                modifyLineBreaks = false
-            }
-        }
-    })
-    lsp.clangd.setup({})
-    lsp.bashls.setup({})
-    lsp.lua_ls.setup({
-        settings = {
-            Lua = {
-                runtime = {
-                    version = 'Lua 5.4',
-                    path = {
-                        '?.lua',
-                        '?/init.lua',
-                        vim.fn.expand '~/.luarocks',
-                        vim.fn.expand '~/.luarocks/share/lua/5.4/?.lua',
-                        vim.fn.expand '~/.luarocks/share/lua/5.4/?/init.lua',
-                    }
-                },
-                workspace = {
-                    library = {
-                        '/opt/homebrew/opt/lua',
-                        '/opt/homebrew/opt/luarocks',
-                        vim.env.VIMRUNTIME,
-                    }
-                },
-                hint = {
-                    enable = true,
-                },
-            }
-        }
-
-    })
-
-    lsp.pylsp.setup({
-        settings = {
-            pylsp = {
-                plugins = {
-                    pylint = {
-                        enabled = true,
-                        args = { "--disable=C0116,W1203,C0114" },
-                        executable = "pylint"
-                    },
-                    pyflakes = { enabled = false },
-                    pycodestyles = { enabled = false },
-                    jedi_completion = { enabled = true },
-                    jedi_hover = { enabled = true },
-                    jedi_references = { enabled = true },
-                    jedi_signature_help = { enabled = true },
-                    jedi_symbols = { enabled = true, all_scopes = true },
-                    pyls_isort = { enabled = true, profile = "black" },
-                    pylsp_mypy = { enabled = true },
-                    pylsp_black = {
-                        enable = true,
-                        line_length = 120
-                    },
-                },
-            },
-        },
-        flags = {
-            debounce_text_changes = 200,
-        },
     })
 
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -183,98 +196,6 @@ local config = function()
         end,
     })
 
-    local opts = {
-        tools = { -- rust-tools options
-            autoSetHints = true,
-            inlay_hints = {
-
-                -- Only show inlay hints for the current line
-                only_current_line = false,
-
-                -- Event which triggers a refersh of the inlay hints.
-                -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-                -- not that this may cause  higher CPU usage.
-                -- This option is only respected when only_current_line and
-                -- autoSetHints both are true.
-                only_current_line_autocmd = "CursorHold",
-
-                -- wheter to show parameter hints with the inlay hints or not
-                show_parameter_hints = true,
-
-                -- prefix for parameter hints
-                parameter_hints_prefix = "<- ",
-
-                -- prefix for all the other hints (type, chaining)
-                other_hints_prefix = "=> ",
-
-                -- whether to align to the length of the longest line in the file
-                max_len_align = false,
-
-                -- padding from the left if max_len_align is true
-                max_len_align_padding = 1,
-
-                -- whether to align to the extreme right or not
-                right_align = false,
-
-                -- padding from the right if right_align is true
-                right_align_padding = 7,
-
-                -- The color of the hints
-                highlight = "SpecialComment",
-            },
-            hover_actions = {
-
-                -- the border that is used for the hover window
-                -- see vim.api.nvim_open_win()
-                border = {
-                    { "╭", "FloatBorder" },
-                    { "─", "FloatBorder" },
-                    { "╮", "FloatBorder" },
-                    { "│", "FloatBorder" },
-                    { "╯", "FloatBorder" },
-                    { "─", "FloatBorder" },
-                    { "╰", "FloatBorder" },
-                    { "│", "FloatBorder" },
-                },
-
-                -- Maximal width of the hover window. Nil means no max.
-                max_width = nil,
-
-                -- Maximal height of the hover window. Nil means no max.
-                max_height = nil,
-
-                -- whether the hover action window gets automatically focused
-                -- default: false
-                auto_focus = false,
-            },
-        },
-
-        -- all the opts to send to nvim-lspconfig
-        -- these override the defaults set by rust-tools.nvim
-        -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-        server = {
-            -- on_attach is a callback called when the language server attachs to the buffer
-            --	on_attach = function ()
-            -- Hover actions
-            --	  vim.keymap.set("n", "<C-leader>", require('rust-tools').hover_actions.hover_actions, { buffer = bufnr })
-            -- Code action groups
-            --	  vim.keymap.set("n", "<Leader>a", require('rust-tools').code_action_group.code_action_group, { buffer = bufnr })
-            settings = {
-                -- to enable rust-analyzer settings visit:
-                -- https://github.com/rust-aalyzer/rust-analyzero blob/master/docs/user/generated_config.adoc
-                ["rust-analyzer"] = {
-                    -- enable clippy on save
-                    checkOnSave = {
-                        command = "clippy"
-                    },
-                }
-            }
-        },
-    }
-
-
-    --require('rustaceanvim').setup(opts)
-
     -- Setup Completion
     -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
     local lspkind = require('lspkind')
@@ -331,14 +252,13 @@ end
 return {
     {
         "neovim/nvim-lspconfig",
+        event = {"BufReadPre", "BufNewfile"},
         dependencies = {
             { "nvim-telescope/telescope.nvim" },
             { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
             { "folke/lsp-colors.nvim" },
             { "f3fora/cmp-spell" },
-            --{ "simrat39/rust-tools.nvim" },
-            { "mrcjkb/rustaceanvim", version = "^4", ft = {"rust"},},
             { "onsails/lspkind.nvim" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-buffer" },
@@ -354,7 +274,6 @@ return {
                 version = "v2.1.1"
             },
             { "rafamadriz/friendly-snippets" }
---            { "j-hui/fidget.nvim" }
         },
         config = config
     }

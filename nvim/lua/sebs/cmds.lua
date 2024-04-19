@@ -11,7 +11,5 @@ api.nvim_create_autocmd({ "BufEnter", "BufReadPost" }, {
                norm zR
         ]])
     end,
-    --        api.nvim_command("normal zR")
-    --        print(string.format('Got event %s', vim.inspect(ev)))
 })
 

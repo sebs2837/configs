@@ -107,7 +107,7 @@ local config = function()
     ins_left {
         -- mode component
         function()
-            return ''
+            return ''
         end,
         color = mode_color,
         padding = { right = 1 },
@@ -169,23 +169,6 @@ local config = function()
         color = { fg = '#ffffff', gui = 'bold' },
     }
 
-    --[[
-ins_left {
-	'lsp_progress',
-	display_components = { 'spinner', { 'percentage' } },
-	-- With spinner
-	colors = {
-		percentage      = '#ffffff',
-		title           = colors.cyan,
-		message         = colors.cyan,
-		spinner         = '#ffffff',
-		lsp_client_name = colors.magenta,
-		use             = true,
-	},
-	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-	spinner_symbols = { '󰪞 ', '󰪟 ', '󰪠 ', '󰪡 ', '󰪢 ', '󰪣 ', '󰪤 ', '󰪥 '}
-}
-    --]]
 
     -- Add components to right sections
     ins_right {
