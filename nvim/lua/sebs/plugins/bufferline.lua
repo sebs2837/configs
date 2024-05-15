@@ -65,10 +65,16 @@ local config = function()
     }
 end
 return {
+--[[ removed buffer line in favour of more nvim'ish approach where:
+-- buffers are in-mem files 
+-- tabs are collection of buffers
+-- windows represent the view of buffers
     {
         "akinsho/nvim-bufferline.lua",
         dependencies = "kyazdani42/nvim-web-devicons",
         config = config,
         event = "BufReadPre",
     }
+    ]]--
+    {}
 }

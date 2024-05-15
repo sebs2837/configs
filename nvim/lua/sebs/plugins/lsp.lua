@@ -266,14 +266,12 @@ return {
             { "hrsh7th/cmp-cmdline" },
             { "hrsh7th/cmp-vsnip" },
             { "hrsh7th/nvim-cmp" },
-            { "hrsh7th/cmp-calc" },
-            { "hrsh7th/cmp-emoji" },
-            { "hrsh7th/vim-vsnip" },
-            {
+            { "hrsh7th/vim-vsnip" }
+       --[[ {
                 "L3MON4D3/LuaSnip",
                 version = "v2.1.1"
-            },
-            { "rafamadriz/friendly-snippets" }
+            },]]--
+--            { "rafamadriz/friendly-snippets" }
         },
         config = config
     }

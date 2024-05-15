@@ -59,7 +59,15 @@ local config = function()
     })
 
     -- Key mappings
-    map("n", "<C-p>", builtin.git_files,
+    map("n", "<C-p>", function()
+            local git_dir = vim.fn.finddir('.git', vim.fn.getcwd() .. ";")
+            if git_dir == "" then
+                vim.notify(vim.fn.getcwd() .. " is not a git repo", vim.log.levels.ERROR)
+                return
+            end
+
+            builtin.git_files()
+        end,
         { noremap = true, silent = true, desc = 'telescope git files' })
     map("n", "<leader>pf", function()
             local where = utils.buffer_dir()

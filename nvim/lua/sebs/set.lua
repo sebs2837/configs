@@ -51,7 +51,7 @@ opt.title = true
 opt.background = "dark"
 opt.termguicolors = true
 
-opt.showtabline = 2
+opt.showtabline = 0
 opt.ruler = true
 opt.laststatus = 2
 

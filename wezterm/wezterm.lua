@@ -65,8 +65,8 @@ config = {
     min_scroll_bar_height     = '2cell',
     font                      = wezterm.font_with_fallback({
         { family = "CaskaydiaCove NFP SemiLight", scale = 1.3 },
-        { family = "JetBrainsMono NF", scale = 1.2 },
-        { family = "SauceCodePro NF",  scale = 1.2 },
+        { family = "JetBrainsMono NF",            scale = 1.2 },
+        { family = "SauceCodePro NF",             scale = 1.2 },
     }),
     window_background_opacity = 1.0,
     window_decorations        = "RESIZE",
@@ -86,10 +86,12 @@ config = {
 
     tab_bar_at_bottom         = true,
     colors                    = {
+        selection_fg = '#D8DEE9', -- make selections visible with rose-pine
+        selection_bg = '#2E3440',
         tab_bar = {
             -- The color of the inactive tab bar edge/divider
             inactive_tab_edge = '#575757',
-            background = '#232136',--'#2E3440',
+            background = '#232136', --'#2E3440',
             active_tab = {
                 -- The color of the background area for the tab
                 bg_color = '#2E3440',
