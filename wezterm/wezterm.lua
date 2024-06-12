@@ -64,7 +64,7 @@ config = {
     enable_scroll_bar         = true,
     min_scroll_bar_height     = '2cell',
     font                      = wezterm.font_with_fallback({
-        { family = "CaskaydiaCove NFP SemiLight", scale = 1.3 },
+        { family = "CaskaydiaCove NFP SemiLight", scale = 1.4 }, -- presentation 1.7
         { family = "JetBrainsMono NF",            scale = 1.2 },
         { family = "SauceCodePro NF",             scale = 1.2 },
     }),
@@ -85,6 +85,8 @@ config = {
     },
 
     tab_bar_at_bottom         = true,
+    hide_tab_bar_if_only_one_tab = true,
+
     colors                    = {
         selection_fg = '#D8DEE9', -- make selections visible with rose-pine
         selection_bg = '#2E3440',

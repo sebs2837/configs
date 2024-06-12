@@ -1,3 +1,38 @@
+local LSPIcon = {}
+LSPIcon = {
+    lua_ls = { icon = "" },
+    rust_analyzer =  { icon = "" },
+    zls = { icon = "" },
+    julials = { icon = "" },
+    gopls= {icon = ""},
+}
+
+
+local function get_icon()
+    return LSPIcon:to_string()
+end
+
+function LSPIcon:to_string()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local client = vim.lsp.get_clients({bufnr= bufnr})
+    local msg = "  LSP: "
+    for _, c in  ipairs(client) do
+        print("Name " ..c.name)
+    end
+
+    if client ~= nil then
+        local name = client.name
+
+        local icon = LSPIcon[name].cfg.icon
+        print("msg " .. icon)
+        local m = msg .. icon
+        print("msg " ..m)
+        return ""..msg .. icon..""
+    else
+        return msg .. "No active clietnt"
+    end
+end
+
 local config = function()
     local lualine = require('lualine')
 
@@ -100,7 +135,7 @@ local config = function()
         function()
             return '▊'
         end,
-        color = mode_color,         -- Sets highlighting of component
+        color = mode_color,                -- Sets highlighting of component
         padding = { left = 0, right = 1 }, -- We don't need space before this
     }
 
@@ -147,32 +182,43 @@ local config = function()
             return '%='
         end,
     }
+    --[[
+        function()
+            local msg = 'No Active Lsp'
+            local bufnr = vim.api.nvim_get_current_buf()
+            local client = vim.lsp.get_clients({ bufnr = bufnr })[1]
+            if client.name ~= nil then
+                msg = client.name
+            end
+            return msg
+        end,
+]] --
 
     ins_left {
         -- Lsp server name .
-        function()
+            function()
             local msg = 'No Active Lsp'
-            local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-            local clients = vim.lsp.get_active_clients()
+            local buf_ft = vim.api.nvim_get_option_value('filetype', {buf = 0})
+            local clients = vim.lsp.get_clients()
             if next(clients) == nil then
                 return msg
             end
             for _, client in ipairs(clients) do
                 local filetypes = client.config.filetypes
                 if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                    return client.name
+                    return LSPIcon[client.name].icon.." ".. client.name
                 end
             end
             return msg
         end,
-        icon = ' LSP:',
+        icon = '',
         color = { fg = '#ffffff', gui = 'bold' },
     }
 
 
     -- Add components to right sections
     ins_right {
-        'o:encoding', -- option component same as &encoding in viml
+        'o:encoding',       -- option component same as &encoding in viml
         fmt = string.upper, -- I'm not sure why it's upper case either ;)
         cond = conditions.hide_in_width,
         color = { fg = colors.green, gui = 'bold' },

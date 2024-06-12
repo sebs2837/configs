@@ -29,7 +29,7 @@ local config = function()
                 theme = "dropdown",
             },
             buffers = {
-                theme = "dropdown"
+                theme = "ivy"
             },
             grep_string = { theme = "dropdown" },
             life_grep = { theme = "dropdown" },

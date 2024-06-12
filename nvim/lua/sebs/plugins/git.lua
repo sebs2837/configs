@@ -1,17 +1,17 @@
 local config = function()
     require('gitsigns').setup {
-        signs                             = {
+        signs      = {
             add          = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
             change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
             delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
         },
-        signcolumn                        = true,  -- Toggle with `:Gitsigns toggle_signs`
-        numhl                             = false, -- Toggle with `:Gitsigns toggle_numhl`
-        linehl                            = false, -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff                         = false, -- Toggle with `:Gitsigns toggle_word_diff`
-        on_attach                         = function(bufnr)
+        signcolumn = true,                         -- Toggle with `:Gitsigns toggle_signs`
+        numhl      = false,                        -- Toggle with `:Gitsigns toggle_numhl`
+        linehl     = false,                        -- Toggle with `:Gitsigns toggle_linehl`
+        word_diff  = false,                        -- Toggle with `:Gitsigns toggle_word_diff`
+        on_attach  = function(bufnr)
             local gs = package.loaded.gitsigns
             local map = vim.keymap.set
 
@@ -63,22 +63,21 @@ local config = function()
             enable = false
         },
     }
-        vim.api.nvim_create_autocmd('OptionSet', {
+    vim.api.nvim_create_autocmd('OptionSet', {
         group = vim.api.nvim_create_augroup('SebsAuCmds', {}),
-            pattern = {"diff"},
-            callback = function (ev)
-                return
-            end,
-})
+        pattern = { "diff" },
+        callback = function(ev)
+            return
+        end,
+    })
 end
 return {
     {
         "lewis6991/gitsigns.nvim",
         dependencies = {
-		{"nvim-lua/plenary.nvim"},
-		{"tpope/vim-fugitive"}
-	},
+            { "nvim-lua/plenary.nvim" },
+            { "tpope/vim-fugitive" }
+        },
         config = config
     }
 }
-
