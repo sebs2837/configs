@@ -76,6 +76,7 @@ return {
     },
     {
         'rose-pine/neovim',
+        name = 'rose-pine',
         config = color_config,
     },
     { "EdenEast/nightfox.nvim" },
