@@ -284,8 +284,7 @@ local config = function()
             documentation = cmp.config.window.bordered(),
         },
         mapping = {
-            ['<C-p>'] = cmp.mapping.select_prev_item(),
-            ['<C-n>'] = cmp.mapping.select_next_item(),
+            ['<C-s>'] = cmp.mapping.complete(),
             -- Add tab support
             ['<S-Tab>'] = cmp.mapping(function(fallback)
                 if cmp.visible() then
@@ -343,6 +342,15 @@ local config = function()
             { name = 'luasnip' },
             { name = 'buffer' },
             { name = 'crates' },
+            { name = 'spell',
+                option = {
+                    keep_all_entries = false,
+                    enable_in_context = function ()
+                        return require('cmp.config.context').in_treesitter_capture('spell')
+                    end,
+                    preselect_correct_word = true,
+                }
+            },
         },
     })
 end

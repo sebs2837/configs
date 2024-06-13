@@ -26,7 +26,7 @@ opt.cmdheight = 2
 opt.updatetime = 500
 opt.encoding = "utf8"
 opt.spelllang = {"en_us"}
-opt.spell = false
+opt.spell = true
 
 
 opt.shortmess:append("c")

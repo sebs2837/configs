@@ -130,3 +130,5 @@ vim.keymap.set("n", "dh", function()
         vim.cmd.diffget { args = { "//3" } }
     end,
     OPTIONS:desc("diffget right (REMOTE)"))
+
+return OPTIONS
