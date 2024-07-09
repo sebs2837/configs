@@ -8,6 +8,7 @@ local config = function()
             "fish",
             "go",
             "html",
+            "haskell",
             "json",
             "julia",
             "lua",

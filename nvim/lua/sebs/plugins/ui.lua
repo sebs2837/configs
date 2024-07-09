@@ -80,4 +80,5 @@ return {
         config = color_config,
     },
     { "EdenEast/nightfox.nvim" },
+    { "folke/tokyonight.nvim" }
 }

@@ -2,7 +2,7 @@ local config = function()
     local mason     = require('mason')
     local mason_lsp = require('mason-lspconfig')
     local lspconfig = require('lspconfig')
-    local informa = require"informa"
+--    local informa = require"informa"
 
     mason.setup({
         ui = {
@@ -153,7 +153,7 @@ local config = function()
             local client = lsp_clients[1]
 
             if client.server_capabilities.inlayHintProvider then
-                vim.lsp.inlay_hint.enable(true)
+                vim.lsp.inlay_hint.enable(false)
             end
 
             vim.diagnostic.config({
@@ -212,7 +212,7 @@ local config = function()
                     builtin.lsp_type_definitions()
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show type definition' })
-            map('n', '<leader>vrn', function() informa.lsp_rename() end,
+            map('n', '<leader>vrn', function() vim.lsp.buf.rename() end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'rename under cursor' })
             map('n', '<leader>vca', vim.lsp.buf.code_action,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
@@ -341,6 +341,7 @@ local config = function()
             { name = 'path' },
             { name = 'luasnip' },
             { name = 'buffer' },
+            { name = 'calc' },
             { name = 'crates' },
             { name = 'spell',
                 option = {
@@ -368,6 +369,7 @@ return {
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
+            { "hrsh7th/cmp-calc"},
             { "hrsh7th/cmp-cmdline" },
             { "hrsh7th/nvim-cmp" },
             {

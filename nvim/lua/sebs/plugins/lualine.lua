@@ -162,6 +162,20 @@ local config = function()
 
     ins_left { 'location' }
 
+    ins_left { function()
+        local bufs = vim.api.nvim_list_bufs()
+        local count = -1
+
+        for _, buf in  pairs(bufs) do
+           if vim.api.nvim_buf_is_valid(buf) then
+             count = count + 1
+           end
+        end
+        return ' '.. count 
+
+    end
+    }
+
     ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
 
     ins_left {
