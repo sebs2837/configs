@@ -2,7 +2,7 @@ local config = function()
     local mason     = require('mason')
     local mason_lsp = require('mason-lspconfig')
     local lspconfig = require('lspconfig')
---    local informa = require"informa"
+    --    local informa = require"informa"
 
     mason.setup({
         ui = {
@@ -61,7 +61,7 @@ local config = function()
             end,
             zls = function()
                 lspconfig.zls.setup({
-                    filetypes = {'zig'}
+                    filetypes = { 'zig' }
                 })
                 vim.g.zig_fmt_autosave = 0
             end,
@@ -153,20 +153,20 @@ local config = function()
             local client = lsp_clients[1]
 
             if client.server_capabilities.inlayHintProvider then
-                vim.lsp.inlay_hint.enable(false)
+                --vim.lsp.inlay_hint.enable(false)
             end
-
             vim.diagnostic.config({
-                virtual_text = true,
+                virtual_text = false,
                 signs = {
                     text = {
-                        [vim.diagnostic.severity.ERROR] = '',
-                        [vim.diagnostic.severity.WARN] = '',
-                        [vim.diagnostic.severity.INFO] = '',
-                        [vim.diagnostic.severity.HINT] = '󰠠',
+                        [vim.diagnostic.severity.ERROR] = '●',
+                        [vim.diagnostic.severity.WARN] = '●',
+                        [vim.diagnostic.severity.INFO] = '●',
+                        [vim.diagnostic.severity.HINT] = '●',
                     }
                 }
             })
+
 
 
             map("n", "<leader>vti", function()
@@ -230,9 +230,9 @@ local config = function()
     local luasnip = require("luasnip")
     local snippets = vim.fn.stdpath("config") .. "/lua/sebs/snippets"
     luasnip.setup({
-        	keep_roots = true,
-	link_roots = true,
-	link_children = true,
+        keep_roots = true,
+        link_roots = true,
+        link_children = true,
         update_events = "TextChanged,TextChangedI",
     });
 
@@ -244,31 +244,31 @@ local config = function()
     -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
     local cmp = require 'cmp'
     local kind_icons = {
-      Text = " ",
-      Method = " ",
-      Function = "󰊕 ",
-      Constructor = " ",
-      Field = " ",
-      Variable = " ",
-      Class = " ",
-      Interface = " ",
-      Module = " ",
-      Property = " ",
-      Unit = " ",
-      Value = " ",
-      Enum = " ",
-      Keyword = " ",
-      Snippet = " ",
-      Color = "",
-      File = " ",
-      Reference = " ",
-      Folder = " ",
-      EnumMember = " ",
-      Constant = " ",
-      Struct = " ",
-      Event = " ",
-      Operator = "  ",
-      TypeParameter = "  ",
+        Text = " ",
+        Method = " ",
+        Function = "󰊕 ",
+        Constructor = " ",
+        Field = " ",
+        Variable = " ",
+        Class = " ",
+        Interface = " ",
+        Module = " ",
+        Property = " ",
+        Unit = " ",
+        Value = " ",
+        Enum = " ",
+        Keyword = " ",
+        Snippet = " ",
+        Color = "",
+        File = " ",
+        Reference = " ",
+        Folder = " ",
+        EnumMember = " ",
+        Constant = " ",
+        Struct = " ",
+        Event = " ",
+        Operator = "  ",
+        TypeParameter = "  ",
     }
 
 
@@ -308,14 +308,14 @@ local config = function()
             ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-leader>'] = cmp.mapping.complete(),
             ['<C-e>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.close()
-                    elseif luasnip.choice_active() then
-                        luasnip.change_choice(1)
-                    else
-                        fallback()
-                    end
-            end, {"i", "s"}),
+                if cmp.visible() then
+                    cmp.close()
+                elseif luasnip.choice_active() then
+                    luasnip.change_choice(1)
+                else
+                    fallback()
+                end
+            end, { "i", "s" }),
             ['<CR>'] = cmp.mapping.confirm({
                 behavior = cmp.ConfirmBehavior.Insert,
                 select = true,
@@ -323,7 +323,7 @@ local config = function()
         },
 
         formatting = {
-            format = function (entry, vim_item)
+            format = function(entry, vim_item)
                 vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
                 vim_item.menu = ({
                     buffer = "[Buffer]",
@@ -343,10 +343,11 @@ local config = function()
             { name = 'buffer' },
             { name = 'calc' },
             { name = 'crates' },
-            { name = 'spell',
+            {
+                name = 'spell',
                 option = {
                     keep_all_entries = false,
-                    enable_in_context = function ()
+                    enable_in_context = function()
                         return require('cmp.config.context').in_treesitter_capture('spell')
                     end,
                     preselect_correct_word = true,
@@ -369,7 +370,7 @@ return {
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-calc"},
+            { "hrsh7th/cmp-calc" },
             { "hrsh7th/cmp-cmdline" },
             { "hrsh7th/nvim-cmp" },
             {
@@ -377,8 +378,13 @@ return {
                 version = "v2.1.1",
                 dependencies = {
                     { "saadparwaiz1/cmp_luasnip" },
-                    {"hrsh7th/nvim-cmp"}
+                    { "hrsh7th/nvim-cmp" }
                 }
+            },
+            {
+                "chrisgrieser/nvim-lsp-endhints",
+                event = "LspAttach",
+                opts = {}, -- required, even if empty
             },
         },
         config = config
