@@ -29,10 +29,11 @@ local config = function()
                 theme = "dropdown",
             },
             buffers = {
-                theme = "ivy"
+             theme = "dropdown",
             },
             grep_string = { theme = "dropdown" },
             life_grep = { theme = "dropdown" },
+            lsp = { theme = "cursor" },
         },
         extensions = {
             undo = {

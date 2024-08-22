@@ -75,7 +75,7 @@ local config = function()
                     settings = {
                         Lua = {
                             runtime = {
-                                version = 'Lua 5.4',
+                                version = 'LuaJIT',
                                 path = {
                                     '?.lua',
                                     '?/init.lua',
@@ -129,7 +129,15 @@ local config = function()
                         debounce_text_changes = 200,
                     },
                 })
+            end,
+            typst_lsp = function()
+                lspconfig.typst_lsp.setup({
+                    settings = {
+                        exportPdf = "never"
+                    }
+                })
             end
+
         }
     })
 
@@ -215,6 +223,10 @@ local config = function()
             map('n', '<leader>vrn', function() vim.lsp.buf.rename() end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'rename under cursor' })
             map('n', '<leader>vca', vim.lsp.buf.code_action,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
+            map('n', '<leader>pca', function()
+                    require('tiny-code-action').code_action()
+                end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
             map('n', '<leader>vrr', function()
                     builtin.lsp_references()
@@ -338,6 +350,7 @@ local config = function()
         -- Installed sources
         sources = {
             { name = 'nvim_lsp' },
+            { name = 'nvim_lsp_signature_help' },
             { name = 'path' },
             { name = 'luasnip' },
             { name = 'buffer' },
@@ -363,6 +376,13 @@ return {
         event = { "BufReadPre", "BufNewfile" },
         dependencies = {
             { "nvim-telescope/telescope.nvim" },
+            {
+                "rachartier/tiny-code-action.nvim",
+                event = "LspAttach",
+                config = function()
+                    require('tiny-code-action').setup()
+                end
+            },
             { "williamboman/mason.nvim" },
             { "williamboman/mason-lspconfig.nvim" },
             { "folke/lsp-colors.nvim" },
@@ -372,6 +392,7 @@ return {
             { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-calc" },
             { "hrsh7th/cmp-cmdline" },
+            { "hrsh7th/cmp-nvim-lsp-signature-help" },
             { "hrsh7th/nvim-cmp" },
             {
                 "L3MON4D3/LuaSnip",

@@ -69,6 +69,10 @@ local color_config = function()
     vim.cmd.colorscheme("rose-pine")
 end
 
+local render_markdown = function()
+    require('render-markdown').setup()
+end
+
 return {
     {
         "j-hui/fidget.nvim",
@@ -80,5 +84,11 @@ return {
         config = color_config,
     },
     { "EdenEast/nightfox.nvim" },
-    { "folke/tokyonight.nvim" }
+    { "folke/tokyonight.nvim" },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {},
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
+        config = render_markdown,
+    }
 }

@@ -110,6 +110,9 @@ vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", OPTIONS:default())
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") --move lines up
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") --move lines down
 
+vim.keymap.set({"n", "v", "i"}, "<Up>", function() end)
+vim.keymap.set({"n", "v", "i"}, "<Down>", function() end)
+
 vim.keymap.set("n", "<leader>nc", function()
         local cfg = vim.fn.stdpath('config')
         vim.cmd { cmd = 'Lexplore', args = { cfg }, bang = true }
@@ -117,6 +120,7 @@ vim.keymap.set("n", "<leader>nc", function()
     OPTIONS:desc("open nvim user config")
 )
 
+-- @Todo: This should only work if filetype is Lua
 vim.keymap.set("n", "<leader><leader>", function() -- reload with double leader
     vim.cmd("so")
 end)

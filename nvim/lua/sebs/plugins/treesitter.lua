@@ -19,6 +19,7 @@ local config = function()
             "rust",
             "scss",
             "toml",
+            "typst",
             "vimdoc",
             "yaml",
             "zig",

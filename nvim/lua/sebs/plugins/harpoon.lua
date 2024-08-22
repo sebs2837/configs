@@ -5,7 +5,7 @@ local config = function()
     local map = vim.keymap.set
 
     map('n', '<leader>hh', function () harpoon.ui:toggle_quick_menu(harpoon:list()) end, { silent = true, desc = 'harpoon toggle quick menu' })
-    map('n', '<leader>ha', function () harpoon:list():append() end, { silent = true, desc = 'harpoon add file' })
+    map('n', '<leader>ha', function () harpoon:list():add() end, { silent = true, desc = 'harpoon add file' })
 
     harpoon:setup({
         settings = {
