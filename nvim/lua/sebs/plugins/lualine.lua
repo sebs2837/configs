@@ -5,6 +5,7 @@ LSPIcon = {
     zls = { icon = "" },
     julials = { icon = "" },
     gopls= {icon = ""},
+    ts_ls = { icon = "" },
 }
 
 
@@ -196,17 +197,6 @@ local config = function()
             return '%='
         end,
     }
-    --[[
-        function()
-            local msg = 'No Active Lsp'
-            local bufnr = vim.api.nvim_get_current_buf()
-            local client = vim.lsp.get_clients({ bufnr = bufnr })[1]
-            if client.name ~= nil then
-                msg = client.name
-            end
-            return msg
-        end,
-]] --
 
     ins_left {
         -- Lsp server name .

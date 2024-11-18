@@ -105,7 +105,6 @@ vim.keymap.set("n", "q?", "<NOP>", OPTIONS:default())                      --no 
 
 vim.keymap.set("n", "<leader>c?", toggle_special_chars, OPTIONS:default()) -- toogle display spaces and other special characters
 
-vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", OPTIONS:default())
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") --move lines up
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") --move lines down
@@ -135,4 +134,11 @@ vim.keymap.set("n", "dh", function()
     end,
     OPTIONS:desc("diffget right (REMOTE)"))
 
+
+vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", OPTIONS:default()) -- map ESC in termnial mode to switch to normal mode
+vim.keymap.set("n", "<leader>tt", function() 
+
+    vim.cmd { cmd = "ToggleTerm"}
+end, OPTIONS:desc("Toggle terminal window")
+) -- map ESC in termnial mode to switch to normal mode
 return OPTIONS

@@ -2,7 +2,6 @@ local config = function()
     local mason     = require('mason')
     local mason_lsp = require('mason-lspconfig')
     local lspconfig = require('lspconfig')
-    --    local informa = require"informa"
 
     mason.setup({
         ui = {
@@ -57,6 +56,23 @@ local config = function()
                             modifyLineBreaks = false
                         }
                     }
+                })
+            end,
+            ts_ls = function()
+                local root_dir = function()
+                    local path = lspconfig.util.root_pattern({'tsconfig.json', 'jsconfig.json', 'package.json', '.git'})
+                    local other = path()
+                    print("root dir: " .. vim.print(other) )
+                    return other
+                end
+                lspconfig.ts_ls.setup({
+                    init_options = { hostInfo = 'neovim' },
+                    filetypes = { 'javascript', 'typescript' },
+                    root_dir = function()
+                        local pattern = {'tsconfig.json', 'jsconfig.json', 'package.json', '.git'}
+                        local root_dir = vim.fs.dirname(vim.fs.find(pattern, {upward = true})[1])
+                        return root_dir
+                    end,
                 })
             end,
             zls = function()
@@ -167,9 +183,9 @@ local config = function()
                 virtual_text = false,
                 signs = {
                     text = {
-                        [vim.diagnostic.severity.ERROR] = '●',
-                        [vim.diagnostic.severity.WARN] = '●',
-                        [vim.diagnostic.severity.INFO] = '●',
+                        [vim.diagnostic.severity.ERROR] = '',
+                        [vim.diagnostic.severity.WARN] = '',
+                        [vim.diagnostic.severity.INFO] = '',
                         [vim.diagnostic.severity.HINT] = '●',
                     }
                 }

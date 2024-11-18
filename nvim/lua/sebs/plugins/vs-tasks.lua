@@ -5,7 +5,9 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
         {
-            'akinsho/toggleterm.nvim', version = "*", config = true
+            'akinsho/toggleterm.nvim', version = "*", opts = {
+                direction = "float",
+            }
         },
     },
     config = function()
