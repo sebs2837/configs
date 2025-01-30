@@ -26,7 +26,7 @@ local config = function()
                         ['rust_analyzer'] = {
                             diagnostic = {
                                 enable = false,
-                            }
+                            },
                         }
                     }
                 }
@@ -146,14 +146,6 @@ local config = function()
                     },
                 })
             end,
-            typst_lsp = function()
-                lspconfig.typst_lsp.setup({
-                    settings = {
-                        exportPdf = "never"
-                    }
-                })
-            end
-
         }
     })
 
@@ -206,6 +198,8 @@ local config = function()
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to declaration' })
             map('n', 'gd', vim.lsp.buf.definition,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to definition' })
+            map('n', 'gtd', vim.lsp.buf.type_definition,
+                { noremap = true, silent = true, buffer = bufnr, desc = 'go to type definition' })
             map('n', 'D', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'show hover info' })
             map('n', 'gi', vim.lsp.buf.implementation,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to implementation' })
@@ -421,7 +415,23 @@ return {
             {
                 "chrisgrieser/nvim-lsp-endhints",
                 event = "LspAttach",
-                opts = {}, -- required, even if empty
+                opts = {
+                    icons = {
+                        type = " ",
+                        parameter = "󰰘 ",
+                        offspec = "󰚺 ",
+                        unknown = " ",
+                    },
+                    label = {
+                        truncateAtChars = 30,
+                        padding = 1,
+                        marginLeft = 1,
+                        sameKindSeperator = "; "
+                    },
+                    extmark = {
+                        priority = 50,
+                    },
+                }, -- required, even if empty
             },
         },
         config = config

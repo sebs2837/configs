@@ -1,7 +1,6 @@
 local config = function()
     local crates = require 'crates'
     crates.setup()
--- thei
 
     local map = vim.keymap.set
 
@@ -27,7 +26,8 @@ end
 return {
     {
         'saecki/crates.nvim',
-        tag = 'v0.4.0',
+        tag = 'stable',
+        event = { "BufRead Cargo.toml" },
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = config,
     }

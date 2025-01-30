@@ -1,10 +1,10 @@
 local LSPIcon = {}
 LSPIcon = {
     lua_ls = { icon = "" },
-    rust_analyzer =  { icon = "" },
+    rust_analyzer = { icon = "" },
     zls = { icon = "" },
     julials = { icon = "" },
-    gopls= {icon = ""},
+    gopls = { icon = "" },
     ts_ls = { icon = "" },
 }
 
@@ -15,10 +15,10 @@ end
 
 function LSPIcon:to_string()
     local bufnr = vim.api.nvim_get_current_buf()
-    local client = vim.lsp.get_clients({bufnr= bufnr})
+    local client = vim.lsp.get_clients({ bufnr = bufnr })
     local msg = "  LSP: "
-    for _, c in  ipairs(client) do
-        print("Name " ..c.name)
+    for _, c in ipairs(client) do
+        print("Name " .. c.name)
     end
 
     if client ~= nil then
@@ -27,8 +27,8 @@ function LSPIcon:to_string()
         local icon = LSPIcon[name].cfg.icon
         print("msg " .. icon)
         local m = msg .. icon
-        print("msg " ..m)
-        return ""..msg .. icon..""
+        print("msg " .. m)
+        return "" .. msg .. icon .. ""
     else
         return msg .. "No active clietnt"
     end
@@ -167,13 +167,12 @@ local config = function()
         local bufs = vim.api.nvim_list_bufs()
         local count = -1
 
-        for _, buf in  pairs(bufs) do
-           if vim.api.nvim_buf_is_valid(buf) then
-             count = count + 1
-           end
+        for _, buf in pairs(bufs) do
+            if vim.api.nvim_buf_is_valid(buf) then
+                count = count + 1
+            end
         end
-        return ' '.. count 
-
+        return ' ' .. count
     end
     }
 
@@ -200,9 +199,9 @@ local config = function()
 
     ins_left {
         -- Lsp server name .
-            function()
+        function()
             local msg = 'No Active Lsp'
-            local buf_ft = vim.api.nvim_get_option_value('filetype', {buf = 0})
+            local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
             local clients = vim.lsp.get_clients()
             if next(clients) == nil then
                 return msg
@@ -210,7 +209,7 @@ local config = function()
             for _, client in ipairs(clients) do
                 local filetypes = client.config.filetypes
                 if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                    return LSPIcon[client.name].icon.." ".. client.name
+                    return LSPIcon[client.name].icon .. " " .. client.name
                 end
             end
             return msg
@@ -260,6 +259,7 @@ local config = function()
         color = mode_color,
         padding = { left = 1 },
     }
+
 
     -- Now don't forget to initialize lualine
     lualine.setup(config)
