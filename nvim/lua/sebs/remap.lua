@@ -50,8 +50,9 @@ end
 
 --map("n", "<Space>", "<NOP>", OPTIONS:default())
 vim.g.mapleader = " "
-
+--[[
 vim.keymap.set("n", "<leader>bf", function()
+
         if explore_open then
             vim.cmd { cmd = 'Lexplore', bang = true }
             explore_open = false
@@ -68,8 +69,8 @@ vim.keymap.set("n", "<leader>bf", function()
         end
     end,
     OPTIONS:default())
+--]]
 
--- vim.keymap.set("n", "<leader>bF", vim.cmd({ cmd = 'Lexplore' }), OPTIONS:default())
 
 vim.keymap.set("v", "<", "<gv", OPTIONS:default())                                         -- select line again after indent
 vim.keymap.set("v", ">", ">gv", OPTIONS:default())                                         -- select line again after indent
@@ -109,15 +110,8 @@ vim.keymap.set("n", "<leader>c?", toggle_special_chars, OPTIONS:default()) -- to
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") --move lines up
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") --move lines down
 
-vim.keymap.set({"n", "v", "i"}, "<Up>", function() end)
-vim.keymap.set({"n", "v", "i"}, "<Down>", function() end)
-
-vim.keymap.set("n", "<leader>nc", function()
-        local cfg = vim.fn.stdpath('config')
-        vim.cmd { cmd = 'Lexplore', args = { cfg }, bang = true }
-    end,
-    OPTIONS:desc("open nvim user config")
-)
+vim.keymap.set({ "n", "v", "i" }, "<Up>", function() end)
+vim.keymap.set({ "n", "v", "i" }, "<Down>", function() end)
 
 -- @Todo: This should only work if filetype is Lua
 vim.keymap.set("n", "<leader><leader>", function() -- reload with double leader
@@ -136,9 +130,8 @@ vim.keymap.set("n", "dh", function()
 
 
 vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", OPTIONS:default()) -- map ESC in termnial mode to switch to normal mode
-vim.keymap.set("n", "<leader>tt", function() 
-
-    vim.cmd { cmd = "ToggleTerm"}
+vim.keymap.set("n", "<leader>tt", function()
+    vim.cmd { cmd = "ToggleTerm" }
 end, OPTIONS:desc("Toggle terminal window")
 ) -- map ESC in termnial mode to switch to normal mode
 return OPTIONS

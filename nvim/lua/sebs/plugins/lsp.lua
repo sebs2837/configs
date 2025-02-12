@@ -146,6 +146,9 @@ local config = function()
                     },
                 })
             end,
+            julials = function()
+                lspconfig.julials.setup({})
+            end,
         }
     })
 
