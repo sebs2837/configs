@@ -121,7 +121,7 @@ local config = function()
                         pylsp = {
                             plugins = {
                                 pylint = {
-                                    enabled = true,
+                                    enabled = false,
                                     args = { "--disable=C0116,W1203,C0114" },
                                     executable = "pylint"
                                 },
