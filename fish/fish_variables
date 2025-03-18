@@ -10,11 +10,11 @@ SETUVAR _fish_abbr_ga:git\x20add\x20\x2dp
 SETUVAR _fish_abbr_gah:git\x20stash\x3b\x20and\x20git\x20pull\x20\x2d\x2drebase\x3b\x20and\x20git\x20stash\x20pop
 SETUVAR _fish_abbr_gc:git\x20checkout
 SETUVAR _fish_abbr_cat:bat\x20-p
-SETUVAR _fish_abbr_l:exa\x20\x2d\x2dicons\x20
-SETUVAR _fish_abbr_ll:exa\x20\x2d\x2dicons\x20\x2dl
-SETUVAR _fish_abbr_lll:exa\x20\x2d\x2dicons\x20\x2dla
-SETUVAR _fish_abbr_ls:exa\x20\x2d\x2dicons
-SETUVAR _fish_abbr_lt:exa\x20\x2d\x2dicons\x20\x2dT
+SETUVAR _fish_abbr_l:eza\x20\x2d\x2dicons\x20
+SETUVAR _fish_abbr_ll:eza\x20\x2d\x2dicons\x20\x2dl
+SETUVAR _fish_abbr_lll:eza\x20\x2d\x2dicons\x20\x2dla
+SETUVAR _fish_abbr_ls:eza\x20\x2d\x2dicons
+SETUVAR _fish_abbr_lt:eza\x20\x2d\x2dicons\x20\x2dT
 SETUVAR _fish_abbr_lx:ls
 SETUVAR _fish_abbr_lzd:lazydocker
 SETUVAR _fish_abbr_m:make

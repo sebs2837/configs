@@ -2,7 +2,7 @@
 format = '$all'
 scan_timeout = 30
 command_timeout = 500
-add_newline = true
+add_newline = false
 
 [aws]
 format = 'on [$symbol($profile )(\($region\) )(\[$duration\])]($style)'
@@ -15,9 +15,9 @@ expiration_symbol = 'X'
 
 [character]
 format = '$symbol '
-success_symbol = '[❯](bold green)'
-error_symbol = '[❯](bold red)'
-vicmd_symbol = '[❮](bold green)'
+success_symbol = '[❯](bold #ea9a97)'
+error_symbol = '[❯](bold #eb6f92)'
+vicmd_symbol = '[❮](bold #9ccfd8)'
 disabled = false
 
 [cmake]
@@ -90,7 +90,7 @@ detect_files = [
 detect_folders = []
 
 [directory]
-truncation_length = 3
+truncation_length = 4
 truncate_to_repo = true
 fish_style_pwd_dir_length = 0
 use_logical_path = true
@@ -99,13 +99,13 @@ style = 'cyan bold'
 disabled = false
 read_only = '🔒'
 read_only_style = 'red'
-truncation_symbol = ''
-home_symbol = '~'
+truncation_symbol = '…/'
+home_symbol = '🏠 '
 
 [directory.substitutions]
 
 [docker_context]
-symbol = '🐳 '
+symbol = '󰡨 '
 style = 'blue bold'
 format = 'via [$symbol$context]($style) '
 only_with_files = true
@@ -241,7 +241,7 @@ disabled = false
 [golang]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = '🐹 '
+symbol = ' '
 style = 'bold cyan'
 disabled = false
 detect_extensions = ['go']
@@ -311,8 +311,8 @@ detect_folders = []
 [jobs]
 threshold = 1
 format = '[$symbol$number]($style) '
-symbol = '✦'
-style = 'bold blue'
+symbol = ' '
+style = 'bold #ea9a97'
 disabled = false
 
 [julia]
@@ -353,7 +353,7 @@ disabled = true
 [lua]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = '🌙 '
+symbol = ' '
 style = 'bold blue'
 lua_binary = 'lua'
 disabled = false
@@ -384,29 +384,25 @@ detect_folders = []
 
 [nix_shell]
 format = 'via [$symbol$state( \($name\))]($style) '
-symbol = '❄️  '
+symbol = '󱄅 '
 style = 'bold blue'
 impure_msg = 'impure'
 pure_msg = 'pure'
 disabled = false
 
-[nodejs]
+[bun]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = ' '
+symbol = '🧅'
 style = 'bold green'
 disabled = false
-not_capable_style = 'bold red'
-detect_extensions = [
-    'js',
-    'mjs',
-    'cjs',
-    'ts',
-]
+detect_extensions = []
 detect_files = [
     'package.json',
     '.node-version',
     '.nvmrc',
+    'bun.lockb',
+    'bunfig.toml'
 ]
 detect_folders = ['node_modules']
 
@@ -415,7 +411,7 @@ format = 'via [$symbol($version )(\($switch_indicator$switch_name\) )]($style)'
 version_format = 'v${raw}'
 global_switch_indicator = ''
 local_switch_indicator = '*'
-symbol = '🐫 '
+symbol = '  '
 style = 'bold yellow'
 disabled = false
 detect_extensions = [
@@ -506,7 +502,7 @@ python_binary = [
 format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 version_format = 'v${raw}'
 style = 'yellow bold'
-symbol = '🐍 '
+symbol = ' '
 disabled = false
 detect_extensions = ['py']
 detect_files = [
@@ -551,7 +547,7 @@ detect_folders = []
 [ruby]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = '💎 '
+symbol = '  '
 style = 'bold red'
 disabled = false
 detect_extensions = ['rb']
@@ -564,7 +560,7 @@ detect_folders = []
 [rust]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = '🦀 '
+symbol = ' '
 style = 'bold red'
 disabled = false
 detect_extensions = ['rs']
@@ -630,7 +626,7 @@ disabled = true
 [swift]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = '🐦 '
+symbol = ' '
 style = 'bold 202'
 disabled = false
 detect_extensions = ['swift']
@@ -691,7 +687,7 @@ detect_folders = []
 [zig]
 format = 'via [$symbol($version )]($style)'
 version_format = 'v${raw}'
-symbol = '↯ '
+symbol = ' '
 style = 'bold yellow'
 disabled = false
 detect_extensions = ['zig']

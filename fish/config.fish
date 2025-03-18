@@ -1,13 +1,21 @@
 #  Global environment variables
 set -xg EDITOR nvim
 
-# HOMEBREW
-set -xg HOMBREW_HOME /opt/homebrew
-
 # Random work related tools
 set -xg TOOLS $HOME/.tools/bin
 
-# FIG
+# HOMEBREW
+switch (uname)
+  case Darwin
+    set --global --export HOMEBREW_PREFIX "/opt/homebrew";
+    set --global --export HOMEBREW_CELLAR "/opt/homebrew/Cellar";
+    set --global --export HOMEBREW_REPOSITORY "/opt/homebrew";
+    fish_add_path --global --move --path "/opt/homebrew/bin" "/opt/homebrew/sbin";
+    if test -n "$MANPATH[1]"; set --global --export MANPATH '' $MANPATH; end;
+    if not contains "/opt/homebrew/share/info" $INFOPATH; set --global --export INFOPATH "/opt/homebrew/share/info" $INFOPATH; end;
+end
+
+#GIT
 set -xg GIT $HOMBREW_HOME/bin/git
 
 # JAVA
@@ -18,7 +26,6 @@ set JULIA /Applications/Julia-1.6.app/Contents/Resources/julia/bin
 
 # PYTHON
 set PIP_USR_BIN $HOME/.local/bin
-set PYTHON_USR_BIN $HOME/Library/Python/3.10/bin
 
 # GO Settings
 set -xg GOPATH $HOME/code/go
@@ -26,16 +33,17 @@ set -xg GOBIN $GOPATH/bin
 set -xg GO111MODULE on
 
 #RUST
+source "$HOME/.cargo/env.fish"
 set -xg CARGO_HOME $HOME/.cargo
 set -xg CARGO_INSTALL_ROOT $CARGO_HOME
+set -xg RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 
 #RUBY
-set RVM $HOME/.rvm/bin
+#set RVM $HOME/.rvm/bin
 
 set -xg PATH $HOME/bin $FIG $HOME/.cargo/bin $JAVA_HOME/bin $RVM $JULIA $PATH
 set -xg PATH $TOOLS $GOBIN $CARGO_INSTALL_ROOT $PIP_USR_BIN $PYTHON_USR_BIN $GIT $GEMS $LUA_LSP $PATH 
 
-set -xg RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/library
 
 set -xg ROGCAT_PROFILES $HOME/.config/rogcat/profiles.toml
 set -xg CCACHE_DIR $HOME/CACHE
@@ -47,10 +55,6 @@ set -xg NAVI_CONFIG $HOME/.config/navi/config.yaml
 set fish_greeting
 
 
-switch (uname)
-  case Darwin
-    set -U fish_user_paths /opt/homebrew/bin
-end
 
 if test -f ./aliases.fish
     source ./aliases.fish
