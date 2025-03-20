@@ -6,6 +6,7 @@ return {
         vim.o.timeoutlen = 500
         require('which-key').setup {
             plugins = {},
+            preset = "helix",
             --[[
             triggers_blacklist = {
                  list of mode / prefixes that should never be hooked by WhichKey
