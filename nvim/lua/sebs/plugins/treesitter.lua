@@ -19,32 +19,6 @@ local config = function()
             "yaml",
             "zig"
         },
---[[
-            "bash",
-            "c",
-            "cpp",
-            "css",
-            "fish",
-            "go",
-            "html",
-            "haskell",
-            "json",
-            "javascript",
-            "julia",
-            "lua",
-            "markdown",
-            "markdown_inline",
-            "python",
-            "ruby",
-            "rust",
-            "scss",
-            "toml",
-            "typst",
-            "vimdoc",
-            "yaml",
-            "zig",
-            "latex"
-        },--]]                   -- one of "all", "maintained" (parsers with maintainers), or a list of languages
         ignore_install = {}, -- List of parsers to ignore installing
         highlight = {
             enable = true,   -- false will disable the whole extension
@@ -84,8 +58,8 @@ local config = function()
                     ["il"] = "@loop.inner",
                     ["ib"] = "@block.inner",
                     ["ab"] = "@block.outer",
-                    ["ir"] = "@parameter.inner",
-                    ["ar"] = "@parameter.outer"
+                    ["ip"] = "@parameter.inner",
+                    ["ap"] = "@parameter.outer"
                 }
             }
         },

@@ -108,5 +108,5 @@ global.netrw_hide = 1
 global.netrw_winsize = 25
 global.netrw_keepdir = 0 -- stay in dir where opened
 
-opt.foldmethod = "expr" -- use expressions for codefolding
-opt.foldexpr = "nvim_treesitter#foldexpr()" -- let treesitter do the evaluation
+--opt.foldmethod = "expr" -- use expressions for codefolding
+--opt.foldexpr = "nvim_treesitter#foldexpr()" -- let treesitter do the evaluation

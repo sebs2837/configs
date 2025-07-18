@@ -27,6 +27,20 @@ local config = function()
                             diagnostic = {
                                 enable = false,
                             },
+                            imports = {
+                                granularity = {
+                                    group = "module",
+                                },
+                                prefix = "self",
+                            },
+                            cargo = {
+                                buildScripts = {
+                                    enable = true,
+                                }
+                            },
+                            procMacro = {
+                                enable = true,
+                            }
                         }
                     }
                 }
@@ -60,17 +74,17 @@ local config = function()
             end,
             ts_ls = function()
                 local root_dir = function()
-                    local path = lspconfig.util.root_pattern({'tsconfig.json', 'jsconfig.json', 'package.json', '.git'})
+                    local path = lspconfig.util.root_pattern({ 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' })
                     local other = path()
-                    print("root dir: " .. vim.print(other) )
+                    print("root dir: " .. vim.print(other))
                     return other
                 end
                 lspconfig.ts_ls.setup({
                     init_options = { hostInfo = 'neovim' },
                     filetypes = { 'javascript', 'typescript' },
                     root_dir = function()
-                        local pattern = {'tsconfig.json', 'jsconfig.json', 'package.json', '.git'}
-                        local root_dir = vim.fs.dirname(vim.fs.find(pattern, {upward = true})[1])
+                        local pattern = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' }
+                        local root_dir = vim.fs.dirname(vim.fs.find(pattern, { upward = true })[1])
                         return root_dir
                     end,
                 })
@@ -114,6 +128,9 @@ local config = function()
                     }
 
                 })
+            end,
+            clangd = function()
+                lspconfig.clangd.setup({})
             end,
             pylsp = function()
                 lspconfig.pylsp.setup({
@@ -175,7 +192,7 @@ local config = function()
                 --vim.lsp.inlay_hint.enable(false)
             end
             vim.diagnostic.config({
-                virtual_text = false,
+                virtual_text =  false ,
                 signs = {
                     text = {
                         [vim.diagnostic.severity.ERROR] = '',
@@ -199,52 +216,71 @@ local config = function()
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             map('n', 'gD', vim.lsp.buf.declaration,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to declaration' })
+
             map('n', 'gd', vim.lsp.buf.definition,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to definition' })
+
             map('n', 'gtd', vim.lsp.buf.type_definition,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to type definition' })
+
             map('n', 'D', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'show hover info' })
+
             map('n', 'gi', vim.lsp.buf.implementation,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to implementation' })
+
             map('n', '<leader>df', vim.diagnostic.open_float,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'open diagnostics in floating window' })
+
             map('n', '<leader>vd', function()
                     builtin.diagnostics({ bufnr = 0 })
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show diagnostics for current buffer' })
+
             map('n', '<leader>vD', function()
                     builtin.diagnostics({})
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show diagnostics for current buffer' })
-            map('n', ']d', vim.diagnostic.goto_next,
+
+            map('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'go to next diagnostic message' })
-            map('n', '[d', vim.diagnostic.goto_prev,
+
+            map('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'got to previous diagnostic message' })
-            map('n', '<C-h>', vim.lsp.buf.signature_help,
+
+            map('n', '<leader><vh>', vim.lsp.buf.signature_help,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show signature help' })
+
             map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'add folder to workspace' })
+
             map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'remove folder from workspace' })
+
             map('n', '<leader>wl', function()
                 print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             end, { noremap = true, silent = true, buffer = bufnr, desc = 'list all workspace folders' })
+
             map('n', '<leader>D', function()
                     builtin.lsp_type_definitions()
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show type definition' })
+
             map('n', '<leader>vrn', function() vim.lsp.buf.rename() end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'rename under cursor' })
+
             map('n', '<leader>vca', vim.lsp.buf.code_action,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
+
             map('n', '<leader>pca', function()
                     require('tiny-code-action').code_action()
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'code action' })
+
             map('n', '<leader>vrr', function()
                     builtin.lsp_references()
                 end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'show all references' })
+
             map('n', '<leader>vf', function() vim.lsp.buf.format() end,
                 { noremap = true, silent = true, buffer = bufnr, desc = 'format buffer' })
         end,
@@ -296,7 +332,7 @@ local config = function()
         TypeParameter = "  ",
     }
 
-
+--[[
     cmp.setup({
         -- Enable LSP snippets
         snippet = {
@@ -380,7 +416,7 @@ local config = function()
                 }
             },
         },
-    })
+    })]]--
 end
 
 return {
@@ -400,13 +436,33 @@ return {
             { "williamboman/mason-lspconfig.nvim" },
             { "folke/lsp-colors.nvim" },
             { "f3fora/cmp-spell" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-path" },
+--            { "hrsh7th/cmp-nvim-lsp" },
+--            { "hrsh7th/cmp-buffer" },
+--            { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-calc" },
-            { "hrsh7th/cmp-cmdline" },
+            --{ "hrsh7th/cmp-cmdline" },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
-            { "hrsh7th/nvim-cmp" },
+            {
+                "saghen/blink.cmp",
+                version = "1.*",
+                opts = {
+                    signature = { enabled = true },
+                    keymap = {
+                        preset = 'default',
+                        ['<C-n>'] = {
+                            function(cmp)
+                                cmp.show({providers = { 'snippets', 'lsp' } })
+                            end
+                        },
+                        ['<Tab>'] = {'select_next', 'fallback'},
+                        ['<S-Tab>'] = {'select_prev', 'fallback'},
+                        ['<CR>'] = { 'accept', 'fallback'},
+                    },
+                    source = {
+                        default = {'lsp', 'path', 'snippets', 'buffer' },
+                    },
+                },
+            },
             {
                 "L3MON4D3/LuaSnip",
                 version = "v2.1.1",

@@ -1,4 +1,5 @@
 local config = function()
+    --[[
     require('lint').linters_by_ft = {
         markdown = {'markdownlint',}
     }
@@ -7,7 +8,7 @@ local config = function()
         callback = function (ev)
             require('lint').try_lint()
         end,
-    })
+    })--]]
 end
 
 return {

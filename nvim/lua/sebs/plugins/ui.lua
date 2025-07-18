@@ -19,7 +19,13 @@ local color_config = function()
 end
 
 local render_markdown = function()
-    require('render-markdown').setup()
+    require('render-markdown').setup({
+        file_types = {'markdown'},
+        latex = {
+            enable = false
+        }
+
+    })
 end
 
 
