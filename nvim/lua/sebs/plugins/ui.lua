@@ -18,9 +18,21 @@ local color_config = function()
     vim.cmd.colorscheme("rose-pine")
 end
 
+local mini_cfg = function()
+    local mini_icons = require("mini.icons")
+    local mini_files = require("mini.files")
+    mini_icons.setup({})
+    mini_files.setup({})
+
+    vim.keymap.set("n", "-", function()
+        mini_files.open()
+    end, OPTIONS:desc("Open mini file explorer"))
+end
+
+
 local render_markdown = function()
     require('render-markdown').setup({
-        file_types = {'markdown'},
+        file_types = { 'markdown' },
         latex = {
             enable = false
         }
@@ -44,10 +56,10 @@ local oil_cfg = function()
 end
 
 return {
-    {
+    --[[{
         "stevearc/oil.nvim",
         config = oil_cfg
-    },
+    },]]
     "j-hui/fidget.nvim",
     {
         'rose-pine/neovim',
@@ -55,11 +67,15 @@ return {
         config = color_config,
     },
     { "EdenEast/nightfox.nvim" },
+    {
+        'echasnovski/mini.nvim',
+        config = mini_cfg,
+    },
     { "folke/tokyonight.nvim" },
     {
         'MeanderingProgrammer/render-markdown.nvim',
         opts = {},
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
+        dependencies = { 'nvim-treesitter/nvim-treesitter', },
         config = render_markdown,
     }
 }

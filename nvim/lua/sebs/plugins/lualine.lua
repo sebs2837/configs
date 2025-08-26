@@ -269,6 +269,6 @@ return {
         "nvim-lualine/lualine.nvim",
         event = "VimEnter",
         config = config,
-        dependencies = { "kyazdani42/nvim-web-devicons", opt = true }
+        --dependencies = { "kyazdani42/nvim-web-devicons", opt = true }
     }
 }

@@ -73,12 +73,6 @@ local config = function()
                 })
             end,
             ts_ls = function()
-                local root_dir = function()
-                    local path = lspconfig.util.root_pattern({ 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' })
-                    local other = path()
-                    print("root dir: " .. vim.print(other))
-                    return other
-                end
                 lspconfig.ts_ls.setup({
                     init_options = { hostInfo = 'neovim' },
                     filetypes = { 'javascript', 'typescript' },
@@ -332,91 +326,6 @@ local config = function()
         TypeParameter = "  ",
     }
 
---[[
-    cmp.setup({
-        -- Enable LSP snippets
-        snippet = {
-            expand = function(args)
-                luasnip.lsp_expand(args.body)
-            end,
-        },
-        window = {
-            completion = cmp.config.window.bordered(),
-            documentation = cmp.config.window.bordered(),
-        },
-        mapping = {
-            ['<C-s>'] = cmp.mapping.complete(),
-            -- Add tab support
-            ['<S-Tab>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-            ['<Tab>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-            ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-            ['<C-leader>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.close()
-                elseif luasnip.choice_active() then
-                    luasnip.change_choice(1)
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-            ['<CR>'] = cmp.mapping.confirm({
-                behavior = cmp.ConfirmBehavior.Insert,
-                select = true,
-            })
-        },
-
-        formatting = {
-            format = function(entry, vim_item)
-                vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-                vim_item.menu = ({
-                    buffer = "[Buffer]",
-                    nvim_lsp = "[LSP]",
-                    luasnip = "[Luasnip]",
-                    nvim_lua = "[Lua]",
-                    latex_symbol = "[Latex]"
-                })[entry.source.name]
-                return vim_item
-            end
-        },
-        -- Installed sources
-        sources = {
-            { name = 'nvim_lsp' },
-            { name = 'nvim_lsp_signature_help' },
-            { name = 'path' },
-            { name = 'luasnip' },
-            { name = 'buffer' },
-            { name = 'calc' },
-            { name = 'crates' },
-            {
-                name = 'spell',
-                option = {
-                    keep_all_entries = false,
-                    enable_in_context = function()
-                        return require('cmp.config.context').in_treesitter_capture('spell')
-                    end,
-                    preselect_correct_word = true,
-                }
-            },
-        },
-    })]]--
 end
 
 return {
@@ -436,11 +345,7 @@ return {
             { "williamboman/mason-lspconfig.nvim" },
             { "folke/lsp-colors.nvim" },
             { "f3fora/cmp-spell" },
---            { "hrsh7th/cmp-nvim-lsp" },
---            { "hrsh7th/cmp-buffer" },
---            { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-calc" },
-            --{ "hrsh7th/cmp-cmdline" },
             { "hrsh7th/cmp-nvim-lsp-signature-help" },
             {
                 "saghen/blink.cmp",
@@ -457,9 +362,6 @@ return {
                         ['<Tab>'] = {'select_next', 'fallback'},
                         ['<S-Tab>'] = {'select_prev', 'fallback'},
                         ['<CR>'] = { 'accept', 'fallback'},
-                    },
-                    source = {
-                        default = {'lsp', 'path', 'snippets', 'buffer' },
                     },
                 },
             },
